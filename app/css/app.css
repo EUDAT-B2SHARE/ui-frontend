@@ -1,1 +1,155 @@
-/* app css stylesheet */
+/*/* app css stylesheet
+
+.phone-images {
+  background-color: white;
+  width: 450px;
+  height: 450px;
+  overflow: hidden;
+  position: relative;
+  float: left;
+}
+
+
+img.phone {
+  float: left;
+  margin-right: 3em;
+  margin-bottom: 2em;
+  background-color: white;
+  padding: 2em;
+  height: 400px;
+  width: 400px;
+  display: none;
+}
+
+img.phone:first-child {
+  display: block;
+}*/
+
+
+/*.main-container {
+  padding-left: 50px;
+  padding-right: 50px;
+}*/
+
+/* base site */
+
+.about-header {
+  font-size: 13px;
+}
+.about-footer {
+  text-align: right;
+  margin-right: 30px;
+  font-size: 10px;
+}
+.about-footer img {
+  height: 12px;
+}
+.about-footer a {
+  text-decoration: none;
+}
+.legal-notice{
+  margin-top: 7px;
+  font-size: 11px;
+}
+.navbar-brand .b2share-logo{
+  height: 90px;
+}
+.navbar-brand .eudat-logo{
+  height: 48px;
+}
+
+/* fix to footer bottom */
+
+html,body{
+  height: 100%;
+}
+
+#holder{
+  min-height: 100%;
+  position:relative;
+}
+
+#main-container{
+  padding-bottom: 100px;
+}
+
+#footer{
+  height: 100px;
+  width:100%;
+  position: absolute;
+  left: 0;
+}
+
+.navbar-default {
+  background: white url('../img/header.png') no-repeat right top;
+}
+
+footer .navbar-default {
+  background: #DDD url('../img/footer.png') no-repeat right bottom;
+  height: 60px;
+}
+
+
+.header-nav .navbar-nav {
+  margin-top: 70px;
+}
+
+
+/* dashboard last deposits*/
+
+.deposit {
+  margin: 5px 0 5px 0;
+}
+
+.deposit p {
+  padding: 0;
+  margin: 0;
+}
+
+.deposit .date{
+  color: blue;
+}
+
+.deposit .name {
+  font-weight: 900;
+}
+
+.deposit .description {
+  color: gray;
+}
+
+/* pages */
+
+#user-guide img {
+  width: 500px;
+}
+
+.legal-notice img {
+  float: left;
+  padding: 5px;
+}
+
+/* presets */
+
+.text-uppercase {
+  text-transform: uppercase;
+}
+
+.bg-color-orange {
+  background-color: #E5601E;
+}
+
+.text-color-white {
+  color: #fff;
+}
+
+.text-color-white a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.text-color-white a:hover {
+  color: #fff;
+  /*text-decoration: none;*/
+}
+
