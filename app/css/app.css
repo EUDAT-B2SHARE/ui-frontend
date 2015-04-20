@@ -1,9 +1,13 @@
+<<<<<<< HEAD
 /* app css stylesheet */
 
 body {
   padding-top: 20px;
 }
 
+=======
+/*/* app css stylesheet
+>>>>>>> b2share
 
 .phone-images {
   background-color: white;
@@ -14,6 +18,7 @@ body {
   float: left;
 }
 
+<<<<<<< HEAD
 .phones {
   list-style: none;
 }
@@ -33,6 +38,7 @@ body {
 }
 
 /** Detail View **/
+
 img.phone {
   float: left;
   margin-right: 3em;
@@ -49,51 +55,130 @@ img.phone:first-child {
 }
 
 
-ul.phone-thumbs {
-  margin: 0;
-  list-style: none;
+/*.main-container {
+  padding-left: 50px;
+  padding-right: 50px;
+}*/
+
+/* base site */
+
+.about-header {
+  font-size: 13px;
+}
+.about-footer {
+  text-align: right;
+  margin-right: 30px;
+  font-size: 10px;
+}
+.about-footer img {
+  height: 12px;
+}
+.about-footer a {
+  text-decoration: none;
+}
+.legal-notice{
+  margin-top: 7px;
+  font-size: 11px;
+}
+.navbar-brand .b2share-logo{
+  height: 90px;
+}
+.navbar-brand .eudat-logo{
+  height: 48px;
 }
 
-ul.phone-thumbs li {
-  border: 1px solid black;
-  display: inline-block;
-  margin: 1em;
-  background-color: white;
+/* fix to footer bottom */
+
+html,body{
+  height: 100%;
 }
 
-ul.phone-thumbs img {
+#holder{
+  min-height: 100%;
+  position:relative;
+}
+
+#main-container{
+  padding-bottom: 100px;
+}
+
+#footer{
   height: 100px;
-  width: 100px;
-  padding: 1em;
+  width:100%;
+  position: absolute;
+  left: 0;
 }
 
-ul.phone-thumbs img:hover {
-  cursor: pointer;
+.navbar-default {
+  background: white url('../img/header.png') no-repeat right top;
+}
+
+footer .navbar-default {
+  background: #DDD url('../img/footer.png') no-repeat right bottom;
+  height: 60px;
 }
 
 
-ul.specs {
-  clear: both;
-  margin: 0;
+.header-nav .navbar-nav {
+  margin-top: 70px;
+}
+
+
+/* dashboard last deposits*/
+
+.deposit {
+  margin: 5px 0 5px 0;
+}
+
+.deposit p {
   padding: 0;
-  list-style: none;
+  margin: 0;
 }
 
-ul.specs > li{
-  display: inline-block;
-  width: 200px;
-  vertical-align: top;
+.deposit .date{
+  color: blue;
 }
 
-ul.specs > li > span{
-  font-weight: bold;
-  font-size: 1.2em;
+.deposit .name {
+  font-weight: 900;
 }
 
-ul.specs dt {
-  font-weight: bold;
+.deposit .description {
+  color: gray;
 }
 
-h1 {
-  border-bottom: 1px solid gray;
+/* pages */
+
+#user-guide img {
+  width: 500px;
 }
+
+.legal-notice img {
+  float: left;
+  padding: 5px;
+}
+
+/* presets */
+
+.text-uppercase {
+  text-transform: uppercase;
+}
+
+.bg-color-orange {
+  background-color: #E5601E;
+}
+
+.text-color-white {
+  color: #fff;
+}
+
+.text-color-white a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.text-color-white a:hover {
+  color: #fff;
+  /*text-decoration: none;*/
+}
+

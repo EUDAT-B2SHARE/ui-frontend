@@ -1,0 +1,12 @@
+div, body, input, textarea, button, #testimonials h4, .highlighted-text {
+	font-family: 'Raleway';
+	font-style: normal;
+	font-weight: 500;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-family: 'Raleway';
+	font-style: normal;
+	font-weight: 600;
+	text-transform: uppercase;
+}

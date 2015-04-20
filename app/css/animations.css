@@ -1,8 +1,3 @@
-/*
- * animations css stylesheet
- */
-
-/* animate ngRepeat in phone listing */
 
 .phone-listing.ng-enter,
 .phone-listing.ng-leave,
@@ -23,7 +18,7 @@
 .phone-listing.ng-move.ng-move-active,
 .phone-listing.ng-enter.ng-enter-active {
   opacity: 1;
-  height: 120px;
+  height: 420px;
 }
 
 .phone-listing.ng-leave {
@@ -38,14 +33,12 @@
   padding-bottom: 0;
 }
 
-/* cross fading between routes with ngView */
-
 .view-container {
   position: relative;
 }
 
-.view-frame.ng-enter,
-.view-frame.ng-leave {
+
+.view-frame.ng-enter, .view-frame.ng-leave {
   background: white;
   position: absolute;
   top: 0;
