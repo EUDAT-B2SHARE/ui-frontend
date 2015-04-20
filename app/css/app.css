@@ -118,9 +118,19 @@ footer .navbar-default {
   height: 60px;
 }
 
-
-.header-nav .navbar-nav {
+/* increase navbar sizes */
+.header-nav .navbar-collapse .navbar-nav {
   margin-top: 70px;
+}
+.header-nav .navbar-header {
+  min-height: 120px;
+}
+/* restore collapsed navbar offset height */
+.header-nav .in .navbar-nav {
+  margin-top: 5px;
+}
+.header-nav .collapsing .navbar-nav {
+  margin-top: 5px;
 }
 
 
