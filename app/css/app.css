@@ -1,64 +1,3 @@
-<<<<<<< HEAD
-/* app css stylesheet */
-
-body {
-  padding-top: 20px;
-}
-
-=======
-/*/* app css stylesheet
->>>>>>> b2share
-
-.phone-images {
-  background-color: white;
-  width: 450px;
-  height: 450px;
-  overflow: hidden;
-  position: relative;
-  float: left;
-}
-
-<<<<<<< HEAD
-.phones {
-  list-style: none;
-}
-
-.thumb {
-  float: left;
-  margin: -0.5em 1em 1.5em 0;
-  padding-bottom: 1em;
-  height: 100px;
-  width: 100px;
-}
-
-.phones li {
-  clear: both;
-  height: 115px;
-  padding-top: 15px;
-}
-
-/** Detail View **/
-
-img.phone {
-  float: left;
-  margin-right: 3em;
-  margin-bottom: 2em;
-  background-color: white;
-  padding: 2em;
-  height: 400px;
-  width: 400px;
-  display: none;
-}
-
-img.phone:first-child {
-  display: block;
-}
-
-
-/*.main-container {
-  padding-left: 50px;
-  padding-right: 50px;
-}*/
 
 /* base site */
 
@@ -93,6 +32,7 @@ html,body{
   height: 100%;
 }
 
+
 #holder{
   min-height: 100%;
   position:relative;
@@ -115,7 +55,7 @@ html,body{
 
 footer .navbar-default {
   background: #DDD url('../img/footer.png') no-repeat right bottom;
-  height: 60px;
+  min-height: 80px;
 }
 
 /* increase navbar sizes */
@@ -125,12 +65,49 @@ footer .navbar-default {
 .header-nav .navbar-header {
   min-height: 120px;
 }
-/* restore collapsed navbar offset height */
 .header-nav .in .navbar-nav {
   margin-top: 5px;
 }
 .header-nav .collapsing .navbar-nav {
   margin-top: 5px;
+}
+/* collapse to max of 928px */
+@media (max-width: 940px) {
+  .navbar-header {
+      float: none;
+  }
+  .navbar-toggle {
+      display: block;
+  }
+  .navbar-collapse {
+      border-top: 1px solid transparent;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
+  }
+  .navbar-collapse.collapse {
+      display: none!important;
+  }
+  .navbar-nav {
+      float: none!important;
+      margin: 7.5px -15px;
+  }
+  .navbar-nav>li {
+      float: none;
+  }
+  .navbar-nav>li>a {
+      padding-top: 10px;
+      padding-bottom: 10px;
+  }
+  .navbar-text {
+      float: none;
+      margin: 15px 0;
+  }
+  /* since 3.1.0 */
+  .navbar-collapse.collapse.in {
+      display: block!important;
+  }
+  .collapsing {
+      overflow: hidden!important;
+  }
 }
 
 
