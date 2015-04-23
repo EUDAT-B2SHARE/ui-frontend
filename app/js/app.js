@@ -61,7 +61,11 @@ phonecatApp.config(['$routeProvider', function($routeProvider){
     controller: 'SearchCtrl'
   });
 
-
+  // deposit
+  $routeProvider.when('/deposit/:uuid',{
+    templateUrl: 'layout/deposit/deposit.html',
+    controller: 'DepositCtrl'
+  });
 
 
 }]);

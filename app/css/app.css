@@ -113,6 +113,14 @@ footer .navbar-default {
 
 /* dashboard last deposits*/
 
+.deposits a {
+  text-decoration: none;
+}
+
+.deposits a:hover .name {
+  text-decoration: underline;
+}
+
 .deposit {
   margin: 5px 0 5px 0;
 }

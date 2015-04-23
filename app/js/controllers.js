@@ -75,6 +75,8 @@ phonecatControllers.controller('SearchCtrl', ['$scope', '$routeParams', '$locati
 
 }]);
 
-
+phonecatControllers.controller('DepositCtrl', ['$scope', '$routeParams', function($scope, $routeParams){
+  $scope.uuid = $routeParams.uuid;
+}]);
 
 
