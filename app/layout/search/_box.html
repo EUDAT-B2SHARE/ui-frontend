@@ -1,0 +1,28 @@
+
+<div class="row">
+  <div class="col-xs-12">
+    <h2>Search</h2>
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-12">
+    <form name="searchFormNg" ng-submit="searchForm.submitForm()">
+      <div id="name-group" class="form-group">
+        <span class="help-inline">{{searchForm_errorMessage}}</span>
+        <div class="input-group">
+          <span class="input-group-btn">
+            <button ng-click="goto('/help/search')" class="btn btn-default" type="button">
+              <i class="fa fa-question-circle"></i>
+            </button>
+          </span>
+          <input name="query" type="text" ng-model="searchForm.query" placeholder="Search 185 records for" class="form-control">
+          <span class="input-group-btn">
+            <button class="btn btn-primary" type="submit">
+              <i class="fa fa-search"></i> SEARCH
+            </button>
+          </span>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
