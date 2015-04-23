@@ -39,7 +39,7 @@ html,body{
 }
 
 #main-container{
-  padding-bottom: 100px;
+  /*padding-bottom: 100px;*/
 }
 
 #footer{
@@ -50,12 +50,22 @@ html,body{
 }
 
 .navbar-default {
+  margin-bottom: 0;
   background: white url('../img/header.png') no-repeat right top;
+}
+
+footer {
+  background-color: #f3f3eb;
 }
 
 footer .navbar-default {
   background: #DDD url('../img/footer.png') no-repeat right bottom;
   min-height: 80px;
+}
+
+#page{
+  background: #f3f3eb url('../img/bg/slide1.png') no-repeat left top;
+  min-height: 800px;
 }
 
 /* increase navbar sizes */
