@@ -40,12 +40,17 @@ var phonecatControllers = angular.module('phonecatControllers', ['angular-loadin
 phonecatControllers.controller('HomeCtrl', ['$scope', '$http', '$location', function($scope, $http, $location){
   $scope.searchForm = {};
   $scope.searchForm.submitForm = function() {
-    console.log('processForm');
-    console.log($scope.searchForm.query);
+    if($scope.searchForm.query == undefined)
+      return;
     $scope.errorName = "blaat";
     $scope.message = "generic error";
     $location.path('/search/query/' + $scope.searchForm.query);
   };
+
+  $scope.goto = function(name) {
+    $location.path(name);
+  }
+
 
 }]);
 
@@ -61,10 +66,11 @@ phonecatControllers.controller('UserCtrl', ['$scope', function($scope){
 
 }]);
 
-phonecatControllers.controller('SearchCtrl', ['$scope', '$routeParams',
-  function($scope, $routeParams){
+phonecatControllers.controller('SearchCtrl', ['$scope', '$routeParams', '$location',
+  function($scope, $routeParams, $location){
   // map parameter on scope
   $scope.query = $routeParams.query;
+
 }]);
 
 

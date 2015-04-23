@@ -41,6 +41,9 @@ phonecatApp.config(['$routeProvider', function($routeProvider){
   }).when('/help/faq',{
     templateUrl: 'layout/help/faq.html',
     controller: 'HelpCtrl'
+  }).when('/help/search',{
+    templateUrl: 'layout/help/search.html',
+    controller: 'HelpCtrl'
   });
 
   // user
