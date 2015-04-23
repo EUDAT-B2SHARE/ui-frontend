@@ -14,28 +14,16 @@ var phonecatApp = angular.module('phonecatApp', [
 });
 
 phonecatApp.config(['$routeProvider', function($routeProvider){
-  // $routeProvider.when('/phones', {
-  //   templateUrl: 'partials/phone-list.html',
-  //   controller: 'PhoneListCtrl'
-  // }).when('/phones/:phoneId', {
-  //   templateUrl: 'partials/phone-detail.html',
-  //   controller: 'PhoneDetailCtrl'
-  // }).otherwise({
-  //   redirectTo/: '/dashboard'
-  // })
-
-// <a href="#/about/legal-notice">Legal Notice</a>.
-//           </p>
-//           <ul class="nav navbar-nav navbar-right">
-//             <li class=""><a href="#/help/terms-of-use">Terms of Use</a></li>
-//             <li class=""><a href="#/help/api">REST API</a></li>
-//             <li class=""><a href="#/about/eudat">About EUDAT</a></li>
-
-
+  // default route
   $routeProvider.when('/', {
     templateUrl: 'layout/home/index.html',
     controller: 'HomeCtrl'
-  }).when('/about/b2share',{
+  }).otherwise({
+    redirectTo: '/'
+  });
+
+  // about
+  $routeProvider.when('/about/b2share',{
     templateUrl: 'layout/about/b2share.html',
     controller: 'AboutCtrl'
   }).when('/about/communities',{
@@ -44,14 +32,35 @@ phonecatApp.config(['$routeProvider', function($routeProvider){
   }).when('/about/legal-notice',{
     templateUrl: 'layout/about/legal-notice.html',
     controller: 'AboutCtrl'
-  }).when('/help/user-guide',{
+  });
+
+  // help
+  $routeProvider.when('/help/user-guide',{
     templateUrl: 'layout/help/user-guide.html',
     controller: 'HelpCtrl'
   }).when('/help/faq',{
     templateUrl: 'layout/help/faq.html',
     controller: 'HelpCtrl'
-  }).otherwise({
-    redirectTo: '/'
-  })
+  });
+
+  // user
+  $routeProvider.when('/user/sign-up',{
+    templateUrl: 'layout/user/sign-up.html',
+    controller: 'UserCtrl'
+  }).when('/user/login',{
+    templateUrl: 'layout/user/login.html',
+    controller: 'UserCtrl'
+  });
+
+  // search
+  $routeProvider.when('/search/query/:query',{
+    templateUrl: 'layout/search/query.html',
+    controller: 'SearchCtrl'
+  });
+
+
+
+
 }]);
+
 
