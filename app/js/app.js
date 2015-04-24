@@ -11,13 +11,25 @@ var phonecatApp = angular.module('phonecatApp', [
   'phonecatServices',
 ]).config(function(cfpLoadingBarProvider){
   cfpLoadingBarProvider.includeSpinner = false;
+}).config(function($alertProvider) {
+  angular.extend($alertProvider.defaults, {
+    animation: 'am-fade-and-slide-top message',
+    placement: 'top',
+    container: "#alerts-container",
+  })
 });
+
+// define global scope helpers
+phonecatApp.run(function($rootScope, Global) {
+  $rootScope.gbl = Global;
+});
+
 
 phonecatApp.config(['$routeProvider', function($routeProvider){
   // default route
   $routeProvider.when('/', {
     templateUrl: 'layout/home/index.html',
-    controller: 'HomeCtrl'
+    controller: 'DefaultCtrl'
   }).otherwise({
     redirectTo: '/'
   });

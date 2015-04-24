@@ -36,24 +36,40 @@ var phonecatControllers = angular.module('phonecatControllers', ['angular-loadin
 
 // }]);
 
+// phonecatControllers.run(function($rootScope) {
+//   $rootScope.globalFoo = function() {
+//     alert("I'm global foo!");
+//   };
+// });
 
-phonecatControllers.controller('HomeCtrl', ['$scope', '$http', '$location', function($scope, $http, $location){
+
+phonecatControllers.controller('DefaultCtrl', ['$scope', '$alert', '$location', function($scope, $alert, $location){
   $scope.searchForm = {};
   $scope.searchForm.submitForm = function() {
-    if($scope.searchForm.query == undefined){
-      $scope.searchForm_errorMessage = "Please provide a search value";
+    if($scope.searchForm.query == undefined || $scope.searchForm.query == ""){
+
+      //
+      var title_msg = $('#alerts-container').find('.message').find('[ng-bind=title]').html();
+      var title = "";
+      var content_msg = $('#alerts-container').find('.message').find('[ng-bind-html=content]').html();
+      var content = 'Please provide a search value';
+
+      if(content_msg != content && title_msg != title){
+        $alert({content: content, title: title, type: "warning"});
+      }
       return;
+    } else {
+      // TODO: only remove search errors
+      $('#alerts-container').empty();
     }
-    $scope.errorName = "blaat";
-    $scope.message = "generic error";
+    // $scope.errorName = "blaat";
+    // $scope.message = "generic error";
     $location.path('/search/query/' + $scope.searchForm.query);
   };
 
   $scope.goto = function(name) {
     $location.path(name);
   }
-
-
 }]);
 
 phonecatControllers.controller('AboutCtrl', ['$scope', function($scope){

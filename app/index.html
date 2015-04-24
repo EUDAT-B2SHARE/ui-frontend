@@ -15,6 +15,9 @@
   <script src="bower_components/angular-route/angular-route.js"></script>
   <script src="bower_components/angular-resource/angular-resource.js"></script>
   <script src="bower_components/angular-animate/angular-animate.js"></script>
+  <script src="bower_components/angular-strap/dist/angular-strap.min.js"></script>
+  <script src="bower_components/angular-strap/dist/angular-strap.tpl.min.js"></script>
+
   <script src="bower_components/angular-loading-bar/src/loading-bar.js"></script>
   <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
   <link type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=Raleway:300,500&amp;subset=latin" media="all">
@@ -40,6 +43,7 @@
 <div id="holder">
 
   <div id="header">
+    <div id="alerts-container"></div>
     <header>
       <div class="row-fluid bg-color-orange text-color-white">
         <span class="col-xs-offset-1 about-header text-center-responsive text-color-white"><a href="http://eudat.eu" target="_blank">GO TO EUDAT WEBSITE</a></div>
@@ -62,9 +66,28 @@
                 <img class="eudat-logo" ng-src="{{'img/eudat-logo.png'}}">
               </div>
             </a>
-          </div>
+            </div>
 
-          <div class="collapse navbar-collapse" id="header-navbar-collapse">
+          <!-- inside collapsing part -->
+          <div ng-controller="DefaultCtrl" class="collapse navbar-collapse" id="header-navbar-collapse">
+            <!-- search input -->
+            <form name="searchFormNg" ng-submit="searchForm.submitForm()">
+              <div class="nav-search" class="input-group">
+                <span class="input-group-btn">
+                  <button ng-click="gbl.path('/help/search')" class="btn btn-default" type="button">
+                    <i class="fa fa-question-circle"></i>
+                  </button>
+                </span>
+                <input type="text" autofocus="autofocus" autocomplete="off" placeholder="Search 185 records for..." name="query" style="" class="form-control" ng-model="searchForm.query">
+                <span class="input-group-btn">
+                  <button class="btn btn-primary" type="submit">
+                    <i class="fa fa-search"></i> SEARCH
+                  </button>
+                </span>
+              </div>
+            </form>
+
+            <!-- menu -->
             <ul class="nav navbar-nav text-uppercase">
               <li class=""><a href="#/about/b2share">
                 <i class="fa fa-cubes"></i>What is B2SHARE</a></li>
@@ -82,24 +105,25 @@
         </div>
       </nav>
 
-      <!-- -->
+      <!-- main container -->
       <div id="main-container" class="view-container">
-        <div id="page" ng-view class="view-frame" autoscroll="true"></div>
+        <div id="page" ng-view class="view-frame" autoscroll="true">
+          <!-- this is replaced by controller -->
+        </div>
+        <div class="about-footer">
+          Powered by
+          <a href="http://invenio-software.org" target="_blank">
+            <img ng-src="{{'img/invenio.png'}}">
+          </a>
+        </div>
       </div>
 
-      </div>
     </header>
   </div>
 
   <!-- footer -->
   <div id="footer">
     <footer>
-      <div class="about-footer">
-        Powered by
-        <a href="http://invenio-software.org" target="_blank">
-          <img ng-src="{{'img/invenio.png'}}">
-        </a>
-      </div>
       <nav class="bottom-nav navbar-bottom navbar-default">
         <div class="container-fluid">
           <div class="col-xs-1">&nbsp;</div>
