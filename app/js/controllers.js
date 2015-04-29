@@ -47,23 +47,20 @@ phonecatControllers.controller('DefaultCtrl', ['$scope', '$alert', '$location', 
   $scope.searchForm = {};
   $scope.searchForm.submitForm = function() {
     if($scope.searchForm.query == undefined || $scope.searchForm.query == ""){
-
-      //
+      // get/set search values
       var title_msg = $('#alerts-container').find('.message').find('[ng-bind=title]').html();
       var title = "";
       var content_msg = $('#alerts-container').find('.message').find('[ng-bind-html=content]').html();
       var content = 'Please provide a search value';
-
+      // add flash for empty search
       if(content_msg != content && title_msg != title){
-        $alert({content: content, title: title, type: "warning"});
+        $alert({content: content, title: title, type: "warning", animation: 'am-fade-and-slide-top message search'});
       }
       return;
     } else {
-      // TODO: only remove search errors
-      $('#alerts-container').empty();
+      $('#alerts-container').find('.search').remove();
     }
-    // $scope.errorName = "blaat";
-    // $scope.message = "generic error";
+    // redirect to search page
     $location.path('/search/query/' + $scope.searchForm.query);
   };
 
