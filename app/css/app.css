@@ -33,6 +33,12 @@
   margin-right: 250px;
 }
 
+.stop-scrolling {
+  height: 100%;
+  overflow: hidden;
+}
+
+
 /* fix to footer bottom */
 
 html,body{
@@ -197,6 +203,7 @@ footer .navbar-default {
 }
 
 /* pages */
+
 
 .legal-notice img {
   float: left;

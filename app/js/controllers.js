@@ -74,6 +74,19 @@ phonecatControllers.controller('AboutCtrl', ['$scope', function($scope){
 }]);
 
 phonecatControllers.controller('HelpCtrl', ['$scope', function($scope){
+  $('.img-thumbnail').colorbox({href: function(){
+    return $(this).attr("src");
+    }, maxWidth: "75%", fixed: true, scrolling: false
+  });
+
+  $(document).bind('cbox_open', function(){
+    $('body').addClass('stop-scrolling');
+  });
+
+  $(document).bind('cbox_closed', function(){
+    $('body').removeClass('stop-scrolling');
+  });
+
 
 }]);
 
