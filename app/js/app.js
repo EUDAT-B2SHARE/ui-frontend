@@ -19,11 +19,38 @@ var phonecatApp = angular.module('phonecatApp', [
   })
 });
 
+ // $('.img-thumbnail').colorbox({href: function(){
+ //    return $(this).attr("src");
+ //    }, maxWidth: "75%", fixed: true, scrolling: false
+ //  });
+
+ //  $(document).bind('cbox_open', function(){
+ //    $('body').addClass('stop-scrolling');
+ //  });
+
+ //  $(document).bind('cbox_closed', function(){
+ //    $('body').removeClass('stop-scrolling');
+ //  });
+
+
 // define global scope helpers
 phonecatApp.run(function($rootScope, Global) {
   $rootScope.gbl = Global;
-});
 
+
+  // $('.img-thumbnail')
+  // console.log("run");
+
+  // console.log(v);
+  // console.log(v.colorbox());
+
+  // angular.element(window).on('resize', function () {
+
+
+  // angular.bind()
+
+
+});
 
 phonecatApp.config(['$routeProvider', function($routeProvider){
   // default route

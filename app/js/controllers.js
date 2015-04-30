@@ -66,7 +66,32 @@ phonecatControllers.controller('DefaultCtrl', ['$scope', '$alert', '$location', 
 
   $scope.goto = function(name) {
     $location.path(name);
-  }
+  };
+
+  // content view loaded
+  $scope.$on('$viewContentLoaded', function(){
+    console.log("view content loaded!");
+
+    // colorbox
+    var v = angular.element('.img-thumbnail');
+    v.colorbox({href: function(){
+        // bind href with src of img
+        return $(this).attr("src");
+      }, maxWidth: "75%", fixed: true, scrolling: false
+    });
+    // stop background scrolling (body behind colorbox)
+    $(document).bind('cbox_open', function(){
+      $('body').addClass('stop-scrolling');
+    });
+    // enable scrolling
+    $(document).bind('cbox_closed', function(){
+      $('body').removeClass('stop-scrolling');
+    });
+
+  });
+
+
+
 }]);
 
 phonecatControllers.controller('AboutCtrl', ['$scope', function($scope){
@@ -74,18 +99,7 @@ phonecatControllers.controller('AboutCtrl', ['$scope', function($scope){
 }]);
 
 phonecatControllers.controller('HelpCtrl', ['$scope', function($scope){
-  $('.img-thumbnail').colorbox({href: function(){
-    return $(this).attr("src");
-    }, maxWidth: "75%", fixed: true, scrolling: false
-  });
 
-  $(document).bind('cbox_open', function(){
-    $('body').addClass('stop-scrolling');
-  });
-
-  $(document).bind('cbox_closed', function(){
-    $('body').removeClass('stop-scrolling');
-  });
 
 
 }]);

@@ -33,11 +33,6 @@
   margin-right: 250px;
 }
 
-.stop-scrolling {
-  height: 100%;
-  overflow: hidden;
-}
-
 
 /* fix to footer bottom */
 
@@ -243,5 +238,10 @@ footer .navbar-default {
 
 .align-right{
   text-align: right;
+}
+
+.stop-scrolling {
+  height: 100%;
+  overflow: hidden;
 }
 
