@@ -94,8 +94,6 @@ phonecatControllers.controller('AboutCtrl', ['$scope', function($scope){
 
 phonecatControllers.controller('HelpCtrl', ['$scope', function($scope){
 
-
-
 }]);
 
 phonecatControllers.controller('UserCtrl', ['$scope', function($scope){

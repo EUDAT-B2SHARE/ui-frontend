@@ -8,7 +8,7 @@
   text-align: right;
   padding-right: 30px;
   font-size: 10px;
-  background-color: #f3f3eb;
+  background-color: white;
 }
 .about-footer img {
   height: 12px;
@@ -72,7 +72,7 @@ footer .navbar-default {
 }
 
 #page{
-  background: #f3f3eb url('../img/bg/slide1.png') no-repeat left top;
+  background: white url('../img/bg_page.png') no-repeat left top;
   min-height: 800px;
 }
 
