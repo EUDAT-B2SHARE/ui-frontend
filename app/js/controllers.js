@@ -86,10 +86,12 @@ phonecatControllers.controller('DefaultCtrl', ['$scope', '$alert', '$location', 
       $('body').removeClass('stop-scrolling');
     });
 
-    // overwrite href target
-
+    // overwrite remote href to _blank target (if target not set)
     $('a').each(function(i, a){
-      console.log(a);
+      a = $(a);
+      if(!a.attr("href").startsWith("#/") && a.attr("target") == undefined){
+        a.attr("target", "_blank");
+      }
     });
 
   });

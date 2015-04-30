@@ -257,13 +257,13 @@ footer .navbar-default {
   color: #fff;
   /*text-decoration: none;*/
 }
-
 .align-right{
   text-align: right;
 }
-
 .stop-scrolling {
   height: 100%;
   overflow: hidden;
 }
-
+.no-radius {
+  border-radius: 0px;
+}

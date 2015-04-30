@@ -37,21 +37,16 @@ var phonecatApp = angular.module('phonecatApp', [
 phonecatApp.run(function($rootScope, Global) {
   $rootScope.gbl = Global;
 
-
-  // $('.img-thumbnail')
-  // console.log("run");
-
-  // console.log(v);
-  // console.log(v.colorbox());
-
-  // angular.element(window).on('resize', function () {
-
-
-  // angular.bind()
-
+  // string helper
+  if (typeof String.prototype.startsWith != 'function') {
+    String.prototype.startsWith = function (str){
+      return this.slice(0, str.length) == str;
+    };
+  }
 
 });
 
+// routes
 phonecatApp.config(['$routeProvider', function($routeProvider){
   // default route
   $routeProvider.when('/', {
