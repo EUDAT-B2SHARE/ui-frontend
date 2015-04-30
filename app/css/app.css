@@ -16,6 +16,29 @@
 .about-footer a {
   text-decoration: none;
 }
+.spacer-footer{
+  /*background: white url('../img/footer-line.png') no-repeat right top;*/
+  height: 10px;
+  padding: 0;
+  margin: 0;
+  /*width: 100%;*/
+}
+.spacer-footer .box-1 {
+  background: #173b93;
+  height: 10px;
+}
+.spacer-footer .box-2 {
+  background: #c73118;
+  height: 10px;
+}
+.spacer-footer .box-3 {
+  background: #f45c0b;
+  height: 10px;
+}
+.spacer-footer .box-4 {
+  background: #fba700;
+  height: 10px;
+}
 .legal-notice{
   margin-top: 7px;
   font-size: 11px;
@@ -26,7 +49,6 @@
 .navbar-brand .eudat-logo{
   height: 48px;
 }
-
 .nav-search {
   display: table;
   padding: 20px;
@@ -72,7 +94,7 @@ footer .navbar-default {
 }
 
 #page{
-  background: white url('../img/bg_page.png') no-repeat left top;
+  background: white url('../img/bg-page.png') no-repeat center top;
   min-height: 800px;
 }
 

@@ -85,6 +85,13 @@ phonecatControllers.controller('DefaultCtrl', ['$scope', '$alert', '$location', 
     $(document).bind('cbox_closed', function(){
       $('body').removeClass('stop-scrolling');
     });
+
+    // overwrite href target
+
+    $('a').each(function(i, a){
+      console.log(a);
+    });
+
   });
 }]);
 
