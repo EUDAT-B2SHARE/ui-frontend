@@ -70,8 +70,6 @@ phonecatControllers.controller('DefaultCtrl', ['$scope', '$alert', '$location', 
 
   // content view loaded
   $scope.$on('$viewContentLoaded', function(){
-    console.log("view content loaded!");
-
     // colorbox
     var v = angular.element('.img-thumbnail');
     v.colorbox({href: function(){
@@ -87,11 +85,7 @@ phonecatControllers.controller('DefaultCtrl', ['$scope', '$alert', '$location', 
     $(document).bind('cbox_closed', function(){
       $('body').removeClass('stop-scrolling');
     });
-
   });
-
-
-
 }]);
 
 phonecatControllers.controller('AboutCtrl', ['$scope', function($scope){
