@@ -126,7 +126,7 @@ footer .navbar-default {
   top: 10px;
   right:50px;
   z-index: 9999;
-  width: 300px;
+  max-width: 300px;
   float: right;
 }
 
