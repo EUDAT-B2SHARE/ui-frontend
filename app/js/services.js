@@ -16,6 +16,7 @@ phonecatServices.factory('Global', ['$rootScope', '$location',
   function($rootScope, $location){
   return {
     path: function(data){
+      console.log('path')
       $location.path(data);
     }
   };

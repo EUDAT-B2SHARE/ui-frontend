@@ -19,22 +19,10 @@ var phonecatApp = angular.module('phonecatApp', [
   })
 });
 
- // $('.img-thumbnail').colorbox({href: function(){
- //    return $(this).attr("src");
- //    }, maxWidth: "75%", fixed: true, scrolling: false
- //  });
 
- //  $(document).bind('cbox_open', function(){
- //    $('body').addClass('stop-scrolling');
- //  });
-
- //  $(document).bind('cbox_closed', function(){
- //    $('body').removeClass('stop-scrolling');
- //  });
-
-
-// define global scope helpers
+// application runner
 phonecatApp.run(function($rootScope, Global) {
+  // global bindings (service)
   $rootScope.gbl = Global;
 
   // string helper

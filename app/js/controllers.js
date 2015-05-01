@@ -64,9 +64,7 @@ phonecatControllers.controller('DefaultCtrl', ['$scope', '$alert', '$location', 
     $location.path('/search/query/' + $scope.searchForm.query);
   };
 
-  $scope.goto = function(name) {
-    $location.path(name);
-  };
+
 
   // content view loaded
   $scope.$on('$viewContentLoaded', function(){
@@ -86,13 +84,25 @@ phonecatControllers.controller('DefaultCtrl', ['$scope', '$alert', '$location', 
       $('body').removeClass('stop-scrolling');
     });
 
-    // overwrite remote href to _blank target (if target not set)
+    // a href hooks
     $('a').each(function(i, a){
       a = $(a);
-      if(!a.attr("href").startsWith("#/") && a.attr("target") == undefined){
-        a.attr("target", "_blank");
+      if(!a.attr("href").startsWith("#/")){
+        if(a.attr("target") == undefined)
+          // overwrite remote href to _blank target (if target not set)
+          a.attr("target", "_blank");
+      } else {
+        // attach inner-link helper
+        a.addClass("inner-link");
+      }
+      // detect expanded navs
+      var navs = $(document).find('nav .navbar-collapse');
+      if(navs.hasClass('in') && a.hasClass('inner-link')){
+        // collapse navs on internal link click
+        navs.removeClass('in');
       }
     });
+
 
   });
 }]);
