@@ -55,6 +55,9 @@
   margin-right: 250px;
 }
 
+.has-error{
+  color: #b94a48;
+}
 
 /* fix to footer bottom */
 
@@ -185,6 +188,21 @@ footer .navbar-default {
   box-shadow: none;
   border: 0;
   padding: 5px;
+}
+
+/* form errors */
+
+
+input.ng-invalid.ng-touched {
+  background-color: #ffbfbf;
+  color: black;
+  border-color: #b94a48;
+  border-color: #b94a48;
+  box-shadow: 0 0px 0px #b94a48 inset, 0 0 4px #b94a48;
+  outline: 0 none;
+}
+
+input.ng-valid.ng-touched {
 }
 
 

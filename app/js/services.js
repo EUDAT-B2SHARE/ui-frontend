@@ -12,14 +12,45 @@ phonecatServices.factory('Phone', ['$resource', function($resource){
 }]);
 
 
-phonecatServices.factory('Global', ['$rootScope', '$location',
-  function($rootScope, $location){
+phonecatServices.factory('Global', ['$rootScope', '$location', '$timeout',
+  function($rootScope, $location, $timeout){
   return {
+    // path redirection
     path: function(data){
-      console.log('path')
       $location.path(data);
+    },
+    // flash notification add
+    flash_add: function(action, clazz, content, type){
+      // get/set search values
+      if(type == undefined) type = "warning";
+      var title_msg = $('#alerts-container').find('.message').find('[ng-bind=title]').html();
+      var title = "";
+      var content_msg = $('#alerts-container').find('.message').find('[ng-bind-html=content]').html();
+      // add flash for empty search
+      if(content_msg != content && title_msg != title){
+        action({content: content, title: title, type: type, animation: 'am-fade-and-slide-top message ' + clazz});
+      }
+    },
+    // flash notification dismiss (click)
+    flash_dismiss: function(type){
+      // click dismiss button
+      $timeout(function() {
+        angular.element('#alerts-container').find('.' + type + ' button').trigger('click');
+      }, 100);
     }
   };
+}]);
+
+
+phonecatServices.factory('User', ['$resource', function($resource){
+  return $resource('http://localhost:5000/user/:action.json', {}, {
+    authenticate: { method: 'POST', params: {action: "authenticate", remember: '@remember'},
+      transformRequest: function(data){
+        delete data['remember'];
+        return angular.toJson(data);
+      }
+      },
+  });
 }]);
 
 

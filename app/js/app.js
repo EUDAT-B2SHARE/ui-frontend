@@ -75,6 +75,9 @@ phonecatApp.config(['$routeProvider', function($routeProvider){
   }).when('/user/login',{
     templateUrl: 'layout/user/login.html',
     controller: 'UserCtrl'
+  }).when('/user/profile', {
+    templateUrl: 'layout/user/profile.html',
+    controller: 'UserCtrl'
   });
 
   // search

@@ -5,11 +5,59 @@
       <div class="">
         <h2>User: Login</h2>
         <p>
-          * stub
+          <form novalidate name="userLoginFormNg" ng-submit="userLogin.submitForm()">
+            <div class="form-horizontal">
+              <span class="help-inline" ng-bind="userLogin.errorBase"></span>
+              <!-- email -->
+              <div class="form-group">
+                <label for="inputEmail" class="col-xs-2 control-label">Email*</label>
+                <div class="col-xs-8">
+                  <input type="email" class="form-control" name="uEmail" id="inputEmail" placeholder="enter email address" ng-model="userLogin.email" required="true" autofocus="true">
+                  <div class="help-inline" ng-show="userLoginFormNg.$submitted || userLoginFormNg.uEmail.$touched">
+                    <span ng-show="userLoginFormNg.uEmail.$error.email" ng-bind="userLogin.errorEmail"></span>
+                  </div>
+                </div>
+              </div>
+              <!-- password -->
+              <div class="form-group">
+                <label for="inputPassword" class="col-xs-2 control-label">Password*</label>
+                <div class="col-xs-8">
+                  <input type="password" class="form-control" name="uPassword" id="inputPassword" placeholder="enter password (hidden)" ng-model="userLogin.password" required="true">
+                  <div class="help-inline" ng-show="userLoginFormNg.$submitted || userLoginFormNg.uPassword.$touched">
+                    <span ng-show="userLoginFormNg.uPassword.$error.password" ng-bind="userLogin.errorPassword"></span>
+                  </div>
+                </div>
+              </div>
+              <!-- remember -->
+              <div class="form-group">
+                <div class="col-xs-offset-2 col-xs-8">
+                  <div class="checkbox">
+                    <label>
+                      <input type="checkbox" name="uRemember" id="inputRemember" ng-model="userLogin.remember">
+                        Remember me
+                      </input>
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <!-- submit -->
+              <div class="form-group">
+                <div class="col-xs-offset-2 col-xs-8">
+                  <button type="submit" class="btn btn-primary">
+                    <i class="fa fa-sign-in"></i> Login
+                  </button>
+                </div>
+              </div>
+
+
+            </div>
+
+          </form>
         </p>
       </div>
     </div>
     <div class="col-sm-5">
+
 
     </div>
   </div>

@@ -43,28 +43,22 @@ var phonecatControllers = angular.module('phonecatControllers', ['angular-loadin
 // });
 
 
-phonecatControllers.controller('DefaultCtrl', ['$scope', '$alert', '$location', function($scope, $alert, $location){
+phonecatControllers.controller('DefaultCtrl', ['$scope', '$alert', '$location', '$timeout', '$rootScope',
+          function($scope, $alert, $location, $timeout, $rootScope){
+
+  // search
   $scope.searchForm = {};
   $scope.searchForm.submitForm = function() {
+    console.log("search form");
     if($scope.searchForm.query == undefined || $scope.searchForm.query == ""){
-      // get/set search values
-      var title_msg = $('#alerts-container').find('.message').find('[ng-bind=title]').html();
-      var title = "";
-      var content_msg = $('#alerts-container').find('.message').find('[ng-bind-html=content]').html();
-      var content = 'Please provide a search value';
-      // add flash for empty search
-      if(content_msg != content && title_msg != title){
-        $alert({content: content, title: title, type: "warning", animation: 'am-fade-and-slide-top message search'});
-      }
+      $rootScope.gbl.flash_add($alert, 'search', 'Please provide a search value', 'warning');
       return;
     } else {
-      $('#alerts-container').find('.search').remove();
+      $rootScope.gbl.flash_dismiss('search');
     }
     // redirect to search page
     $location.path('/search/query/' + $scope.searchForm.query);
   };
-
-
 
   // content view loaded
   $scope.$on('$viewContentLoaded', function(){
@@ -115,18 +109,70 @@ phonecatControllers.controller('HelpCtrl', ['$scope', function($scope){
 
 }]);
 
-phonecatControllers.controller('UserCtrl', ['$scope', function($scope){
+phonecatControllers.controller('UserCtrl', ['$scope', 'User', '$alert', '$timeout', '$rootScope', '$window', '$location',
+    function($scope, User, $alert, $timeout, $rootScope, $window, $location){
+
+  // redirect logged in users to profile page
+  // if($window.sessionStorage.user){
+  //   $location.path('/user/profile');
+  // }
+
+
+  // login form
+  $scope.userLogin = {};
+  $scope.userLogin.submitForm = function() {
+    var f = $scope.userLogin;
+    if(f.email == undefined || f.password == undefined){
+      f.errorBase = "Some fields are empty";
+      angular.element("[name=userLoginFormNg]").addClass("has-error");
+    } else {
+      f.errorBase = "";
+      angular.element("[name=userLoginFormNg]").removeClass("has-error");
+    }
+    // call user authenticate
+    $scope.user = User.authenticate({email: f.email, password: f.password, remember: f.remember}, function(data){
+      $rootScope.gbl.flash_dismiss('socket');
+      // TODO: handle invalid requests here!
+      $window.sessionStorage.user = data.user;
+    }, function(err){
+      $rootScope.gbl.flash_add($alert, 'socket', 'Connection with server lost', 'danger');
+      delete $window.sessionStorage.user;
+    });
+
+
+
+    // console.log($scope.user);
+
+
+
+
+
+    // if(f.email == undefined || f.password == undefined){
+    //   return;
+    // }
+
+    // if($scope.searchForm.query == undefined || $scope.searchForm.query == ""){
+    //   $rootScope.gbl.flash_add($alert, 'search', 'Please provide a search value', 'warning');
+    //   return;
+    // } else {
+    //   $rootScope.gbl.flash_dismiss('search');
+    // }
+    // redirect to search page
+    // $location.path('/search/query/' + $scope.searchForm.query);
+  };
+
 
 }]);
 
 phonecatControllers.controller('SearchCtrl', ['$scope', '$routeParams', '$location',
-  function($scope, $routeParams, $location){
+    function($scope, $routeParams, $location){
   // map parameter on scope
   $scope.query = $routeParams.query;
 
 }]);
 
-phonecatControllers.controller('DepositCtrl', ['$scope', '$routeParams', function($scope, $routeParams){
+phonecatControllers.controller('DepositCtrl', ['$scope', '$routeParams',
+    function($scope, $routeParams){
   $scope.uuid = $routeParams.uuid;
 }]);
 
