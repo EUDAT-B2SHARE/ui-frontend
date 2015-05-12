@@ -146,6 +146,7 @@ phonecatControllers.controller('UserCtrl', ['$scope', 'User', '$alert', '$timeou
       // TODO: handle invalid requests here!
       delete $window.sessionStorage.user;
       $window.sessionStorage.user = JSON.stringify(data.user);
+      angular.element("[name=userLoginFormNg]").removeClass("has-error");
       // $rootScope.gbl.flash_add($alert, 'user', 'Logged in as: `' + data.user.name + '`', 'success');
       $location.path('/user/profile');
     }, function(data){

@@ -92,27 +92,47 @@
 
             <!-- menu -->
             <ul class="nav navbar-nav text-uppercase">
-              <li class=""><a href="#/about/b2share">
-                <i class="fa fa-cubes"></i>What is B2SHARE</a></li>
-              <li class=""><a href="#/help/user-guide">
-                <i class="fa fa-cubes"></i>User Guide</a></li>
-              <li class=""><a href="#/help/faq">
-                <i class="fa fa-cubes"></i>FAQs</a></li>
-              <li class=""><a href="#/about/communities">
-                <i class="fa fa-cubes"></i>Communities</a></li>
-              <li class=""><a href="http://www.eudat.eu/services/b2share" target="_blank">
-                Contact <i class="fa fa-external-link"></i></a></li>
+              <!-- basic navigation -->
+              <li class="{{gbl.routeActive('/about/b2share')}}">
+                <a href="#/about/b2share">
+                  <i class="fa fa-cubes"></i>What is B2SHARE
+                </a>
+              </li>
+              <li class="{{gbl.routeActive('/help/user-guide')}}">
+                <a href="#/help/user-guide">
+                  <i class="fa fa-cubes"></i>User Guide
+                </a>
+              </li>
+              <li class="{{gbl.routeActive('/help/faq')}}">
+                <a href="#/help/faq">
+                  <i class="fa fa-cubes"></i>FAQs
+                </a>
+              </li>
+              <li class="{{gbl.routeActive('/about/communities')}}">
+                <a href="#/about/communities">
+                  <i class="fa fa-cubes"></i>Communities
+                </a>
+              </li>
+              <li class="">
+                <a href="http://www.eudat.eu/services/b2share" target="_blank"> Contact <i class="fa fa-external-link"></i>
+                </a>
+              </li>
 
-              <!-- user dropdown -->
-              <li class="dropdown" ng-show="user != undefined">
+              <!-- user dropdown show when user has session -->
+              <li class="dropdown " ng-show="user != undefined">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-user"></i><span class="caret"></span></a>
                 <ul class="dropdown-menu" role="menu">
-                  <li><a href="#/user/profile">Profile</a></li>
+                  <li><a href="#/user/profile">
+                    <i class="fa fa-info"></i> Profile
+                  </a></li>
                   <li class="divider"></li>
-                  <li><a href="#/user/logout">Logout</a></li>
+                  <li><a href="#/user/logout">
+                    <i class="fa fa-sign-out"></i> Logout
+                  </a></li>
                 </ul>
               </li>
-              <li class="" ng-show="user == undefined">
+              <!-- show when user object is empty -->
+              <li class="{{gbl.routeActive('/user/login')}}" ng-show="user == undefined">
                 <a href="#/user/login"><i class="fa fa-sign-in"></i></a>
               </li>
             </ul>

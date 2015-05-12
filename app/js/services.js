@@ -12,6 +12,12 @@ phonecatServices.factory('Global', ['$rootScope', '$location', '$timeout',
     path: function(data){
       $location.path(data);
     },
+    // return active to be injected into <div class="..."> upon active route
+    routeActive: function(route){
+      if($location.path() == route){
+        return "active";
+      }
+    },
     // flash notification add
     flash_add: function(action, clazz, content, type){
       // get/set search values

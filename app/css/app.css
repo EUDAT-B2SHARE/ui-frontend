@@ -142,7 +142,7 @@ footer .navbar-default {
 }
 
 
-/* collapse to max of 940px */
+/* collapse to max of 1000px */
 @media (max-width: 1000px) {
   .navbar-header {
     float: none;
@@ -180,7 +180,6 @@ footer .navbar-default {
     overflow: hidden!important;
   }
 
-
 }
 
 .panel-hidden{
@@ -193,8 +192,6 @@ footer .navbar-default {
 }
 
 /* form errors */
-
-
 input.ng-invalid.ng-touched {
   background-color: #ffbfbf;
   color: black;
@@ -205,6 +202,19 @@ input.ng-invalid.ng-touched {
 }
 
 input.ng-valid.ng-touched {
+}
+
+
+.list-group-item.active a {
+  color: white;
+}
+.list-group-item.active,
+.list-group-item.active:hover,
+.list-group-item.active:focus {
+  z-index: 2;
+  color: #fff;
+  background-color: #E5601E;
+  border-color: #E5601E;
 }
 
 
