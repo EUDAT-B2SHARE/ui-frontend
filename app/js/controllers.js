@@ -43,13 +43,17 @@ var phonecatControllers = angular.module('phonecatControllers', ['angular-loadin
 // });
 
 
-phonecatControllers.controller('DefaultCtrl', ['$scope', '$alert', '$location', '$timeout', '$rootScope',
-          function($scope, $alert, $location, $timeout, $rootScope){
+phonecatControllers.controller('DefaultCtrl', ['$scope', '$alert', '$location', '$timeout', '$rootScope', '$window',
+          function($scope, $alert, $location, $timeout, $rootScope, $window){
+
+  console.log("DefaultCtrl");
+  if($window.sessionStorage.user != undefined){
+    $rootScope.user = JSON.parse($window.sessionStorage.user);
+  }
 
   // search
   $scope.searchForm = {};
   $scope.searchForm.submitForm = function() {
-    console.log("search form");
     if($scope.searchForm.query == undefined || $scope.searchForm.query == ""){
       $rootScope.gbl.flash_add($alert, 'search', 'Please provide a search value', 'warning');
       return;
@@ -112,30 +116,44 @@ phonecatControllers.controller('HelpCtrl', ['$scope', function($scope){
 phonecatControllers.controller('UserCtrl', ['$scope', 'User', '$alert', '$timeout', '$rootScope', '$window', '$location',
     function($scope, User, $alert, $timeout, $rootScope, $window, $location){
 
-  // redirect logged in users to profile page
-  // if($window.sessionStorage.user){
-  //   $location.path('/user/profile');
-  // }
+  console.log("UserCtrl");
+  if($window.sessionStorage.user != undefined){
+    $rootScope.user = JSON.parse($window.sessionStorage.user);
+  }
 
+  // logout user
+  if ($location.path() == "/user/logout"){
+    delete $window.sessionStorage.user;
+    $rootScope.user = undefined;
+    $rootScope.gbl.flash_add($alert, 'user', 'You\'ve logged out', 'success');
+    $location.path("/user/login");
+  }
 
   // login form
   $scope.userLogin = {};
   $scope.userLogin.submitForm = function() {
     var f = $scope.userLogin;
-    if(f.email == undefined || f.password == undefined){
-      f.errorBase = "Some fields are empty";
-      angular.element("[name=userLoginFormNg]").addClass("has-error");
-    } else {
-      f.errorBase = "";
-      angular.element("[name=userLoginFormNg]").removeClass("has-error");
-    }
+    // if(f.email == undefined || f.password == undefined){
+    //   angular.element("[name=userLoginFormNg]").addClass("has-error");
+    // } else {
+    //   f.errorBase = "";
+    //   angular.element("[name=userLoginFormNg]").removeClass("has-error");
+    // }
+
     // call user authenticate
-    $scope.user = User.authenticate({email: f.email, password: f.password, remember: f.remember}, function(data){
+    User.authenticate({email: f.email, password: f.password, remember: f.remember}, function(data){
       $rootScope.gbl.flash_dismiss('socket');
       // TODO: handle invalid requests here!
-      $window.sessionStorage.user = data.user;
-    }, function(err){
-      $rootScope.gbl.flash_add($alert, 'socket', 'Connection with server lost', 'danger');
+      delete $window.sessionStorage.user;
+      $window.sessionStorage.user = JSON.stringify(data.user);
+      // $rootScope.gbl.flash_add($alert, 'user', 'Logged in as: `' + data.user.name + '`', 'success');
+      $location.path('/user/profile');
+    }, function(data){
+      // jdata = JSON.parse(data);
+      f.errorBase = data.data.error.base;
+      angular.element("[name=userLoginFormNg]").addClass("has-error");
+      // if(data.)
+      // $rootScope.gbl.flash_add($alert, 'socket', 'Connection with server lost', 'danger');
       delete $window.sessionStorage.user;
     });
 

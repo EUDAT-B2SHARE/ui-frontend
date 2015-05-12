@@ -143,7 +143,7 @@ footer .navbar-default {
 
 
 /* collapse to max of 940px */
-@media (max-width: 940px) {
+@media (max-width: 1000px) {
   .navbar-header {
     float: none;
   }
@@ -179,6 +179,8 @@ footer .navbar-default {
   .collapsing {
     overflow: hidden!important;
   }
+
+
 }
 
 .panel-hidden{

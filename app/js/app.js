@@ -21,7 +21,7 @@ var phonecatApp = angular.module('phonecatApp', [
 
 
 // application runner
-phonecatApp.run(function($rootScope, Global) {
+phonecatApp.run(function($rootScope, Global, $window) {
   // global bindings (service)
   $rootScope.gbl = Global;
 
@@ -77,6 +77,9 @@ phonecatApp.config(['$routeProvider', function($routeProvider){
     controller: 'UserCtrl'
   }).when('/user/profile', {
     templateUrl: 'layout/user/profile.html',
+    controller: 'UserCtrl'
+  }).when('/user/logout', {
+    templateUrl: 'layout/user/logout.html',
     controller: 'UserCtrl'
   });
 

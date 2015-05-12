@@ -49,7 +49,7 @@
     <div id="alerts-container"></div>
     <header>
       <div class="row-fluid bg-color-orange text-color-white">
-        <span class="col-xs-offset-1 about-header text-center-responsive text-color-white"><a href="http://eudat.eu" target="_blank">GO TO EUDAT WEBSITE</a></div>
+        <span class="col-xs-offset-1 about-header text-center-responsive text-color-white"><a href="http://eudat.eu" target="_blank">GO TO EUDAT WEBSITE</a>
       </div>
 
       <!-- Navigation -->
@@ -102,7 +102,21 @@
                 <i class="fa fa-cubes"></i>Communities</a></li>
               <li class=""><a href="http://www.eudat.eu/services/b2share" target="_blank">
                 Contact <i class="fa fa-external-link"></i></a></li>
+
+              <!-- user dropdown -->
+              <li class="dropdown" ng-show="user != undefined">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-user"></i><span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                  <li><a href="#/user/profile">Profile</a></li>
+                  <li class="divider"></li>
+                  <li><a href="#/user/logout">Logout</a></li>
+                </ul>
+              </li>
+              <li class="" ng-show="user == undefined">
+                <a href="#/user/login"><i class="fa fa-sign-in"></i></a>
+              </li>
             </ul>
+
           </div>
 
         </div>
