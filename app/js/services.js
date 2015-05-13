@@ -18,6 +18,11 @@ phonecatServices.factory('Global', ['$rootScope', '$location', '$timeout',
         return "active";
       }
     },
+    pageActive: function(page){
+      if($location.path().endsWith(page)){
+        return "active";
+      }
+    },
     // flash notification add
     flash_add: function(action, clazz, content, type){
       // get/set search values

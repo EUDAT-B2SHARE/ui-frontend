@@ -179,11 +179,18 @@ phonecatControllers.controller('SearchCtrl', ['$scope', '$routeParams', '$locati
 }]);
 
 
-phonecatControllers.controller('DepositListCtrl', ['$scope', '$routeParams', 'Deposit', '$rootScope', '$alert', '$window',
-    function($scope, $routeParams, Deposit, $rootScope, $alert, $window){
+phonecatControllers.controller('DepositListCtrl', ['$scope', '$routeParams', 'Deposit', '$rootScope', '$alert', '$location',
+    function($scope, $routeParams, Deposit, $rootScope, $alert, $location){
+
+  // force page offset
+  if($routeParams.page == undefined){
+    $location.path('/deposits/page/1');
+    return;
+  }
+  $scope.currentPage = $routeParams.page;
 
   // latest 20 deposits
-  Deposit.deposits({page: 1, page_size: 20, order_by: 'created_at', order: 'desc'}, function(data){
+  Deposit.deposits({page: $scope.currentPage, page_size: 20, order_by: 'created_at', order: 'desc'}, function(data){
     $scope.deposits = data.deposits;
   }, function(data){
     // error happend
@@ -203,8 +210,7 @@ phonecatControllers.controller('DepositCtrl', ['$scope', '$routeParams', 'Deposi
   }, function(data){
     // error handling
     $rootScope.gbl.flash_add($alert, 'deposit', 'Could not load deposit: `'+$routeParams.uuid+'`', 'warning');
-    cfpLoadingBar.complete();
-    $window.history.back();
+    // $window.history.back();
   });
 
 }]);

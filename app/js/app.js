@@ -25,11 +25,17 @@ phonecatApp.run(function($rootScope, Global, $window) {
   // global bindings (service)
   $rootScope.gbl = Global;
 
-  // string helper
+  // string helper startsWith
   if (typeof String.prototype.startsWith != 'function') {
     String.prototype.startsWith = function (str){
       return this.slice(0, str.length) == str;
     };
+  }
+  // string helper endsWith
+  if (typeof String.prototype.endsWith != 'function') {
+    String.prototype.endsWith = function(str){
+      return this.slice(-str.length) == str;
+    }
   }
 
 });
@@ -90,7 +96,10 @@ phonecatApp.config(['$routeProvider', function($routeProvider){
   });
 
   // deposit
-  $routeProvider.when('/deposits',{
+  $routeProvider.when('/deposits/',{
+    templateUrl: 'layout/deposit/index.html',
+    controller: 'DepositListCtrl'
+  }).when('/deposits/page/:page',{
     templateUrl: 'layout/deposit/index.html',
     controller: 'DepositListCtrl'
   }).when('/deposit/:uuid',{
