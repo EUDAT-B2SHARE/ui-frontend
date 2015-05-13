@@ -125,6 +125,7 @@ phonecatControllers.controller('UserCtrl', ['$scope', 'User', '$alert', '$timeou
   if ($location.path() == "/user/logout"){
     delete $window.sessionStorage.user;
     $rootScope.user = undefined;
+    $rootScope.gbl.flash_dismiss('user');
     $rootScope.gbl.flash_add($alert, 'user', 'You\'ve logged out', 'success');
     $location.path("/user/login");
   }
@@ -142,20 +143,22 @@ phonecatControllers.controller('UserCtrl', ['$scope', 'User', '$alert', '$timeou
 
     // call user authenticate
     User.authenticate({email: f.email, password: f.password, remember: f.remember}, function(data){
+      delete $window.sessionStorage.user;
       $rootScope.gbl.flash_dismiss('socket');
       // TODO: handle invalid requests here!
-      delete $window.sessionStorage.user;
+
       $window.sessionStorage.user = JSON.stringify(data.user);
       angular.element("[name=userLoginFormNg]").removeClass("has-error");
-      // $rootScope.gbl.flash_add($alert, 'user', 'Logged in as: `' + data.user.name + '`', 'success');
+      $rootScope.gbl.flash_add($alert, 'user', 'You\'ve logged in as: `'+data.user.name+'`', 'success');
       $location.path('/user/profile');
     }, function(data){
-      // jdata = JSON.parse(data);
+      delete $window.sessionStorage.user;
       f.errorBase = data.data.error.base;
       angular.element("[name=userLoginFormNg]").addClass("has-error");
       // if(data.)
-      // $rootScope.gbl.flash_add($alert, 'socket', 'Connection with server lost', 'danger');
-      delete $window.sessionStorage.user;
+      if(String(data.status).startsWith("5")){
+        $rootScope.gbl.flash_add($alert, 'socket', 'An error has occured', 'danger');
+      }
     });
 
 

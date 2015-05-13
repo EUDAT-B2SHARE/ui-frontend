@@ -22,12 +22,12 @@ phonecatServices.factory('Global', ['$rootScope', '$location', '$timeout',
     flash_add: function(action, clazz, content, type){
       // get/set search values
       if(type == undefined) type = "warning";
-      var title_msg = $('#alerts-container').find('.message').find('[ng-bind=title]').html();
-      var title = "";
-      var content_msg = $('#alerts-container').find('.message').find('[ng-bind-html=content]').html();
+      // var title_msg = $('#alerts-container').find('.message').find('[ng-bind=title]').html();
+      // var title = "";
+      var content_msg = $('#alerts-container').find('.message.' + clazz).find('[ng-bind-html=content]').html();
       // add flash for empty search
-      if(content_msg != content && title_msg != title){
-        action({content: content, title: title, type: type, animation: 'am-fade-and-slide-top message ' + clazz});
+      if(content_msg != content){
+        action({content: content, title: "", type: type, animation: 'am-fade-and-slide-top message ' + clazz, duration: 4});
       }
     },
     // flash notification dismiss (click)
