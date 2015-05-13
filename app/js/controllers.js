@@ -43,10 +43,9 @@ var phonecatControllers = angular.module('phonecatControllers', ['angular-loadin
 // });
 
 
-phonecatControllers.controller('DefaultCtrl', ['$scope', '$alert', '$location', '$timeout', '$rootScope', '$window',
-          function($scope, $alert, $location, $timeout, $rootScope, $window){
+phonecatControllers.controller('DefaultCtrl', ['$scope', '$alert', '$location', '$timeout', '$rootScope', '$window', 'Deposit',
+          function($scope, $alert, $location, $timeout, $rootScope, $window, Deposit){
 
-  console.log("DefaultCtrl");
   if($window.sessionStorage.user != undefined){
     $rootScope.user = JSON.parse($window.sessionStorage.user);
   }
@@ -101,6 +100,13 @@ phonecatControllers.controller('DefaultCtrl', ['$scope', '$alert', '$location', 
       }
     });
 
+    // latest deposits
+    Deposit.deposits({page: 1, page_size: 10, order_by: 'created_at', order: 'desc'}, function(data){
+      $scope.deposits = data.deposits;
+    }, function(data){
+      // error happend
+      $rootScope.gbl.flash_add($alert, 'deposits', 'Could not load latest deposits', 'warning');
+    });
 
   });
 }]);
@@ -116,7 +122,6 @@ phonecatControllers.controller('HelpCtrl', ['$scope', function($scope){
 phonecatControllers.controller('UserCtrl', ['$scope', 'User', '$alert', '$timeout', '$rootScope', '$window', '$location',
     function($scope, User, $alert, $timeout, $rootScope, $window, $location){
 
-  console.log("UserCtrl");
   if($window.sessionStorage.user != undefined){
     $rootScope.user = JSON.parse($window.sessionStorage.user);
   }
@@ -155,32 +160,12 @@ phonecatControllers.controller('UserCtrl', ['$scope', 'User', '$alert', '$timeou
       delete $window.sessionStorage.user;
       f.errorBase = data.data.error.base;
       angular.element("[name=userLoginFormNg]").addClass("has-error");
-      // if(data.)
       if(String(data.status).startsWith("5")){
-        $rootScope.gbl.flash_add($alert, 'socket', 'An error has occured', 'danger');
+        $rootScope.gbl.flash_add($alert, 'user', 'An error has occured', 'danger');
       }
     });
 
 
-
-    // console.log($scope.user);
-
-
-
-
-
-    // if(f.email == undefined || f.password == undefined){
-    //   return;
-    // }
-
-    // if($scope.searchForm.query == undefined || $scope.searchForm.query == ""){
-    //   $rootScope.gbl.flash_add($alert, 'search', 'Please provide a search value', 'warning');
-    //   return;
-    // } else {
-    //   $rootScope.gbl.flash_dismiss('search');
-    // }
-    // redirect to search page
-    // $location.path('/search/query/' + $scope.searchForm.query);
   };
 
 
@@ -193,9 +178,35 @@ phonecatControllers.controller('SearchCtrl', ['$scope', '$routeParams', '$locati
 
 }]);
 
-phonecatControllers.controller('DepositCtrl', ['$scope', '$routeParams',
-    function($scope, $routeParams){
-  $scope.uuid = $routeParams.uuid;
+
+phonecatControllers.controller('DepositListCtrl', ['$scope', '$routeParams', 'Deposit', '$rootScope', '$alert', '$window',
+    function($scope, $routeParams, Deposit, $rootScope, $alert, $window){
+
+  // latest 20 deposits
+  Deposit.deposits({page: 1, page_size: 20, order_by: 'created_at', order: 'desc'}, function(data){
+    $scope.deposits = data.deposits;
+  }, function(data){
+    // error happend
+    $rootScope.gbl.flash_add($alert, 'deposits', 'Could not load latest deposits', 'warning');
+  });
+
+}]);
+
+
+
+phonecatControllers.controller('DepositCtrl', ['$scope', '$routeParams', 'Deposit', '$rootScope', '$alert', '$window',
+    function($scope, $routeParams, Deposit, $rootScope, $alert, $window){
+
+  // load requested deposit
+  Deposit.deposit({uuid: $routeParams.uuid}, function(data){
+    $scope.deposit = data.deposit;
+  }, function(data){
+    // error handling
+    $rootScope.gbl.flash_add($alert, 'deposit', 'Could not load deposit: `'+$routeParams.uuid+'`', 'warning');
+    cfpLoadingBar.complete();
+    $window.history.back();
+  });
+
 }]);
 
 

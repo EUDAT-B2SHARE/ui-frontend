@@ -90,7 +90,10 @@ phonecatApp.config(['$routeProvider', function($routeProvider){
   });
 
   // deposit
-  $routeProvider.when('/deposit/:uuid',{
+  $routeProvider.when('/deposits',{
+    templateUrl: 'layout/deposit/index.html',
+    controller: 'DepositListCtrl'
+  }).when('/deposit/:uuid',{
     templateUrl: 'layout/deposit/deposit.html',
     controller: 'DepositCtrl'
   });

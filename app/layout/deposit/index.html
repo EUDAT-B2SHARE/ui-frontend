@@ -1,0 +1,30 @@
+
+<div id="" class="container-fluid">
+  <div class="row">
+    <div class="col-xs-offset-1 col-sm-10">
+
+      <div class="page-header">
+        <h2>Deposits</h2>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="deposits col-xs-offset-1 col-sm-10">
+
+      <div class="row">
+        <!-- iterate deposits -->
+        <div class="deposit col-sm-12" ng-repeat="deposit in deposits | compact">
+          <!-- single deposit -->
+          <a href="#/deposit/{{deposit.uuid}}">
+            <p class="date" ng-bind="deposit.created_at | date:'yyyy-MM-dd'"></p>
+            <p class="name" ng-bind="deposit.title"></p>
+            <p class="description" ng-bind="deposit.description | limitTo:200 "></p>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

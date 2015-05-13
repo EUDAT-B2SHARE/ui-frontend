@@ -52,6 +52,13 @@ phonecatServices.factory('User', ['$resource', function($resource){
   });
 }]);
 
+phonecatServices.factory('Deposit', ['$resource', function($resource){
+  return $resource('http://localhost:5000/deposit/:action.json', {}, {
+    deposits: { method: 'GET', params: {action: 'index', order: '@order', order_by: '@order_by', page: '@page', page_size: '@page_size'}},
+    deposit: { method: 'GET', params: {action: 'deposit', uuid: '@uuid'} },
+  });
+}]);
+
 
 
   // return {

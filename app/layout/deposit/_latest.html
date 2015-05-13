@@ -4,42 +4,18 @@
   <div class="deposits col-sm-12">
 
     <div class="row">
-      <div class="deposit col-sm-6">
-        <a href="#/deposit/c37a61dc-5770-4fbc-939c-2a84e0c9a342">
-          <p class="date">2015-03-15</p>
-          <p class="name">Flask documentation</p>
-          <p class="description">Flask manuel</p>
-        </a>
-      </div>
-      <div class="deposit col-sm-6">
-        <a href="#/deposit/c37a61dc-5770-4fbc-939c-2a84e0c9a342">
-          <p class="date">2015-03-11</p>
-          <p class="name">Indian Pine Hyperspectral Image</p>
-          <p class="description">200 bands Hyuperspectral image matlab format</p>
-        </a>
-      </div>
-      <div class="deposit col-sm-6">
-        <a href="#/deposit/c37a61dc-5770-4fbc-939c-2a84e0c9a342">
-          <p class="date">2015-03-10</p>
-          <p class="name">Indian Pine Hyperspectral Image</p>
-          <p class="description">200 bands Hyuperspectral image matlab format</p>
-        </a>
-      </div>
-      <div class="deposit col-sm-6">
-        <a href="#/deposit/c37a61dc-5770-4fbc-939c-2a84e0c9a342">
-          <p class="date">2015-03-09</p>
-          <p class="name">Indian Pine Hyperspectral Image</p>
-          <p class="description">200 bands Hyuperspectral image matlab format</p>
-        </a>
-      </div>
-      <div class="deposit col-sm-6">
-        <a href="#/deposit/c37a61dc-5770-4fbc-939c-2a84e0c9a342">
-          <p class="date">2015-03-08</p>
-          <p class="name">Flask documentation</p>
-          <p class="description">Flask manuel</p>
+      <!-- iterate deposits -->
+      <div class="deposit col-sm-6" ng-repeat="deposit in deposits | compact">
+        <!-- single deposit -->
+        <a href="#/deposit/{{deposit.uuid}}">
+          <p class="date" ng-bind="deposit.created_at | date:'yyyy-MM-dd'"></p>
+          <p class="name" ng-bind="deposit.title"></p>
+          <p class="description" ng-bind="deposit.description | limitTo:200 "></p>
         </a>
       </div>
     </div>
+
+    <p><a href="#/deposits">More Deposits</a></p>
 
   </div>
 </div>
