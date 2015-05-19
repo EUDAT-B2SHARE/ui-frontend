@@ -147,12 +147,12 @@ phonecatControllers.controller('UserCtrl', ['$scope', 'User', '$alert', '$timeou
   }
 
   // logout user
-  if ($location.path() == "/user/logout"){
+  if ($location.path() == "/users/logout"){
     delete $window.sessionStorage.user;
     $rootScope.user = undefined;
     $rootScope.gbl.flash_dismiss('user');
     $rootScope.gbl.flash_add($alert, 'user', 'You\'ve logged out', 'success');
-    $location.path("/user/login");
+    $location.path("/users/login");
   }
 
   // login form
@@ -160,15 +160,17 @@ phonecatControllers.controller('UserCtrl', ['$scope', 'User', '$alert', '$timeou
   $scope.userLogin.submitForm = function() {
     var f = $scope.userLogin;
     // call user authenticate
-    delete $window.sessionStorage.user;
+
     User.authenticate({email: f.email, password: f.password, remember: f.remember}, function(data){
+      delete $window.sessionStorage.user;
       $rootScope.gbl.flash_dismiss('user');
       // TODO: handle invalid requests here!
       $window.sessionStorage.user = JSON.stringify(data.user);
       angular.element("[name=userLoginFormNg]").removeClass("has-error");
       $rootScope.gbl.flash_add($alert, 'user', 'You\'ve logged in as: `'+data.user.name+'`', 'success');
-      $location.path('/user/profile');
+      $location.path('/users/profile');
     }, function(data){
+      delete $window.sessionStorage.user;
       f.errorBase = data.data.error.base;
       angular.element("[name=userLoginFormNg]").addClass("has-error");
       if(String(data.status).startsWith("5")){

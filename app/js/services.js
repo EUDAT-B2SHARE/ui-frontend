@@ -44,23 +44,6 @@ phonecatServices.factory('Global', ['$rootScope', '$location', '$timeout', '$rou
         angular.element('#alerts-container').find('.' + type + ' button').trigger('click');
       }, 100);
     },
-    // breadcrumbs: function(){
-    //   var arr = $location.path().split('/').filter(function(a){
-    //     return a != "";
-    //   }).map(function(a){
-    //     return {'name': a};
-    //   });
-    //   // if(arr.length == 0)
-    //   //   arr.push("home");
-    //   return arr;
-    // },
-    // breadcrumbActive: function(last){
-    //   console.dir(last);
-    //   if(last)
-    //     return "active";
-    //   else
-    //     return "";
-    // }
   };
 }]);
 
