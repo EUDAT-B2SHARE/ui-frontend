@@ -37,6 +37,13 @@ phonecatApp.run(function($rootScope, Global, $window) {
       return this.slice(-str.length) == str;
     }
   }
+  // string helper isUuid
+  if (typeof String.prototype.isUuid != 'function'){
+    String.prototype.isUuid = function(str){
+      return typeof str == "string" && str.matches("[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}");
+    }
+  }
+
 
 });
 
@@ -99,10 +106,10 @@ phonecatApp.config(['$routeProvider', function($routeProvider){
   $routeProvider.when('/deposits/',{
     templateUrl: 'layout/deposit/index.html',
     controller: 'DepositListCtrl'
-  }).when('/deposits/page/:page',{
+  }).when('/deposits/?page=',{
     templateUrl: 'layout/deposit/index.html',
     controller: 'DepositListCtrl'
-  }).when('/deposit/:uuid',{
+  }).when('/deposits/:uuid',{
     templateUrl: 'layout/deposit/deposit.html',
     controller: 'DepositCtrl'
   });

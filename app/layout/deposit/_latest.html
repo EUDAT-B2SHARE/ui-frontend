@@ -7,7 +7,7 @@
       <!-- iterate deposits -->
       <div class="deposit col-sm-6" ng-repeat="deposit in deposits | compact">
         <!-- single deposit -->
-        <a href="#/deposit/{{deposit.uuid}}">
+        <a href="#/deposits/{{deposit.uuid}}">
           <p class="date" ng-bind="deposit.created_at | date:'yyyy-MM-dd'"></p>
           <p class="name" ng-bind="deposit.title"></p>
           <p class="description" ng-bind="deposit.description | limitTo:200 "></p>

@@ -1,0 +1,9 @@
+<ol class="breadcrumb">
+  <li class=""><a href="#/">B2SHARE</a></li>
+  <li ng-repeat="breadcrumb in breadcrumbs" class="">
+    <!-- active bc -->
+    <a ng-show="breadcrumb.active" href="{{breadcrumb.href}}" ng-bind="breadcrumb.name | uppercase"></a>
+    <!-- inactive bc (current page) -->
+    <span ng-show="!breadcrumb.active" ng-bind="breadcrumb.name | uppercase"></span>
+  </li>
+</ol>

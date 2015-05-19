@@ -5,8 +5,8 @@
 var phonecatServices = angular.module('phonecatServices', ['ngResource']);
 
 
-phonecatServices.factory('Global', ['$rootScope', '$location', '$timeout',
-  function($rootScope, $location, $timeout){
+phonecatServices.factory('Global', ['$rootScope', '$location', '$timeout', '$routeParams',
+  function($rootScope, $location, $timeout, $routeParams){
   return {
     // path redirection
     path: function(data){
@@ -19,7 +19,7 @@ phonecatServices.factory('Global', ['$rootScope', '$location', '$timeout',
       }
     },
     pageActive: function(page){
-      if($location.path().endsWith(page)){
+      if($routeParams.page == page){
         return "active";
       }
     },
@@ -41,7 +41,24 @@ phonecatServices.factory('Global', ['$rootScope', '$location', '$timeout',
       $timeout(function() {
         angular.element('#alerts-container').find('.' + type + ' button').trigger('click');
       }, 100);
-    }
+    },
+    // breadcrumbs: function(){
+    //   var arr = $location.path().split('/').filter(function(a){
+    //     return a != "";
+    //   }).map(function(a){
+    //     return {'name': a};
+    //   });
+    //   // if(arr.length == 0)
+    //   //   arr.push("home");
+    //   return arr;
+    // },
+    // breadcrumbActive: function(last){
+    //   console.dir(last);
+    //   if(last)
+    //     return "active";
+    //   else
+    //     return "";
+    // }
   };
 }]);
 

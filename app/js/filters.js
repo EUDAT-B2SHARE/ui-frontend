@@ -15,3 +15,16 @@ angular.module('phonecatFilters', []).filter('compact', function(){
   }
 });
 
+// angular.module('phonecatFilters', []).filter('parameters', function(){
+//   return function(bc) {
+//     return $.map(bc, function(val, i){
+//       if(val.href.startsWith("#/deposits")){
+//         if(val.href.includes("page"))
+//           return a;
+//       }
+//       return val;
+//     });
+//   }
+// });
+
+

@@ -17,7 +17,7 @@
         <!-- iterate deposits -->
         <div class="deposit col-sm-12" ng-repeat="deposit in deposits | compact">
           <!-- single deposit -->
-          <a href="#/deposit/{{deposit.uuid}}">
+          <a href="#/deposits/{{deposit.uuid}}">
             <p class="date" ng-bind="deposit.created_at | date:'yyyy-MM-dd'"></p>
             <p class="name" ng-bind="deposit.title"></p>
             <p class="description" ng-bind="deposit.description | limitTo:200 "></p>
@@ -28,12 +28,12 @@
         <div class="pagination col-sm-12" align="center">
           <div class="btn-group" role="group" aria-label="...">
 
-            <a href="#/deposits/page/{{currentPage -1}}" class="btn btn-default" ng-if="currentPage > 1">Prev.</a>
-            <a href="#/deposits/page/1" class="btn btn-default {{gbl.pageActive('1')}}">1</a>
-            <a href="#/deposits/page/2" class="btn btn-default {{gbl.pageActive('2')}}">2</a>
-            <a href="#/deposits/page/3" class="btn btn-default {{gbl.pageActive('3')}}">3</a>
-            <a href="#/deposits/page/4" class="btn btn-default {{gbl.pageActive('4')}}">4</a>
-            <a href="#/deposits/page/{{1*currentPage +1}}" class="btn btn-primary">Next</a>
+            <a href="#/deposits?page={{currentPage -1}}" class="btn btn-default" ng-if="currentPage > 1">Prev.</a>
+            <a href="#/deposits?page=1" class="btn btn-default {{gbl.pageActive('1')}}">1</a>
+            <a href="#/deposits?page=2" class="btn btn-default {{gbl.pageActive('2')}}">2</a>
+            <a href="#/deposits?page=3" class="btn btn-default {{gbl.pageActive('3')}}">3</a>
+            <a href="#/deposits?page=4" class="btn btn-default {{gbl.pageActive('4')}}">4</a>
+            <a href="#/deposits?page={{1*currentPage +1}}" class="btn btn-primary">Next</a>
 
           </div>
         </div>

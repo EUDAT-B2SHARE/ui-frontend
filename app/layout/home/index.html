@@ -19,8 +19,10 @@
       </div>
     </div>
     <div class="col-sm-5">
-      <!-- user registration -->
-      <div ng-include src="'layout/user/_register.html'"></div>
+      <!-- user registration (not logged in) -->
+      <div ng-include ng-show="user == undefined" src="'layout/user/_register.html'"></div>
+      <!-- user logged in -->
+      <div ng-include ng-show="user != undefined" src="'layout/user/_user.html'"></div>
       <!-- search box -->
       <div ng-include src="'layout/deposit/_upload.html'"></div>
       <!-- latest deposits -->

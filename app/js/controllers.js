@@ -100,6 +100,18 @@ phonecatControllers.controller('DefaultCtrl', ['$scope', '$alert', '$location', 
       }
     });
 
+    // breadcrumbs
+    var uri = $location.path();
+    var end = uri.indexOf('?');
+    if(end == -1)
+      end = uri.length;
+    var as = uri.substring(1, end).split('/').filter(function(a){ return a != ""; });
+    $scope.breadcrumbs = as.map(function(a, i){
+      var href = "#/" + as.slice(0, i+1).join('/');
+      var active = as.length -1 != i;
+      return {'name': a, 'href': href, 'active': active};
+    });
+
     // latest deposits
     Deposit.deposits({page: 1, page_size: 10, order_by: 'created_at', order: 'desc'}, function(data){
       $scope.deposits = data.deposits;
@@ -139,17 +151,12 @@ phonecatControllers.controller('UserCtrl', ['$scope', 'User', '$alert', '$timeou
   $scope.userLogin = {};
   $scope.userLogin.submitForm = function() {
     var f = $scope.userLogin;
-    // if(f.email == undefined || f.password == undefined){
-    //   angular.element("[name=userLoginFormNg]").addClass("has-error");
-    // } else {
-    //   f.errorBase = "";
-    //   angular.element("[name=userLoginFormNg]").removeClass("has-error");
-    // }
 
     // call user authenticate
+    delete $window.sessionStorage.user;
     User.authenticate({email: f.email, password: f.password, remember: f.remember}, function(data){
-      delete $window.sessionStorage.user;
-      $rootScope.gbl.flash_dismiss('socket');
+
+      $rootScope.gbl.flash_dismiss('user');
       // TODO: handle invalid requests here!
 
       $window.sessionStorage.user = JSON.stringify(data.user);
@@ -157,7 +164,6 @@ phonecatControllers.controller('UserCtrl', ['$scope', 'User', '$alert', '$timeou
       $rootScope.gbl.flash_add($alert, 'user', 'You\'ve logged in as: `'+data.user.name+'`', 'success');
       $location.path('/user/profile');
     }, function(data){
-      delete $window.sessionStorage.user;
       f.errorBase = data.data.error.base;
       angular.element("[name=userLoginFormNg]").addClass("has-error");
       if(String(data.status).startsWith("5")){
@@ -184,7 +190,7 @@ phonecatControllers.controller('DepositListCtrl', ['$scope', '$routeParams', 'De
 
   // force page offset
   if($routeParams.page == undefined){
-    $location.path('/deposits/page/1');
+    $location.path('/deposits').search('page', 1);
     return;
   }
   $scope.currentPage = $routeParams.page;
@@ -203,6 +209,9 @@ phonecatControllers.controller('DepositListCtrl', ['$scope', '$routeParams', 'De
 
 phonecatControllers.controller('DepositCtrl', ['$scope', '$routeParams', 'Deposit', '$rootScope', '$alert', '$window',
     function($scope, $routeParams, Deposit, $rootScope, $alert, $window){
+  // if(!$routeParams.uuid.isUuid()){
+  //   $window.history.back();
+  // }
 
   // load requested deposit
   Deposit.deposit({uuid: $routeParams.uuid}, function(data){
@@ -210,7 +219,7 @@ phonecatControllers.controller('DepositCtrl', ['$scope', '$routeParams', 'Deposi
   }, function(data){
     // error handling
     $rootScope.gbl.flash_add($alert, 'deposit', 'Could not load deposit: `'+$routeParams.uuid+'`', 'warning');
-    // $window.history.back();
+    $window.history.back();
   });
 
 }]);
