@@ -113,7 +113,7 @@ phonecatControllers.controller('DefaultCtrl', ['$scope', '$alert', '$location', 
     });
 
     // latest deposits
-    Deposit.deposits({page: 1, page_size: 10, order_by: 'created_at', order: 'desc'}, function(data){
+    Deposit.deposits({page: 1, page_size: 6, order_by: 'created_at', order: 'desc'}, function(data){
       $scope.deposits = data.deposits;
     }, function(data){
       // error happend
