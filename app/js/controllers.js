@@ -180,6 +180,11 @@ phonecatControllers.controller('UserCtrl', ['$scope', 'User', '$alert', '$timeou
 
 }]);
 
+phonecatControllers.controller('UserListCtrl', ['$scope', 'User', '$alert', '$timeout', '$rootScope', '$window', '$location',
+    function($scope, User, $alert, $timeout, $rootScope, $window, $location){
+
+}]);
+
 phonecatControllers.controller('SearchCtrl', ['$scope', '$routeParams', '$location',
     function($scope, $routeParams, $location){
   // map parameter on scope

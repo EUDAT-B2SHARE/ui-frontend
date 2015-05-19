@@ -97,18 +97,21 @@ phonecatApp.config(['$routeProvider', function($routeProvider){
   });
 
   // user
-  $routeProvider.when('/user/sign-up',{
+  $routeProvider.when('/users/sign-up',{
     templateUrl: 'layout/user/sign-up.html',
     controller: 'UserCtrl'
-  }).when('/user/login',{
+  }).when('/users/login',{
     templateUrl: 'layout/user/login.html',
     controller: 'UserCtrl'
-  }).when('/user/profile', {
+  }).when('/users/profile', {
     templateUrl: 'layout/user/profile.html',
     controller: 'UserCtrl'
-  }).when('/user/logout', {
+  }).when('/users/logout', {
     templateUrl: 'layout/user/logout.html',
     controller: 'UserCtrl'
+  }).when('/users/', {
+    templateUrl: 'layout/user/index.html',
+    controller: 'UserListCtrl'
   });
 
   // search
@@ -122,9 +125,6 @@ phonecatApp.config(['$routeProvider', function($routeProvider){
 
   // deposit
   $routeProvider.when('/deposits/',{
-    templateUrl: 'layout/deposit/index.html',
-    controller: 'DepositListCtrl'
-  }).when('/deposits',{
     templateUrl: 'layout/deposit/index.html',
     controller: 'DepositListCtrl'
   }).when('/deposits/:uuid',{
