@@ -1,5 +1,7 @@
 'use strict';
 
+var backend = 'http://localhost:5000';
+
 /* Services */
 
 var phonecatServices = angular.module('phonecatServices', ['ngResource']);
@@ -64,7 +66,7 @@ phonecatServices.factory('Global', ['$rootScope', '$location', '$timeout', '$rou
 
 
 phonecatServices.factory('User', ['$resource', function($resource){
-  return $resource('http://localhost:5000/user/:action.json', {}, {
+  return $resource(backend + '/user/:action.json', {}, {
     authenticate: { method: 'POST', params: {action: "authenticate", remember: '@remember'},
       transformRequest: function(data){
         delete data['remember'];
@@ -75,7 +77,7 @@ phonecatServices.factory('User', ['$resource', function($resource){
 }]);
 
 phonecatServices.factory('Deposit', ['$resource', function($resource){
-  return $resource('http://localhost:5000/deposit/:action.json', {}, {
+  return $resource(backend + '/deposit/:action.json', {}, {
     deposits: { method: 'GET', params: {action: 'index', order: '@order', order_by: '@order_by', page: '@page', page_size: '@page_size'}},
     deposit: { method: 'GET', params: {action: 'deposit', uuid: '@uuid'} },
   });
