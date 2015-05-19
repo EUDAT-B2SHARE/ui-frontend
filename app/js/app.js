@@ -67,11 +67,23 @@ phonecatApp.config(['$routeProvider', function($routeProvider){
   }).when('/about/legal-notice',{
     templateUrl: 'layout/about/legal-notice.html',
     controller: 'AboutCtrl'
+  }).when('/about/eudat',{
+    templateUrl: 'layout/about/eudat.html',
+    controller: 'AboutCtrl'
+  }).when('/about/',{
+    templateUrl: 'layout/about/index.html',
+    controller: 'AboutListCtrl'
   });
 
   // help
   $routeProvider.when('/help/user-guide',{
     templateUrl: 'layout/help/user-guide.html',
+    controller: 'HelpCtrl'
+  }).when('/help/terms-of-use',{
+    templateUrl: 'layout/help/terms-of-use.html',
+    controller: 'HelpCtrl'
+  }).when('/help/api',{
+    templateUrl: 'layout/help/api.html',
     controller: 'HelpCtrl'
   }).when('/help/faq',{
     templateUrl: 'layout/help/faq.html',
@@ -79,6 +91,9 @@ phonecatApp.config(['$routeProvider', function($routeProvider){
   }).when('/help/search',{
     templateUrl: 'layout/help/search.html',
     controller: 'HelpCtrl'
+  }).when('/help/',{
+    templateUrl: 'layout/help/index.html',
+    controller: 'HelpListCtrl'
   });
 
   // user
@@ -97,16 +112,19 @@ phonecatApp.config(['$routeProvider', function($routeProvider){
   });
 
   // search
-  $routeProvider.when('/search/query/:query',{
+  $routeProvider.when('/search/query',{
     templateUrl: 'layout/search/query.html',
     controller: 'SearchCtrl'
+  }).when('/search/',{
+    templateUrl: 'layout/search/index.html',
+    controller: 'SearchListCtrl'
   });
 
   // deposit
   $routeProvider.when('/deposits/',{
     templateUrl: 'layout/deposit/index.html',
     controller: 'DepositListCtrl'
-  }).when('/deposits/?page=',{
+  }).when('/deposits',{
     templateUrl: 'layout/deposit/index.html',
     controller: 'DepositListCtrl'
   }).when('/deposits/:uuid',{

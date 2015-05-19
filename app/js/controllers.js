@@ -60,7 +60,7 @@ phonecatControllers.controller('DefaultCtrl', ['$scope', '$alert', '$location', 
       $rootScope.gbl.flash_dismiss('search');
     }
     // redirect to search page
-    $location.path('/search/query/' + $scope.searchForm.query);
+    $location.path('/search/query/').search('query', $scope.searchForm.query);
   };
 
   // content view loaded
@@ -127,7 +127,15 @@ phonecatControllers.controller('AboutCtrl', ['$scope', function($scope){
 
 }]);
 
+phonecatControllers.controller('AboutListCtrl', ['$scope', function($scope){
+
+}]);
+
 phonecatControllers.controller('HelpCtrl', ['$scope', function($scope){
+
+}]);
+
+phonecatControllers.controller('HelpListCtrl', ['$scope', function($scope){
 
 }]);
 
@@ -151,14 +159,11 @@ phonecatControllers.controller('UserCtrl', ['$scope', 'User', '$alert', '$timeou
   $scope.userLogin = {};
   $scope.userLogin.submitForm = function() {
     var f = $scope.userLogin;
-
     // call user authenticate
     delete $window.sessionStorage.user;
     User.authenticate({email: f.email, password: f.password, remember: f.remember}, function(data){
-
       $rootScope.gbl.flash_dismiss('user');
       // TODO: handle invalid requests here!
-
       $window.sessionStorage.user = JSON.stringify(data.user);
       angular.element("[name=userLoginFormNg]").removeClass("has-error");
       $rootScope.gbl.flash_add($alert, 'user', 'You\'ve logged in as: `'+data.user.name+'`', 'success');
@@ -170,8 +175,6 @@ phonecatControllers.controller('UserCtrl', ['$scope', 'User', '$alert', '$timeou
         $rootScope.gbl.flash_add($alert, 'user', 'An error has occured', 'danger');
       }
     });
-
-
   };
 
 
@@ -184,6 +187,10 @@ phonecatControllers.controller('SearchCtrl', ['$scope', '$routeParams', '$locati
 
 }]);
 
+phonecatControllers.controller('SearchListCtrl', ['$scope', '$routeParams', '$location',
+    function($scope, $routeParams, $location){
+
+}]);
 
 phonecatControllers.controller('DepositListCtrl', ['$scope', '$routeParams', 'Deposit', '$rootScope', '$alert', '$location',
     function($scope, $routeParams, Deposit, $rootScope, $alert, $location){
