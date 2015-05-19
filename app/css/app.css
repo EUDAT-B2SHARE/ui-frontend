@@ -264,6 +264,15 @@ input.ng-valid.ng-touched {
   font-size: 0.7em;
 }
 
+/* breadcrumbs */
+
+.breadcrumb {
+  background-color: transparent;
+  font-size: small;
+  padding: 5;
+  margin: 0;
+}
+
 /* presets */
 
 .text-uppercase {
@@ -297,3 +306,4 @@ input.ng-valid.ng-touched {
 .no-radius {
   border-radius: 0px;
 }
+
