@@ -121,7 +121,6 @@ b2Controllers.controller('HelpListCtrl', ['$scope', '$rootScope', function($scop
 
 b2Controllers.controller('UserCtrl', ['$scope', 'User', '$alert', '$timeout', '$rootScope', '$window', '$location',
     function($scope, User, $alert, $timeout, $rootScope, $window, $location){
-  // $rootScope.PageTitle.reset();
 
   // logout user
   if ($location.path() == "/users/logout"){
@@ -142,6 +141,8 @@ b2Controllers.controller('UserCtrl', ['$scope', 'User', '$alert', '$timeout', '$
       $rootScope.Helper.flash_dismiss('user');
       // TODO: handle invalid requests here!
       $window.sessionStorage.user = JSON.stringify(data.user);
+      // user session (load when default not yet loaded)
+      $rootScope.user = JSON.parse($window.sessionStorage.user);
       angular.element("[name=userLoginFormNg]").removeClass("has-error");
       $rootScope.Helper.flash_add($alert, 'user', 'You\'ve logged in as: `'+data.user.name+'`', 'success');
       $location.path('/users/profile');
