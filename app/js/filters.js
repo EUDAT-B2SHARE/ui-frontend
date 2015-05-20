@@ -2,12 +2,12 @@
 
 /* Filters */
 
-angular.module('phonecatFilters', []).filter('checkmark', function(){
+angular.module('b2Filters', []).filter('checkmark', function(){
   return function(i){ return i ? '\u2713' : '\u2718'; };
 });
 
 // map filter for {deposits: [{deposit: {}}, {deposit: {}, ...}]}
-angular.module('phonecatFilters', []).filter('compact', function(){
+angular.module('b2Filters', []).filter('compact', function(){
   return function(ds) {
   	if(ds != undefined)
 	    return $.map(ds, function(val, i){
@@ -15,17 +15,4 @@ angular.module('phonecatFilters', []).filter('compact', function(){
 	    });
   }
 });
-
-// angular.module('phonecatFilters', []).filter('parameters', function(){
-//   return function(bc) {
-//     return $.map(bc, function(val, i){
-//       if(val.href.startsWith("#/deposits")){
-//         if(val.href.includes("page"))
-//           return a;
-//       }
-//       return val;
-//     });
-//   }
-// });
-
 

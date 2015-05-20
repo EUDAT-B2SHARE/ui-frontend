@@ -3,45 +3,15 @@
 /* Controllers */
 
 
-var phonecatControllers = angular.module('phonecatControllers', ['angular-loading-bar']);
-
-
-// phonecatControllers.controller('PhoneListCtrl', ['$scope', 'Phone', 'cfpLoadingBar',
-//   function($scope, Phone, cfpLoadingBar){
-//     // cfpLoadingBar.start();
-//     // $http.get('phones/phones.json').success(function(data){
-//     //   $scope.phones = data;
-//     // });
-//     $scope.phones = Phone.query();
-//     $scope.orderProp = 'age';
-//     // cfpLoadingBar.complete();
-// }]);
-
-// phonecatControllers.controller('PhoneDetailCtrl', ['$scope', '$routeParams', 'Phone', 'cfpLoadingBar',
-//   function($scope, $routeParams, Phone, cfpLoadingBar){
-//     // cfpLoadingBar.start();
-//     // $http.get('phones/'+$routeParams.phoneId+'.json').success(function(data){
-//     //   $scope.phone = data;
-//     //   $scope.mainImageUrl = data.images[0];
-//     // });
-
-//     $scope.phone = Phone.get({phoneId: $routeParams.phoneId}, function(phone){
-//       $scope.mainImageUrl = phone.images[0];
-//       // cfpLoadingBar.complete();
-//     });
-
-//     $scope.setImage = function(imageUrl){
-//       $scope.mainImageUrl = imageUrl;
-//     }
-
-// }]);
+var b2Controllers = angular.module('b2Controllers', ['angular-loading-bar']);
 
 // phonecatControllers.run(function($rootScope) {
 //   $rootScope.globalFoo = function() {
 //     alert("I'm global foo!");
 //   };
 // });
-phonecatControllers.controller('HomeCtrl', ['$scope', '$alert', '$location', '$timeout', '$rootScope', '$window', 'Deposit',
+
+b2Controllers.controller('HomeCtrl', ['$scope', '$alert', '$location', '$timeout', '$rootScope', '$window', 'Deposit',
     function($scope, $alert, $location, $timeout, $rootScope, $window, Deposit){
 
   // latest deposits
@@ -55,7 +25,7 @@ phonecatControllers.controller('HomeCtrl', ['$scope', '$alert', '$location', '$t
 }]);
 
 
-phonecatControllers.controller('DefaultCtrl', ['$scope', '$alert', '$location', '$timeout', '$rootScope', '$window', 'Breadcrumbs', 'PageTitle',
+b2Controllers.controller('DefaultCtrl', ['$scope', '$alert', '$location', '$timeout', '$rootScope', '$window', 'Breadcrumbs', 'PageTitle',
           function($scope, $alert, $location, $timeout, $rootScope, $window, Breadcrumbs, PageTitle){
 
   // user session
@@ -129,27 +99,27 @@ phonecatControllers.controller('DefaultCtrl', ['$scope', '$alert', '$location', 
   });
 }]);
 
-phonecatControllers.controller('AboutCtrl', ['$scope', '$rootScope', function($scope, $rootScope){
+b2Controllers.controller('AboutCtrl', ['$scope', '$rootScope', function($scope, $rootScope){
   // $rootScope.PageTitle.reset();
 
 }]);
 
-phonecatControllers.controller('AboutListCtrl', ['$scope', '$rootScope', function($scope, $rootScope){
+b2Controllers.controller('AboutListCtrl', ['$scope', '$rootScope', function($scope, $rootScope){
   // $rootScope.PageTitle.reset();
 
 }]);
 
-phonecatControllers.controller('HelpCtrl', ['$scope', '$rootScope', function($scope, $rootScope){
+b2Controllers.controller('HelpCtrl', ['$scope', '$rootScope', function($scope, $rootScope){
   // $rootScope.PageTitle.reset();
 
 }]);
 
-phonecatControllers.controller('HelpListCtrl', ['$scope', '$rootScope', function($scope, $rootScope){
+b2Controllers.controller('HelpListCtrl', ['$scope', '$rootScope', function($scope, $rootScope){
   // $rootScope.PageTitle.reset();
 
 }]);
 
-phonecatControllers.controller('UserCtrl', ['$scope', 'User', '$alert', '$timeout', '$rootScope', '$window', '$location',
+b2Controllers.controller('UserCtrl', ['$scope', 'User', '$alert', '$timeout', '$rootScope', '$window', '$location',
     function($scope, User, $alert, $timeout, $rootScope, $window, $location){
   // $rootScope.PageTitle.reset();
 
@@ -187,12 +157,12 @@ phonecatControllers.controller('UserCtrl', ['$scope', 'User', '$alert', '$timeou
 
 }]);
 
-phonecatControllers.controller('UserListCtrl', ['$scope', 'User', '$alert', '$timeout', '$rootScope', '$window', '$location',
+b2Controllers.controller('UserListCtrl', ['$scope', 'User', '$alert', '$timeout', '$rootScope', '$window', '$location',
     function($scope, User, $alert, $timeout, $rootScope, $window, $location){
   // $rootScope.PageTitle.reset();
 }]);
 
-phonecatControllers.controller('SearchCtrl', ['$scope', '$routeParams', '$location',
+b2Controllers.controller('SearchCtrl', ['$scope', '$routeParams', '$location',
     function($scope, $routeParams, $location){
   // $rootScope.PageTitle.reset();
   // map parameter on scope
@@ -200,12 +170,12 @@ phonecatControllers.controller('SearchCtrl', ['$scope', '$routeParams', '$locati
 
 }]);
 
-phonecatControllers.controller('SearchListCtrl', ['$scope', '$routeParams', '$location',
+b2Controllers.controller('SearchListCtrl', ['$scope', '$routeParams', '$location',
     function($scope, $routeParams, $location){
   // $rootScope.PageTitle.reset();
 }]);
 
-phonecatControllers.controller('DepositListCtrl', ['$scope', '$routeParams', 'Deposit', '$rootScope', '$alert', '$location',
+b2Controllers.controller('DepositListCtrl', ['$scope', '$routeParams', 'Deposit', '$rootScope', '$alert', '$location',
     function($scope, $routeParams, Deposit, $rootScope, $alert, $location){
   // $rootScope.PageTitle.reset();
 
@@ -228,7 +198,7 @@ phonecatControllers.controller('DepositListCtrl', ['$scope', '$routeParams', 'De
 
 
 
-phonecatControllers.controller('DepositCtrl', ['$scope', '$routeParams', 'Deposit', '$rootScope', '$alert', '$window',
+b2Controllers.controller('DepositCtrl', ['$scope', '$routeParams', 'Deposit', '$rootScope', '$alert', '$window',
     function($scope, $routeParams, Deposit, $rootScope, $alert, $window){
   // title
   var pt = $rootScope.PageTitle;

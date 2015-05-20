@@ -2,13 +2,13 @@
 
 /* App Module */
 
-var phonecatApp = angular.module('phonecatApp', [
+var b2App = angular.module('b2App', [
   'angular-loading-bar',
   'ngRoute',
-  'phonecatAnimations',
-  'phonecatControllers',
-  'phonecatFilters',
-  'phonecatServices',
+  'b2Animations',
+  'b2Controllers',
+  'b2Filters',
+  'b2Services',
 ]).config(function(cfpLoadingBarProvider){
   cfpLoadingBarProvider.includeSpinner = true;
   cfpLoadingBarProvider.includeBar = true;
@@ -23,7 +23,7 @@ var phonecatApp = angular.module('phonecatApp', [
 
 
 // application runner
-phonecatApp.run(function($rootScope, $window, Helper, PageTitle, Breadcrumbs) {
+b2App.run(function($rootScope, $window, Helper, PageTitle, Breadcrumbs) {
   // global bindings (service)
   $rootScope.Helper = Helper;
   $rootScope.PageTitle = PageTitle;
@@ -59,7 +59,7 @@ phonecatApp.run(function($rootScope, $window, Helper, PageTitle, Breadcrumbs) {
 });
 
 // routes
-phonecatApp.config(['$routeProvider', function($routeProvider){
+b2App.config(['$routeProvider', function($routeProvider){
   // default route
   $routeProvider.when('/', {
     templateUrl: 'layout/home/index.html',

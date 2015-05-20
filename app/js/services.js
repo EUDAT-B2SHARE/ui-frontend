@@ -4,7 +4,7 @@ var backend = 'http://localhost:5000';
 
 /* Services */
 
-var b2Services = angular.module('phonecatServices', ['ngResource']);
+var b2Services = angular.module('b2Services', ['ngResource']);
 
 // page title object (only used here)
 var _PageTitle = {page: "", subject: "", title: "B2SHARE"};
