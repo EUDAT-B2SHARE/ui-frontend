@@ -9,9 +9,10 @@ angular.module('phonecatFilters', []).filter('checkmark', function(){
 // map filter for {deposits: [{deposit: {}}, {deposit: {}, ...}]}
 angular.module('phonecatFilters', []).filter('compact', function(){
   return function(ds) {
-    return $.map(ds, function(val, i){
-      return val.deposit;
-    });
+  	if(ds != undefined)
+	    return $.map(ds, function(val, i){
+	      return val.deposit;
+	    });
   }
 });
 
