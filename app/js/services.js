@@ -14,8 +14,9 @@ b2Services.factory('PageTitle', ['$rootScope', '$location', '$timeout', '$routeP
   return {
     reset: function(){
       _PageTitle = {page: "", subject: "", title: "B2SHARE"};
-      _PageTitle.page = _Breadcrumbs[0].name;
-      console.log(_Breadcrumbs);
+      // preset title via breadcrumb parsed page names
+      if(_Breadcrumbs.length > 0)
+        _PageTitle.page = _Breadcrumbs[0].name;
     },
     getTitle: function(){
       return _PageTitle.title + " " + _PageTitle.page + " " +
