@@ -10,7 +10,9 @@ var phonecatApp = angular.module('phonecatApp', [
   'phonecatFilters',
   'phonecatServices',
 ]).config(function(cfpLoadingBarProvider){
-  cfpLoadingBarProvider.includeSpinner = false;
+  cfpLoadingBarProvider.includeSpinner = true;
+  cfpLoadingBarProvider.includeBar = true;
+  cfpLoadingBarProvider.latencyThreshold = 30;
 }).config(function($alertProvider) {
   angular.extend($alertProvider.defaults, {
     animation: 'am-fade-and-slide-top message',

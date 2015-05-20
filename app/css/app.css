@@ -141,6 +141,22 @@ footer .navbar-default {
   font-style: italic;
 }
 
+#loading-bar .bar {
+  background-color: #FFAB2B;
+}
+
+#loading-bar .peg {
+  -moz-box-shadow: #FFAB2B 1px 0 6px 1px;
+  -ms-box-shadow: #FFAB2B 1px 0 6px 1px;
+  -webkit-box-shadow: #FFAB2B 1px 0 6px 1px;
+  box-shadow: #FFAB2B 1px 0 6px 1px;
+}
+
+#loading-bar-spinner .spinner-icon {
+  border-top-color: #FFAB2B;
+  border-left-color: #FFAB2B;
+  margin-top: 20px;
+}
 
 /* collapse to max of 1000px */
 @media (max-width: 1000px) {

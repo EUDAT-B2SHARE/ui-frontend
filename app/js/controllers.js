@@ -160,9 +160,8 @@ phonecatControllers.controller('UserCtrl', ['$scope', 'User', '$alert', '$timeou
   $scope.userLogin.submitForm = function() {
     var f = $scope.userLogin;
     // call user authenticate
-
+    delete $window.sessionStorage.user;
     User.authenticate({email: f.email, password: f.password, remember: f.remember}, function(data){
-      delete $window.sessionStorage.user;
       $rootScope.gbl.flash_dismiss('user');
       // TODO: handle invalid requests here!
       $window.sessionStorage.user = JSON.stringify(data.user);
@@ -170,7 +169,6 @@ phonecatControllers.controller('UserCtrl', ['$scope', 'User', '$alert', '$timeou
       $rootScope.gbl.flash_add($alert, 'user', 'You\'ve logged in as: `'+data.user.name+'`', 'success');
       $location.path('/users/profile');
     }, function(data){
-      delete $window.sessionStorage.user;
       f.errorBase = data.data.error.base;
       angular.element("[name=userLoginFormNg]").addClass("has-error");
       if(String(data.status).startsWith("5")){
