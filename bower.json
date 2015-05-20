@@ -1,9 +1,9 @@
 {
-  "name": "angular-phonecat",
-  "description": "A starter project for AngularJS",
+  "name": "b2share-frontend",
+  "description": "B2SHARE frontend UI",
   "version": "0.0.0",
-  "homepage": "https://github.com/angular/angular-phonecat",
-  "license": "MIT",
+  "homepage": "https://git.osd.surfsara.nl/EUDAT-B2SHARE/b2share-frontend.git",
+  "license": "EUPL",
   "private": true,
   "dependencies": {
     "angular": "1.3.x",

@@ -1,10 +1,10 @@
 {
   "version": "0.0.0",
   "private": true,
-  "name": "angular-phonecat",
+  "name": "b2share-frontend",
   "description": "A tutorial application for AngularJS",
-  "repository": "https://github.com/angular/angular-phonecat",
-  "license": "MIT",
+  "repository": "https://git.osd.surfsara.nl/EUDAT-B2SHARE/b2share-frontend.git",
+  "license": "EUPL",
   "devDependencies": {
     "karma": "^0.12.16",
     "karma-chrome-launcher": "^0.1.0",
