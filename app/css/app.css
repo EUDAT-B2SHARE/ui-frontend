@@ -65,6 +65,9 @@ html,body{
   height: 100%;
 }
 
+a {
+  outline: none!important;
+}
 
 #holder{
   min-height: 100%;

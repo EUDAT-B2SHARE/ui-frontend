@@ -1,12 +1,34 @@
 div, body, input, textarea, button, #testimonials h4, .highlighted-text {
-	font-family: 'Raleway';
-	font-style: normal;
-	font-weight: 500;
+  font-family: Raleway;
+  font-style: normal;
+  font-weight: 500;
 }
 
 h1, h2, h3, h4, h5, h6 {
-	font-family: 'Raleway';
-	font-style: normal;
-	font-weight: 600;
-	text-transform: uppercase;
+  font-family: Raleway;
+  font-family: helvetica;
+  font-style: normal;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+@font-face{
+  font-family:Raleway;
+  font-style:normal;
+  font-weight:500;
+  src:local('Raleway Medium'),local('Raleway-Medium'),url(../bower_components/fonts-raleway/fonts/fonts-raleway/Raleway-Medium.ttf)) format('truetype')
+}
+
+@font-face{
+  font-family:Raleway;
+  font-style:normal;
+  font-weight:600;
+  src:local('Raleway SemiBold'),local('Raleway-SemiBold'),url(../bower_components/fonts-raleway/fonts/fonts-raleway/Raleway-SemiBold.ttf)) format('truetype')
+}
+
+@font-face{
+  font-family:Raleway;
+  font-style:normal;
+  font-weight:700;
+  src:local('Raleway Bold'),local('Raleway-Bold'),url(../bower_components/fonts-raleway/fonts/fonts-raleway/Raleway-Bold.ttf)) format('truetype')
 }
