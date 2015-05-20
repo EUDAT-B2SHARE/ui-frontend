@@ -23,9 +23,9 @@ var phonecatApp = angular.module('phonecatApp', [
 
 
 // application runner
-phonecatApp.run(function($rootScope, $window, Global, PageTitle, Breadcrumbs) {
+phonecatApp.run(function($rootScope, $window, Helper, PageTitle, Breadcrumbs) {
   // global bindings (service)
-  $rootScope.gbl = Global;
+  $rootScope.Helper = Helper;
   $rootScope.PageTitle = PageTitle;
   $rootScope.Breadcrumbs = Breadcrumbs;
 

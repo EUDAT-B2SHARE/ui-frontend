@@ -49,7 +49,7 @@ phonecatControllers.controller('HomeCtrl', ['$scope', '$alert', '$location', '$t
     $scope.deposits = data.deposits;
   }, function(data){
     // error happend
-    $rootScope.gbl.flash_add($alert, 'deposits', 'Could not load latest deposits', 'warning');
+    $rootScope.Helper.flash_add($alert, 'deposits', 'Could not load latest deposits', 'warning');
   });
 
 }]);
@@ -67,10 +67,10 @@ phonecatControllers.controller('DefaultCtrl', ['$scope', '$alert', '$location', 
   $scope.searchForm = {};
   $scope.searchForm.submitForm = function() {
     if($scope.searchForm.query == undefined || $scope.searchForm.query == ""){
-      $rootScope.gbl.flash_add($alert, 'search', 'Please provide a search value', 'warning');
+      $rootScope.Helper.flash_add($alert, 'search', 'Please provide a search value', 'warning');
       return;
     } else {
-      $rootScope.gbl.flash_dismiss('search');
+      $rootScope.Helper.flash_dismiss('search');
     }
     // redirect to search page
     $location.path('/search/query/').search('query', $scope.searchForm.query);
@@ -157,8 +157,8 @@ phonecatControllers.controller('UserCtrl', ['$scope', 'User', '$alert', '$timeou
   if ($location.path() == "/users/logout"){
     delete $window.sessionStorage.user;
     $rootScope.user = undefined;
-    $rootScope.gbl.flash_dismiss('user');
-    $rootScope.gbl.flash_add($alert, 'user', 'You\'ve logged out', 'success');
+    $rootScope.Helper.flash_dismiss('user');
+    $rootScope.Helper.flash_add($alert, 'user', 'You\'ve logged out', 'success');
     $location.path("/users/login");
   }
 
@@ -169,17 +169,17 @@ phonecatControllers.controller('UserCtrl', ['$scope', 'User', '$alert', '$timeou
     // call user authenticate
     delete $window.sessionStorage.user;
     User.authenticate({email: f.email, password: f.password, remember: f.remember}, function(data){
-      $rootScope.gbl.flash_dismiss('user');
+      $rootScope.Helper.flash_dismiss('user');
       // TODO: handle invalid requests here!
       $window.sessionStorage.user = JSON.stringify(data.user);
       angular.element("[name=userLoginFormNg]").removeClass("has-error");
-      $rootScope.gbl.flash_add($alert, 'user', 'You\'ve logged in as: `'+data.user.name+'`', 'success');
+      $rootScope.Helper.flash_add($alert, 'user', 'You\'ve logged in as: `'+data.user.name+'`', 'success');
       $location.path('/users/profile');
     }, function(data){
       f.errorBase = data.data.error.base;
       angular.element("[name=userLoginFormNg]").addClass("has-error");
       if(String(data.status).startsWith("5")){
-        $rootScope.gbl.flash_add($alert, 'user', 'An error has occured', 'danger');
+        $rootScope.Helper.flash_add($alert, 'user', 'An error has occured', 'danger');
       }
     });
   };
@@ -221,7 +221,7 @@ phonecatControllers.controller('DepositListCtrl', ['$scope', '$routeParams', 'De
     $scope.deposits = data.deposits;
   }, function(data){
     // error happend
-    $rootScope.gbl.flash_add($alert, 'deposits', 'Could not load latest deposits', 'warning');
+    $rootScope.Helper.flash_add($alert, 'deposits', 'Could not load latest deposits', 'warning');
   });
 
 }]);
@@ -241,7 +241,7 @@ phonecatControllers.controller('DepositCtrl', ['$scope', '$routeParams', 'Deposi
     // $rootScope.page_title = "B2SHARE / " + data.deposit.title;
   }, function(data){
     // error handling
-    $rootScope.gbl.flash_add($alert, 'deposit', 'Could not load deposit: `'+$routeParams.uuid+'`', 'warning');
+    $rootScope.Helper.flash_add($alert, 'deposit', 'Could not load deposit: `'+$routeParams.uuid+'`', 'warning');
     $window.history.back();
   });
 

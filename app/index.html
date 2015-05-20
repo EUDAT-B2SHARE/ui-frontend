@@ -77,7 +77,7 @@
             <form name="searchFormNg" ng-submit="searchForm.submitForm()">
               <div class="nav-search" class="input-group">
                 <span class="input-group-btn">
-                  <button ng-click="gbl.path('/help/search')" class="btn btn-default" type="button">
+                  <button ng-click="Helper.path('/help/search')" class="btn btn-default" type="button">
                     <i class="fa fa-question-circle"></i>
                   </button>
                 </span>
@@ -93,22 +93,22 @@
             <!-- menu -->
             <ul class="nav navbar-nav text-uppercase">
               <!-- basic navigation -->
-              <li class="{{gbl.routeActive('/about/b2share')}}">
+              <li class="{{Helper.routeActive('/about/b2share')}}">
                 <a href="#/about/b2share">
                   <i class="fa fa-cubes"></i>What is B2SHARE
                 </a>
               </li>
-              <li class="{{gbl.routeActive('/help/user-guide')}}">
+              <li class="{{Helper.routeActive('/help/user-guide')}}">
                 <a href="#/help/user-guide">
                   <i class="fa fa-cubes"></i>User Guide
                 </a>
               </li>
-              <li class="{{gbl.routeActive('/help/faq')}}">
+              <li class="{{Helper.routeActive('/help/faq')}}">
                 <a href="#/help/faq">
                   <i class="fa fa-cubes"></i>FAQs
                 </a>
               </li>
-              <li class="{{gbl.routeActive('/about/communities')}}">
+              <li class="{{Helper.routeActive('/about/communities')}}">
                 <a href="#/about/communities">
                   <i class="fa fa-cubes"></i>Communities
                 </a>
@@ -132,7 +132,7 @@
                 </ul>
               </li>
               <!-- show when user object is empty -->
-              <li class="{{gbl.routeActive('/users/login')}}" ng-show="user == undefined">
+              <li class="{{Helper.routeActive('/users/login')}}" ng-show="user == undefined">
                 <a href="#/users/login"><i class="fa fa-sign-in"></i></a>
               </li>
             </ul>

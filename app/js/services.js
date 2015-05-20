@@ -61,7 +61,7 @@ b2Services.factory('Breadcrumbs', ['$rootScope', '$location', '$timeout', '$rout
 }]);
 
 
-b2Services.factory('Global', ['$rootScope', '$location', '$timeout', '$routeParams',
+b2Services.factory('Helper', ['$rootScope', '$location', '$timeout', '$routeParams',
   function($rootScope, $location, $timeout, $routeParams){
   return {
     // path redirection
