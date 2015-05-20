@@ -54,7 +54,7 @@ phonecatApp.config(['$routeProvider', function($routeProvider){
   // default route
   $routeProvider.when('/', {
     templateUrl: 'layout/home/index.html',
-    controller: 'DefaultCtrl'
+    controller: 'HomeCtrl'
   }).otherwise({
     redirectTo: '/'
   });
