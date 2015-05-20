@@ -7,41 +7,46 @@ var backend = 'http://localhost:5000';
 var b2Services = angular.module('b2Services', ['ngResource']);
 
 // page title object (only used here)
-var _PageTitle = {page: "", subject: "", title: "B2SHARE"};
 
 b2Services.factory('PageTitle', ['$rootScope', '$location', '$timeout', '$routeParams',
   function($rootScope, $location, $timeout, $routeParams){
+  var _pageTitle = {page: "", subject: "", title: "B2SHARE"};
   return {
     reset: function(){
-      _PageTitle = {page: "", subject: "", title: "B2SHARE"};
+      _pageTitle = {page: "", subject: "", title: "B2SHARE"};
       // preset title via breadcrumb parsed page names
-      if(_Breadcrumbs.length > 0)
-        _PageTitle.page = _Breadcrumbs[0].name;
+      if($rootScope.Breadcrumbs.present()){
+        _pageTitle.page = $rootScope.Breadcrumbs.getBreadcrumbs()[0].name;
+      }
     },
     getTitle: function(){
-      return _PageTitle.title + " " + _PageTitle.page + " " +
-        _PageTitle.subject;
+      return $rootScope.Notify.getCountStr() + "" +_pageTitle.subject.capitalize() + " " +
+        _pageTitle.page.capitalize() + " - " + _pageTitle.title;
     },
     setPage: function(page){
-      _PageTitle.page = page;
+      _pageTitle.page = page;
     },
     setSubject: function(subject){
-      _PageTitle.subject = subject;
+      _pageTitle.subject = subject;
     }
   };
 }]);
 
-var _Breadcrumbs = [];
-
 // breadcrumbs
+
+
 b2Services.factory('Breadcrumbs', ['$rootScope', '$location', '$timeout', '$routeParams',
   function($rootScope, $location, $timeout, $routeParams){
+  var _breadcrumbs = [];
   return {
     present: function(){
-      return _Breadcrumbs.length > 0;
+      return _breadcrumbs.length > 0;
+    },
+    length: function(){
+      return _breadcrumbs.length;
     },
     getBreadcrumbs: function(){
-      return _Breadcrumbs;
+      return _breadcrumbs;
     },
     load: function(){
       var uri = $location.path();
@@ -52,12 +57,27 @@ b2Services.factory('Breadcrumbs', ['$rootScope', '$location', '$timeout', '$rout
       // strip prefix and empty entries
       var as = uri.substring(1, end).split('/').filter(function(a){ return a != ""; });
       // map as expected result
-      _Breadcrumbs = as.map(function(a, i){
+      _breadcrumbs = as.map(function(a, i){
         var href = "#/" + as.slice(0, i+1).join('/');
         var active = as.length -1 != i;
         return {'name': a, 'href': href, 'active': active};
       });
     }
+  };
+}]);
+
+// system to user notification
+
+
+b2Services.factory('Notify', ['$rootScope', '$location', '$timeout', '$routeParams',
+  function($rootScope, $location, $timeout, $routeParams){
+  var _notify = [ ];
+  return {
+    getCountStr: function(){
+      if(_notify.length > 0)
+        return "(" + _notify.length + ") ";
+      return "";
+    },
   };
 }]);
 

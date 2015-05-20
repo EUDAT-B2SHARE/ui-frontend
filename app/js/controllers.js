@@ -200,13 +200,10 @@ b2Controllers.controller('DepositListCtrl', ['$scope', '$routeParams', 'Deposit'
 
 b2Controllers.controller('DepositCtrl', ['$scope', '$routeParams', 'Deposit', '$rootScope', '$alert', '$window',
     function($scope, $routeParams, Deposit, $rootScope, $alert, $window){
-  // title
-  var pt = $rootScope.PageTitle;
-  pt.setPage("Deposit");
 
   // load requested deposit
   Deposit.deposit({uuid: $routeParams.uuid}, function(data){
-    pt.setSubject(data.deposit.title);
+    $rootScope.PageTitle.setSubject(data.deposit.title);
     $scope.deposit = data.deposit;
     // $rootScope.page_title = "B2SHARE / " + data.deposit.title;
   }, function(data){

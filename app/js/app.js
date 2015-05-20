@@ -23,11 +23,12 @@ var b2App = angular.module('b2App', [
 
 
 // application runner
-b2App.run(function($rootScope, $window, Helper, PageTitle, Breadcrumbs) {
+b2App.run(function($rootScope, $window, Helper, PageTitle, Breadcrumbs, Notify) {
   // global bindings (service)
   $rootScope.Helper = Helper;
   $rootScope.PageTitle = PageTitle;
   $rootScope.Breadcrumbs = Breadcrumbs;
+  $rootScope.Notify = Notify;
 
   // string helper startsWith
   if (typeof String.prototype.startsWith != 'function') {
