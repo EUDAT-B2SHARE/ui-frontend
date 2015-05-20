@@ -55,11 +55,10 @@ phonecatControllers.controller('HomeCtrl', ['$scope', '$alert', '$location', '$t
 }]);
 
 
-phonecatControllers.controller('DefaultCtrl', ['$scope', '$alert', '$location', '$timeout', '$rootScope', '$window', 'Deposit',
-          function($scope, $alert, $location, $timeout, $rootScope, $window, Deposit){
+phonecatControllers.controller('DefaultCtrl', ['$scope', '$alert', '$location', '$timeout', '$rootScope', '$window', 'Breadcrumbs', 'PageTitle',
+          function($scope, $alert, $location, $timeout, $rootScope, $window, Breadcrumbs, PageTitle){
 
-  // $rootScope.page_title = "B2SHARE";
-
+  // user session
   if($window.sessionStorage.user != undefined){
     $rootScope.user = JSON.parse($window.sessionStorage.user);
   }
@@ -115,49 +114,44 @@ phonecatControllers.controller('DefaultCtrl', ['$scope', '$alert', '$location', 
     });
 
     // breadcrumbs
-    var uri = $location.path();
-    var end = uri.indexOf('?');
-    if(end == -1)
-      end = uri.length;
-    var as = uri.substring(1, end).split('/').filter(function(a){ return a != ""; });
-    $scope.breadcrumbs = as.map(function(a, i){
-      var href = "#/" + as.slice(0, i+1).join('/');
-      var active = as.length -1 != i;
-      return {'name': a, 'href': href, 'active': active};
-    });
+    Breadcrumbs.load();
 
     // page title
-    $rootScope.page_title = "B2SHARE";
-    var bs = $scope.breadcrumbs;
-    if(bs != undefined && bs.length > 0){
-      $rootScope.page_title += " " + bs[bs.length-1].name.capitalize();
-    }
+    PageTitle.reset();
+
+    // // page title
+    // $rootScope.page_title = "B2SHARE";
+    // var bs = $scope.breadcrumbs;
+    // if(bs != undefined && bs.length > 0){
+    //   $rootScope.page_title += " " + bs[bs.length-1].name.capitalize();
+    // }
 
   });
 }]);
 
 phonecatControllers.controller('AboutCtrl', ['$scope', '$rootScope', function($scope, $rootScope){
-  // $rootScope.page_title = "B2SHARE - About";
+  // $rootScope.PageTitle.reset();
+
 }]);
 
 phonecatControllers.controller('AboutListCtrl', ['$scope', '$rootScope', function($scope, $rootScope){
-  // $rootScope.page_title = "B2SHARE - About";
+  // $rootScope.PageTitle.reset();
 
 }]);
 
 phonecatControllers.controller('HelpCtrl', ['$scope', '$rootScope', function($scope, $rootScope){
-  // $rootScope.page_title = "B2SHARE - Help";
+  // $rootScope.PageTitle.reset();
 
 }]);
 
 phonecatControllers.controller('HelpListCtrl', ['$scope', '$rootScope', function($scope, $rootScope){
-  // $rootScope.page_title = "B2SHARE / Help";
+  // $rootScope.PageTitle.reset();
 
 }]);
 
 phonecatControllers.controller('UserCtrl', ['$scope', 'User', '$alert', '$timeout', '$rootScope', '$window', '$location',
     function($scope, User, $alert, $timeout, $rootScope, $window, $location){
-  // $rootScope.page_title = "B2SHARE / User";
+  // $rootScope.PageTitle.reset();
 
   // logout user
   if ($location.path() == "/users/logout"){
@@ -195,12 +189,12 @@ phonecatControllers.controller('UserCtrl', ['$scope', 'User', '$alert', '$timeou
 
 phonecatControllers.controller('UserListCtrl', ['$scope', 'User', '$alert', '$timeout', '$rootScope', '$window', '$location',
     function($scope, User, $alert, $timeout, $rootScope, $window, $location){
-  // $rootScope.page_title = "B2SHARE / Users";
+  // $rootScope.PageTitle.reset();
 }]);
 
 phonecatControllers.controller('SearchCtrl', ['$scope', '$routeParams', '$location',
     function($scope, $routeParams, $location){
-  // $rootScope.page_title = "B2SHARE / Search";
+  // $rootScope.PageTitle.reset();
   // map parameter on scope
   $scope.query = $routeParams.query;
 
@@ -208,12 +202,13 @@ phonecatControllers.controller('SearchCtrl', ['$scope', '$routeParams', '$locati
 
 phonecatControllers.controller('SearchListCtrl', ['$scope', '$routeParams', '$location',
     function($scope, $routeParams, $location){
-  // $rootScope.page_title = "B2SHARE / Search";
+  // $rootScope.PageTitle.reset();
 }]);
 
 phonecatControllers.controller('DepositListCtrl', ['$scope', '$routeParams', 'Deposit', '$rootScope', '$alert', '$location',
     function($scope, $routeParams, Deposit, $rootScope, $alert, $location){
-  // $rootScope.page_title = "B2SHARE / Deposits";
+  // $rootScope.PageTitle.reset();
+
   // force page offset
   if($routeParams.page == undefined){
     $location.path('/deposits').search('page', 1);
@@ -235,13 +230,13 @@ phonecatControllers.controller('DepositListCtrl', ['$scope', '$routeParams', 'De
 
 phonecatControllers.controller('DepositCtrl', ['$scope', '$routeParams', 'Deposit', '$rootScope', '$alert', '$window',
     function($scope, $routeParams, Deposit, $rootScope, $alert, $window){
-  // $rootScope.page_title = "B2SHARE / Deposit";
-  // if(!$routeParams.uuid.isUuid()){
-  //   $window.history.back();
-  // }
+  // title
+  var pt = $rootScope.PageTitle;
+  pt.setPage("Deposit");
 
   // load requested deposit
   Deposit.deposit({uuid: $routeParams.uuid}, function(data){
+    pt.setSubject(data.deposit.title);
     $scope.deposit = data.deposit;
     // $rootScope.page_title = "B2SHARE / " + data.deposit.title;
   }, function(data){

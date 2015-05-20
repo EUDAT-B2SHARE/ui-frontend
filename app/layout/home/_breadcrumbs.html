@@ -1,8 +1,8 @@
 <div class="col-xs-offset-1">
   <!-- breadcrumbs -->
-  <ol ng-show="breadcrumbs.length > 0" class="breadcrumb">
+  <ol ng-show="Breadcrumbs.present()" class="breadcrumb">
     <li class=""><a href="#/"><i class="fa fa-home"></i></a></li>
-    <li ng-repeat="breadcrumb in breadcrumbs" class="">
+    <li ng-repeat="breadcrumb in Breadcrumbs.getBreadcrumbs()" class="">
       <!-- active bc -->
       <a ng-show="breadcrumb.active" href="{{breadcrumb.href}}" ng-bind="breadcrumb.name | uppercase"></a>
       <!-- inactive bc (current page) -->

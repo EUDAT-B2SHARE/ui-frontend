@@ -23,9 +23,11 @@ var phonecatApp = angular.module('phonecatApp', [
 
 
 // application runner
-phonecatApp.run(function($rootScope, Global, $window) {
+phonecatApp.run(function($rootScope, $window, Global, PageTitle, Breadcrumbs) {
   // global bindings (service)
   $rootScope.gbl = Global;
+  $rootScope.PageTitle = PageTitle;
+  $rootScope.Breadcrumbs = Breadcrumbs;
 
   // string helper startsWith
   if (typeof String.prototype.startsWith != 'function') {
@@ -39,12 +41,19 @@ phonecatApp.run(function($rootScope, Global, $window) {
       return this.slice(-str.length) == str;
     }
   }
-  // string helper isUuid
-  if (typeof String.prototype.isUuid != 'function'){
-    String.prototype.isUuid = function(str){
-      return typeof str == "string" && str.matches("[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}");
+  // string helper capticalize
+  if (typeof String.prototype.capitalize != 'function') {
+    String.prototype.capitalize = function() {
+      return this.charAt(0).toUpperCase() + this.slice(1);
     }
   }
+
+  // // string helper isUuid
+  // if (typeof String.prototype.isUuid != 'function'){
+  //   String.prototype.isUuid = function(str){
+  //     return typeof str == "string" && str.matches("[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}");
+  //   }
+  // }
 
 
 });

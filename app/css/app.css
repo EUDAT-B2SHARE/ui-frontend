@@ -292,6 +292,9 @@ input.ng-valid.ng-touched {
   margin: 0;
 }
 
+.img-thumbnail {
+  cursor: pointer;
+}
 /* presets */
 
 .text-uppercase {
@@ -325,4 +328,6 @@ input.ng-valid.ng-touched {
 .no-radius {
   border-radius: 0px;
 }
+
+
 
