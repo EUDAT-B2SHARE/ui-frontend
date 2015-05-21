@@ -55,6 +55,14 @@
   margin-right: 250px;
 }
 
+.user-notifications {
+  font-size: small;
+}
+
+.user-notifications h4 {
+  font-size: small;
+}
+
 .has-error{
   color: #b94a48;
 }
@@ -303,6 +311,10 @@ input.ng-valid.ng-touched {
 
 .bg-color-orange {
   background-color: #E5601E;
+}
+
+.color-primary{
+  color: #E5601E;
 }
 
 .text-color-white {

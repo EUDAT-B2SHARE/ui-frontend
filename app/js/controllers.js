@@ -37,7 +37,7 @@ b2Controllers.controller('DefaultCtrl', ['$scope', '$alert', '$location', '$time
   $scope.searchForm = {};
   $scope.searchForm.submitForm = function() {
     if($scope.searchForm.query == undefined || $scope.searchForm.query == ""){
-      $rootScope.Helper.flash_add($alert, 'search', 'Please provide a search value', 'warning');
+      $rootScope.Notify.flash_add($alert, 'search', 'Please provide a search value', 'warning');
       return;
     } else {
       $rootScope.Helper.flash_dismiss('search');
@@ -163,6 +163,25 @@ b2Controllers.controller('UserListCtrl', ['$scope', 'User', '$alert', '$timeout'
   // $rootScope.PageTitle.reset();
 }]);
 
+b2Controllers.controller('UserNotifyCtrl', ['$scope', 'User', '$alert', '$timeout', '$rootScope', '$window', '$location', 'Notify', '$routeParams',
+    function($scope, User, $alert, $timeout, $rootScope, $window, $location, Notify, $routeParams){
+
+  $scope.group = $routeParams.group;
+  // load notifications
+  $scope.notifications = Notify.getNotifications($scope.group);
+
+  $scope.dismiss = function(){
+    // dismiss notifications
+    Notify.dismiss();
+    // reload scope
+    $scope.notifications = Notify.getNotifications($scope.group);
+  };
+
+
+
+}]);
+
+
 b2Controllers.controller('SearchCtrl', ['$scope', '$routeParams', '$location',
     function($scope, $routeParams, $location){
   // $rootScope.PageTitle.reset();
@@ -192,6 +211,7 @@ b2Controllers.controller('DepositListCtrl', ['$scope', '$routeParams', 'Deposit'
     $scope.deposits = data.deposits;
   }, function(data){
     // error happend
+    // $rootScope.Notify.signal($alert, )
     $rootScope.Helper.flash_add($alert, 'deposits', 'Could not load latest deposits', 'warning');
   });
 

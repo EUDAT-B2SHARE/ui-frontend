@@ -1,0 +1,55 @@
+<div id="" class="container-fluid">
+  <div class="row">
+    <div class="col-xs-offset-1 col-sm-10">
+      <h2>User: Notifications</h2>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-offset-1 col-sm-2">
+      <!-- profile navigation -->
+      <div ng-include src="'layout/user/_menu.html'"></div>
+    </div>
+
+    <!-- menu items -->
+    <div class="col-sm-8 user-notifications">
+      <ul class="nav nav-tabs">
+        <li role="presentation" ng-class="Helper.routeActive('/users/notifications')">
+          <a href="#/users/notifications">All</a>
+        </li>
+        <li role="presentation" ng-show="Notify.present()" ng-class="Helper.routeActive('/users/notifications/flash')">
+          <a href="#/users/notifications/flash">Flash</a>
+        </li>
+        <!-- control -->
+        <li role="presentation" ng-show="Notify.present()" class="pull-right" ng-click="dismiss()">
+          <a href="#/users/notifications" class="btn btn-primary btn-sm">
+            <i class="fa fa-times"></i> Dismiss
+          </a>
+        </li>
+      </ul>
+      <div style="clear: right; height: 10px;">&nbsp;</div>
+    </div>
+
+    <!-- notifications -->
+    <div class="col-sm-8 user-notifications">
+      <div class="panel panel-{{n.type}}" ng-repeat="n in notifications | reverse: 'time'">
+        <div class="panel-heading">
+          <h4 class="panel-title">{{n.title}} - {{n.time | date:'yyyy-MM-dd HH:mm:ss'}}</h4>
+        </div>
+        <div class="panel-body">
+          <i class="fa fa-comment fa-2x"></i>
+          {{n.content}}
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-8 user-notifications empty">
+      <div class="" ng-show="!Notify.present()">
+        <div class="panel-body">
+          <i class="fa fa-comment fa-2x"></i>
+          No notifications
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

@@ -124,6 +124,12 @@ b2App.config(['$routeProvider', function($routeProvider){
   }).when('/users/', {
     templateUrl: 'layout/user/index.html',
     controller: 'UserListCtrl'
+  }).when('/users/notifications', {
+    templateUrl: 'layout/user/notifications.html',
+    controller: 'UserNotifyCtrl'
+  }).when('/users/notifications/:type', {
+    templateUrl: 'layout/user/notifications.html',
+    controller: 'UserNotifyCtrl'
   });
 
   // search

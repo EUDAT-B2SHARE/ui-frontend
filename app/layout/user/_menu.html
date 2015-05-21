@@ -1,14 +1,16 @@
 <div class="panel panel-default">
-	<div class="panel-heading">Settings</div>
-	<ul class="list-group">
-	  <li class="list-group-item {{gbl.routeActive('/users/profile')}}">
-      <a href="#/users/profile">Profile</a>
+  <ul class="list-group">
+    <li class="list-group-item {{Helper.routeActive('/users/profile')}}">
+      <a href="#/users/profile"><i class="fa fa-info"></i> Profile</a>
     </li>
-	  <li class="list-group-item {{gbl.routeActive('/users/groups')}}">
+    <li class="list-group-item {{Helper.routeActive('/users/notifications')}}">
+      <a href="#/users/notifications"><i class="fa fa-comments-o"></i> Notifications {{Notify.getCountStr()}}</a>
+    </li>
+    <li class="list-group-item {{Helper.routeActive('/users/groups')}}">
       <a href="#/users/groups">Groups</a>
     </li>
-	  <li class="list-group-item">Linked Accounts</li>
-	  <li class="list-group-item">Your Actions</li>
-	  <li class="list-group-item">Applications</li>
-	</ul>
+    <li class="list-group-item">Linked Accounts</li>
+    <li class="list-group-item">Your Actions</li>
+    <li class="list-group-item">Applications</li>
+  </ul>
 </div>
