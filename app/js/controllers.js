@@ -19,7 +19,7 @@ b2Controllers.controller('HomeCtrl', ['$scope', '$alert', '$location', '$timeout
     $scope.deposits = data.deposits;
   }, function(data){
     // error happend
-    $rootScope.Helper.flash_add($alert, 'deposits', 'Could not load latest deposits', 'warning');
+    $rootScope.Notify.flash_add($alert, 'deposits', 'Could not load latest deposits', 'warning');
   });
 
 }]);
@@ -40,7 +40,7 @@ b2Controllers.controller('DefaultCtrl', ['$scope', '$alert', '$location', '$time
       $rootScope.Notify.flash_add($alert, 'search', 'Please provide a search value', 'warning');
       return;
     } else {
-      $rootScope.Helper.flash_dismiss('search');
+      $rootScope.Notify.flash_dismiss('search');
     }
     // redirect to search page
     $location.path('/search/query/').search('query', $scope.searchForm.query);
@@ -126,8 +126,9 @@ b2Controllers.controller('UserCtrl', ['$scope', 'User', '$alert', '$timeout', '$
   if ($location.path() == "/users/logout"){
     delete $window.sessionStorage.user;
     $rootScope.user = undefined;
-    $rootScope.Helper.flash_dismiss('user');
-    $rootScope.Helper.flash_add($alert, 'user', 'You\'ve logged out', 'success');
+    $rootScope.Notify.dismiss();
+    $rootScope.Notify.flash_dismiss('user');
+    $rootScope.Notify.flash_add($alert, 'user', 'You\'ve logged out', 'success');
     $location.path("/users/login");
   }
 
@@ -138,19 +139,19 @@ b2Controllers.controller('UserCtrl', ['$scope', 'User', '$alert', '$timeout', '$
     // call user authenticate
     delete $window.sessionStorage.user;
     User.authenticate({email: f.email, password: f.password, remember: f.remember}, function(data){
-      $rootScope.Helper.flash_dismiss('user');
+      $rootScope.Notify.flash_dismiss('user');
       // TODO: handle invalid requests here!
       $window.sessionStorage.user = JSON.stringify(data.user);
       // user session (load when default not yet loaded)
       $rootScope.user = JSON.parse($window.sessionStorage.user);
       angular.element("[name=userLoginFormNg]").removeClass("has-error");
-      $rootScope.Helper.flash_add($alert, 'user', 'You\'ve logged in as: `'+data.user.name+'`', 'success');
+      $rootScope.Notify.flash_add($alert, 'user', 'You\'ve logged in as: `'+data.user.name+'`', 'success');
       $location.path('/users/profile');
     }, function(data){
       f.errorBase = data.data.error.base;
       angular.element("[name=userLoginFormNg]").addClass("has-error");
       if(String(data.status).startsWith("5")){
-        $rootScope.Helper.flash_add($alert, 'user', 'An error has occured', 'danger');
+        $rootScope.Notify.flash_add($alert, 'user', 'An error has occured', 'danger');
       }
     });
   };
@@ -163,18 +164,18 @@ b2Controllers.controller('UserListCtrl', ['$scope', 'User', '$alert', '$timeout'
   // $rootScope.PageTitle.reset();
 }]);
 
-b2Controllers.controller('UserNotifyCtrl', ['$scope', 'User', '$alert', '$timeout', '$rootScope', '$window', '$location', 'Notify', '$routeParams',
-    function($scope, User, $alert, $timeout, $rootScope, $window, $location, Notify, $routeParams){
+b2Controllers.controller('UserNotifyCtrl', ['$scope', 'User', '$alert', '$timeout', '$rootScope', '$window', '$location', '$routeParams',
+    function($scope, User, $alert, $timeout, $rootScope, $window, $location, $routeParams){
 
   $scope.group = $routeParams.group;
   // load notifications
-  $scope.notifications = Notify.getNotifications($scope.group);
+  $scope.notifications = $rootScope.Notify.getNotifications($scope.group);
 
   $scope.dismiss = function(){
     // dismiss notifications
-    Notify.dismiss();
+    $rootScope.Notify.dismiss();
     // reload scope
-    $scope.notifications = Notify.getNotifications($scope.group);
+    $scope.notifications = $rootScope.Notify.getNotifications($scope.group);
   };
 
 
@@ -212,7 +213,7 @@ b2Controllers.controller('DepositListCtrl', ['$scope', '$routeParams', 'Deposit'
   }, function(data){
     // error happend
     // $rootScope.Notify.signal($alert, )
-    $rootScope.Helper.flash_add($alert, 'deposits', 'Could not load latest deposits', 'warning');
+    $rootScope.Notify.flash_add($alert, 'deposits', 'Could not load latest deposits', 'warning');
   });
 
 }]);
@@ -229,7 +230,7 @@ b2Controllers.controller('DepositCtrl', ['$scope', '$routeParams', 'Deposit', '$
     // $rootScope.page_title = "B2SHARE / " + data.deposit.title;
   }, function(data){
     // error handling
-    $rootScope.Helper.flash_add($alert, 'deposit', 'Could not load deposit: `'+$routeParams.uuid+'`', 'warning');
+    $rootScope.Notify.flash_add($alert, 'deposit', 'Could not load deposit: `'+$routeParams.uuid+'`', 'warning');
     $window.history.back();
   });
 

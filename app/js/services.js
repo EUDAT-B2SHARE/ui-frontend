@@ -110,9 +110,9 @@ b2Services.factory('Notify', ['$rootScope', '$location', '$timeout', '$routePara
       }
     },
     flash_dismiss: function(clazz){
-      _notify.each(function(i, val){
-        console.log("test");
-      });
+      // _notify.flash.each(function(i, val){
+      //   console.log("test");
+      // });
       // dismiss flash by clicking button in dom
       $timeout(function() {
         angular.element('#alerts-container').find('.' + clazz + ' button').trigger('click');
@@ -131,7 +131,6 @@ b2Services.factory('Helper', ['$rootScope', '$location', '$timeout', '$routePara
     },
     // return active to be injected into <div class="..."> upon active route
     routeActive: function(route){
-      console.log($location.path());
       if($location.path() == route){
         return "active";
       }
@@ -140,14 +139,6 @@ b2Services.factory('Helper', ['$rootScope', '$location', '$timeout', '$routePara
       if($routeParams.page == page){
         return "active";
       }
-    },
-    // flash notification add
-    flash_add: function(action, clazz, content, type){
-    },
-    // flash notification dismiss (click)
-    flash_dismiss: function(type){
-      // click dismiss button
-
     },
   };
 }]);
