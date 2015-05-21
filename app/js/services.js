@@ -69,11 +69,15 @@ b2Services.factory('Breadcrumbs', ['$rootScope', '$location', '$timeout', '$rout
 // system to user notification
 
 
-b2Services.factory('Notify', ['$rootScope', '$location', '$timeout', '$routeParams',
-  function($rootScope, $location, $timeout, $routeParams){
+b2Services.factory('Notify', ['$rootScope', '$location', '$timeout', '$routeParams', '$window',
+  function($rootScope, $location, $timeout, $routeParams, $window){
   var _notify = {flash: []};
   return {
     getCountStr: function(){
+      // hide count for guests
+      if($window.sessionStorage.user == undefined)
+        return "";
+      // show count for users who have messages
       var cnt = this.getCount();
       if(cnt > 0)
         return "(" + cnt + ") ";
@@ -89,6 +93,7 @@ b2Services.factory('Notify', ['$rootScope', '$location', '$timeout', '$routePara
       return cnt;
     },
     getNotifications: function(group){
+      //TODO: group undefined should group all types together
       if(group == undefined)
         group = 'flash';
       return _notify[group];
