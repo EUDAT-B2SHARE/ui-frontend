@@ -127,7 +127,7 @@ b2Controllers.controller('UserCtrl', ['$scope', 'User', '$alert', '$timeout', '$
     delete $window.sessionStorage.user;
     $rootScope.user = undefined;
     $rootScope.Notify.dismiss();
-    $rootScope.Notify.flash_dismiss('user');
+    $rootScope.Notify.flash_dismiss();
     $rootScope.Notify.flash_add($alert, 'user', 'You\'ve logged out', 'success');
     $location.path("/users/login");
   }

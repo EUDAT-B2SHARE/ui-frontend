@@ -104,23 +104,26 @@ b2Services.factory('Notify', ['$rootScope', '$location', '$timeout', '$routePara
     dismiss: function(){
       _notify = {flash: []};
     },
-    flash_add: function(action, clazz, content, type){
+    flash_add: function(action, clazz, content, type, duration){
       if(type == undefined) type = "warning";
+      if(duration == undefined) duration = 4;
       var flash = {action: action, html_class: clazz, content: content, type: type, time: (new Date().getTime())};
       _notify.flash.push(flash);
       // show flash notification
       var content_msg = $('#alerts-container').find('.message.' + clazz).find('[ng-bind-html=content]').html();
       if(content_msg != content){
-        action({content: content, title: "", type: type, animation: 'am-fade-and-slide-top message ' + clazz, duration: 4});
+        action({content: content, title: "", type: type, animation: 'am-fade-and-slide-top message ' + clazz, duration: duration});
       }
     },
     flash_dismiss: function(clazz){
-      // _notify.flash.each(function(i, val){
-      //   console.log("test");
-      // });
-      // dismiss flash by clicking button in dom
       $timeout(function() {
-        angular.element('#alerts-container').find('.' + clazz + ' button').trigger('click');
+        if(clazz == undefined){
+          // dismiss all
+          angular.element('#alerts-container').find('button').trigger('click');
+        } else {
+          // dismiss specific class
+          angular.element('#alerts-container').find('.' + clazz + ' button').trigger('click');
+        }
       }, 100);
     },
   };
@@ -161,12 +164,6 @@ b2Services.factory('User', ['$resource', function($resource){
 }]);
 
 b2Services.factory('Deposit', ['$resource', '$window',  function($resource, $window){
-  var args = {};
-  console.log($window.sessionStorage.user);
-  // load user token from session
-  // if($window.sessionStorage.user != undefined){
-  //   args.token = JSON.parse($window.sessionStorage.user).token;
-  // }
   // deposit functions
   return $resource(backend + '/deposit/:action.json', {}, {
     deposits: { method: 'GET', params: {action: 'index', order: '@order', order_by: '@order_by', page: '@page', page_size: '@page_size'}},
@@ -174,7 +171,8 @@ b2Services.factory('Deposit', ['$resource', '$window',  function($resource, $win
   });
 }]);
 
-b2Services.factory('b2Interceptor', ['$window', function($window){
+// intercept all http requests
+b2Services.factory('b2Interceptor', ['$window', '$q', '$location', function($window, $q, $location){
   return {
     request: function(config){
       // inject user token
@@ -188,10 +186,17 @@ b2Services.factory('b2Interceptor', ['$window', function($window){
       // catch new user token (secure against replay attacks)
       var user = $window.sessionStorage.user;
       if(user && response.config.url.startsWith("http")){
-        console.log(response);
+        // console.log(response);
         // TODO: catch new user token here!
       }
       return response;
+    },
+    responseError: function(rejection){
+      // automatically logout when authentication fails
+      if(rejection.status == 401){
+        $location.path('/users/logout');
+      }
+      return $q.reject(rejection);
     }
   };
 }]);

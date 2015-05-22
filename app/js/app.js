@@ -20,7 +20,7 @@ var b2App = angular.module('b2App', [
     container: "#alerts-container",
   })
 }).config(['$httpProvider', function($httpProvider) {
-  // push interceptor to inject user token
+  // push interceptor to inject user token validation
   $httpProvider.interceptors.push('b2Interceptor');
 }]);
 
