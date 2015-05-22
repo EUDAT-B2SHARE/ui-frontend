@@ -160,12 +160,42 @@ b2Services.factory('User', ['$resource', function($resource){
   });
 }]);
 
-b2Services.factory('Deposit', ['$resource', function($resource){
+b2Services.factory('Deposit', ['$resource', '$window',  function($resource, $window){
+  var args = {};
+  console.log($window.sessionStorage.user);
+  // load user token from session
+  // if($window.sessionStorage.user != undefined){
+  //   args.token = JSON.parse($window.sessionStorage.user).token;
+  // }
+  // deposit functions
   return $resource(backend + '/deposit/:action.json', {}, {
     deposits: { method: 'GET', params: {action: 'index', order: '@order', order_by: '@order_by', page: '@page', page_size: '@page_size'}},
-    deposit: { method: 'GET', params: {action: 'deposit', uuid: '@uuid'} },
+    deposit: { method: 'GET', params: {action: 'deposit', uuid: '@uuid'}},
   });
 }]);
+
+b2Services.factory('b2Interceptor', ['$window', function($window){
+  return {
+    request: function(config){
+      // inject user token
+      var user = $window.sessionStorage.user;
+      if(user && config.url.startsWith("http")){
+        config.params.token = JSON.parse(user).token;
+      }
+      return config;
+    },
+    response: function(response){
+      // catch new user token (secure against replay attacks)
+      var user = $window.sessionStorage.user;
+      if(user && response.config.url.startsWith("http")){
+        console.log(response);
+        // TODO: catch new user token here!
+      }
+      return response;
+    }
+  };
+}]);
+
 
 
 

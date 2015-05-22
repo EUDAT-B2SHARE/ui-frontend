@@ -19,7 +19,11 @@ var b2App = angular.module('b2App', [
     placement: 'top',
     container: "#alerts-container",
   })
-});
+}).config(['$httpProvider', function($httpProvider) {
+  // push interceptor to inject user token
+  $httpProvider.interceptors.push('b2Interceptor');
+}]);
+
 
 
 // application runner
