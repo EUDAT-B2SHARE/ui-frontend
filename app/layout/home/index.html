@@ -20,9 +20,9 @@
     </div>
     <div class="col-sm-5">
       <!-- user registration (not logged in) -->
-      <div ng-include ng-show="user == undefined" src="'layout/user/_register.html'"></div>
+      <div ng-include ng-show="currentUser == undefined" src="'layout/user/_register.html'"></div>
       <!-- user logged in -->
-      <div ng-include ng-show="user != undefined" src="'layout/user/_user.html'"></div>
+      <div ng-include ng-show="currentUser != undefined" src="'layout/user/_user.html'"></div>
       <!-- search box -->
       <div ng-include src="'layout/deposit/_upload.html'"></div>
       <!-- latest deposits -->

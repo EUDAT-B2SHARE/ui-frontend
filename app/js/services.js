@@ -176,7 +176,6 @@ b2Services.factory('b2Interceptor', ['$window', '$q', '$location', function($win
   return {
     request: function(config){
       // inject user token
-      console.log(config.headers);
       var currentUser = $window.sessionStorage.user;
       // console.log(currentUser);
       if(currentUser && config.url.startsWith("http")){
@@ -197,9 +196,6 @@ b2Services.factory('b2Interceptor', ['$window', '$q', '$location', function($win
     responseError: function(rejection){
       // automatically logout when authentication fails
       if(rejection.status == 401){
-        console.log($window.sessionStorage.user);
-        console.log(rejection.headers);
-
         $location.path('/users/logout');
       }
       return $q.reject(rejection);
