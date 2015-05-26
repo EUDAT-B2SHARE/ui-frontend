@@ -83,6 +83,11 @@ b2Controllers.controller('DefaultCtrl', ['$scope', '$alert', '$location', '$time
       }
     });
 
+    // scroll pages into view (better effect than autofocus="true")
+    if(window.pageYOffset > 200){
+      $('html, body').animate({scrollTop: 0}, "medium");
+    }
+
     // breadcrumbs
     Breadcrumbs.load();
 
