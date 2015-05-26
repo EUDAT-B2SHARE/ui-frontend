@@ -30,7 +30,7 @@ b2Controllers.controller('DefaultCtrl', ['$scope', '$alert', '$location', '$time
 
   // user session
   if($window.sessionStorage.user != undefined){
-    $rootScope.user = JSON.parse($window.sessionStorage.user);
+    $rootScope.currentUser = JSON.parse($window.sessionStorage.user);
   }
 
   // search
@@ -130,7 +130,7 @@ b2Controllers.controller('UserCtrl', ['$scope', 'User', '$alert', '$timeout', '$
   // logout user
   if ($location.path() == "/users/logout"){
     delete $window.sessionStorage.user;
-    $rootScope.user = undefined;
+    $rootScope.currentUser = undefined;
     $rootScope.Notify.dismiss();
     $rootScope.Notify.flash_dismiss();
     $rootScope.Notify.flash_add($alert, 'user', 'You\'ve logged out', 'success');
@@ -148,7 +148,7 @@ b2Controllers.controller('UserCtrl', ['$scope', 'User', '$alert', '$timeout', '$
       // TODO: handle invalid requests here!
       $window.sessionStorage.user = JSON.stringify(data.user);
       // user session (load when default not yet loaded)
-      $rootScope.user = JSON.parse($window.sessionStorage.user);
+      $rootScope.currentUser = JSON.parse($window.sessionStorage.user);
       angular.element("[name=userLoginFormNg]").removeClass("has-error");
       $rootScope.Notify.flash_add($alert, 'user', 'You\'ve logged in as: `'+data.user.name+'`', 'success');
       $location.path('/users/profile');

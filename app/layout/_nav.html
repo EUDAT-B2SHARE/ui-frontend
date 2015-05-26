@@ -65,7 +65,7 @@
         </li>
 
         <!-- user dropdown show when user has session -->
-        <li class="dropdown " ng-show="user != undefined">
+        <li class="dropdown " ng-show="currentUser != undefined">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
             <i class="fa fa-user" ng-show="Notify.getCount() == ''"></i>
             <i class="fa fa-user color-primary" ng-show="Notify.getCount() != ''"></i>
@@ -87,7 +87,7 @@
           </ul>
         </li>
         <!-- show when user object is empty -->
-        <li class="{{Helper.routeActive('/users/login')}}" ng-show="user == undefined">
+        <li class="{{Helper.routeActive('/users/login')}}" ng-show="currentUser == undefined">
           <a href="#/users/login"><i class="fa fa-sign-in"></i></a>
         </li>
       </ul>

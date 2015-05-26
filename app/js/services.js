@@ -176,16 +176,19 @@ b2Services.factory('b2Interceptor', ['$window', '$q', '$location', function($win
   return {
     request: function(config){
       // inject user token
-      var user = $window.sessionStorage.user;
-      if(user && config.url.startsWith("http")){
-        config.params.token = JSON.parse(user).token;
+      console.log(config.headers);
+      var currentUser = $window.sessionStorage.user;
+      // console.log(currentUser);
+      if(currentUser && config.url.startsWith("http")){
+        config.headers.Authorization = 'B2SHARE ' + JSON.parse(currentUser).token;
+        // config.params.token = JSON.parse(currentUser).token;
       }
       return config;
     },
     response: function(response){
       // catch new user token (secure against replay attacks)
-      var user = $window.sessionStorage.user;
-      if(user && response.config.url.startsWith("http")){
+      var currentUser = $window.sessionStorage.user;
+      if(currentUser && response.config.url.startsWith("http")){
         // console.log(response);
         // TODO: catch new user token here!
       }
@@ -194,6 +197,9 @@ b2Services.factory('b2Interceptor', ['$window', '$q', '$location', function($win
     responseError: function(rejection){
       // automatically logout when authentication fails
       if(rejection.status == 401){
+        console.log($window.sessionStorage.user);
+        console.log(rejection.headers);
+
         $location.path('/users/logout');
       }
       return $q.reject(rejection);
