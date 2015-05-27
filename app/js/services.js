@@ -172,13 +172,14 @@ b2Services.factory('Deposit', ['$resource', '$window',  function($resource, $win
 }]);
 
 // intercept all http requests
-b2Services.factory('b2Interceptor', ['$window', '$q', '$location', function($window, $q, $location){
+b2Services.factory('b2Interceptor', ['$window', '$q', '$location', '$rootScope', function($window, $q, $location, $rootScope){
   return {
     request: function(config){
       // inject user token
       var currentUser = $window.sessionStorage.user;
       // console.log(currentUser);
       if(currentUser && config.url.startsWith("http")){
+        console.log(config);
         config.headers.Authorization = 'B2SHARE ' + JSON.parse(currentUser).token;
         // config.params.token = JSON.parse(currentUser).token;
       }
@@ -188,14 +189,24 @@ b2Services.factory('b2Interceptor', ['$window', '$q', '$location', function($win
       // catch new user token (secure against replay attacks)
       var currentUser = $window.sessionStorage.user;
       if(currentUser && response.config.url.startsWith("http")){
-        // console.log(response);
-        // TODO: catch new user token here!
+        var token = response.headers('x-token');
+        if(token){
+          var prefix = "B2SHARE"
+          if(token.startsWith(prefix)){
+            token = token.substring(prefix.length +1, token.length);
+          }
+          var currentUser = JSON.parse(currentUser);
+          currentUser.token = token;
+          $window.sessionStorage.user = JSON.stringify(currentUser);
+          $rootScope.currentUser = currentUser;
+        }
       }
       return response;
     },
     responseError: function(rejection){
       // automatically logout when authentication fails
       if(rejection.status == 401){
+        console.log(rejection);
         $location.path('/users/logout');
       }
       return $q.reject(rejection);
@@ -203,22 +214,3 @@ b2Services.factory('b2Interceptor', ['$window', '$q', '$location', function($win
   };
 }]);
 
-
-
-
-  // return {
-  //     $scope.searchForm = {};
-  // $scope.searchForm.submitForm = function() {
-  //   if($scope.searchForm.query == undefined){
-  //     $scope.searchForm_errorMessage = "Please provide a search value";
-  //     return;
-  //   }
-  //   $scope.errorName = "blaat";
-  //   $scope.message = "generic error";
-  //   $location.path('/search/query/' + $scope.searchForm.query);
-  // };
-
-  // $scope.goto = function(name) {
-  //   $location.path(name);
-  // }
-  // };
