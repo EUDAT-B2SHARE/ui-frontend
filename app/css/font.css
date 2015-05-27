@@ -12,23 +12,13 @@ h1, h2, h3, h4, h5, h6 {
   text-transform: uppercase;
 }
 
-@font-face{
-  font-family:Raleway;
-  font-style:normal;
-  font-weight:500;
-  src:local('Raleway Medium'),local('Raleway-Medium'),url(../bower_components/fonts-raleway/fonts/fonts-raleway/Raleway-Medium.ttf)) format('truetype')
+@font-face {
+  font-family: 'Raleway';
+  src: url(../bower_components/raleway/fonts/medium/raleway-medium.eot);
+  src: url(../bower_components/raleway/fonts/medium/raleway-medium.eot#iefix) format('embedded-opentype'),
+       url(../bower_components/raleway/fonts/medium/raleway-medium.woff) format('woff'),
+       url(../bower_components/raleway/fonts/medium/raleway-medium.ttf)  format('truetype'),
+       url(../bower_components/raleway/fonts/medium/raleway-medium.svg#Raleway) format('svg');
 }
 
-@font-face{
-  font-family:Raleway;
-  font-style:normal;
-  font-weight:600;
-  src:local('Raleway SemiBold'),local('Raleway-SemiBold'),url(../bower_components/fonts-raleway/fonts/fonts-raleway/Raleway-SemiBold.ttf)) format('truetype')
-}
 
-@font-face{
-  font-family:Raleway;
-  font-style:normal;
-  font-weight:700;
-  src:local('Raleway Bold'),local('Raleway-Bold'),url(../bower_components/fonts-raleway/fonts/fonts-raleway/Raleway-Bold.ttf)) format('truetype')
-}
