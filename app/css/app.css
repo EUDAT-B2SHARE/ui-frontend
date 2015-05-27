@@ -317,6 +317,10 @@ input.ng-valid.ng-touched {
   color: #E5601E;
 }
 
+.open .color-primary{
+  color: white;
+}
+
 .text-color-white {
   color: #fff;
 }
