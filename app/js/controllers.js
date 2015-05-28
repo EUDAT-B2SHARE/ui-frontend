@@ -25,13 +25,17 @@ b2Controllers.controller('HomeCtrl', ['$scope', '$alert', '$location', '$timeout
 }]);
 
 
-b2Controllers.controller('DefaultCtrl', ['$scope', '$alert', '$location', '$timeout', '$rootScope', '$window', 'Breadcrumbs', 'PageTitle',
-          function($scope, $alert, $location, $timeout, $rootScope, $window, Breadcrumbs, PageTitle){
+b2Controllers.controller('DefaultCtrl', ['$scope', '$alert', '$location', '$timeout', '$rootScope', '$window', 'Breadcrumbs', 'PageTitle', 'Session',
+  function($scope, $alert, $location, $timeout, $rootScope, $window, Breadcrumbs, PageTitle, Session){
 
   // user session
-  if($window.sessionStorage.user != undefined){
-    $rootScope.currentUser = JSON.parse($window.sessionStorage.user);
+  if(Session.has('user')){
+    $rootScope.user = Session.get('user');
   }
+
+  // if($window.sessionStorage.user != undefined){
+  //   $rootScope.user = JSON.parse($window.sessionStorage.user);
+  // }
 
   // search
   $scope.searchForm = {};
@@ -52,21 +56,21 @@ b2Controllers.controller('DefaultCtrl', ['$scope', '$alert', '$location', '$time
     var v = angular.element('.img-thumbnail');
     v.colorbox({href: function(){
         // bind href with src of img
-        return $(this).attr("src");
+        return angular.element(this).attr("src");
       }, maxWidth: "75%", fixed: true, scrolling: false
     });
     // stop background scrolling (body behind colorbox)
-    $(document).bind('cbox_open', function(){
-      $('body').addClass('stop-scrolling');
+    angular.element(document).bind('cbox_open', function(){
+      angular.element('body').addClass('stop-scrolling');
     });
     // enable scrolling
-    $(document).bind('cbox_closed', function(){
-      $('body').removeClass('stop-scrolling');
+    angular.element(document).bind('cbox_closed', function(){
+      angular.element('body').removeClass('stop-scrolling');
     });
 
     // a href hooks
-    $('a').each(function(i, a){
-      var a = $(a);
+    angular.element('a').each(function(i, a){
+      var a = angular.element(a);
       if(!a.attr("href").startsWith("#/")){
         if(a.attr("target") == undefined)
           // overwrite remote href to _blank target (if target not set)
@@ -76,7 +80,7 @@ b2Controllers.controller('DefaultCtrl', ['$scope', '$alert', '$location', '$time
         a.addClass("inner-link");
       }
       // detect expanded navs
-      var navs = $(document).find('nav .navbar-collapse');
+      var navs = angular.element(document).find('nav .navbar-collapse');
       if(navs.hasClass('in') && a.hasClass('inner-link')){
         // collapse navs on internal link click
         navs.removeClass('in');
@@ -85,7 +89,7 @@ b2Controllers.controller('DefaultCtrl', ['$scope', '$alert', '$location', '$time
 
     // scroll pages into view (better effect than autofocus="true")
     if(window.pageYOffset > 200){
-      $('html, body').animate({scrollTop: 0}, "medium");
+      angular.element('html, body').animate({scrollTop: 0}, "medium");
     }
 
     // breadcrumbs
@@ -94,12 +98,8 @@ b2Controllers.controller('DefaultCtrl', ['$scope', '$alert', '$location', '$time
     // page title
     PageTitle.reset();
 
-    // // page title
-    // $rootScope.page_title = "B2SHARE";
-    // var bs = $scope.breadcrumbs;
-    // if(bs != undefined && bs.length > 0){
-    //   $rootScope.page_title += " " + bs[bs.length-1].name.capitalize();
-    // }
+    // load session
+    Session.load();
 
   });
 }]);
@@ -129,7 +129,6 @@ b2Controllers.controller('UserCtrl', ['$scope', 'User', '$alert', '$timeout', '$
 
   // logout user
   if ($location.path() == "/users/logout"){
-    // delete $window.sessionStorage.user;
     Session.reset('user');
     $rootScope.currentUser = undefined;
     $rootScope.Notify.dismiss();
@@ -143,16 +142,18 @@ b2Controllers.controller('UserCtrl', ['$scope', 'User', '$alert', '$timeout', '$
   $scope.userLogin.submitForm = function() {
     var f = $scope.userLogin;
     // call user authenticate
-    Session.reset('user');
+    Session.unset('user');
     // delete $window.sessionStorage.user;
     User.authenticate({email: f.email, password: f.password, remember: f.remember}, function(data){
       $rootScope.Notify.flash_dismiss('user');
       // TODO: handle invalid requests here!
-      // $window.sessionStorage.user = JSON.stringify(data.user);
-      Session.set({user: data.user});
+      var loc = "session";
+      if(f.remember){
+        loc = "local";
+      }
+      Session.set({user: data.user}, loc);
       // user session (load when default not yet loaded)
-      $rootScope.currentUser = Session.get('user');
-      // $rootScope.currentUser = JSON.parse($window.sessionStorage.user);
+      $rootScope.user = Session.get('user'); //JSON.parse($window.sessionStorage.user);
       angular.element("[name=userLoginFormNg]").removeClass("has-error");
       $rootScope.Notify.flash_add($alert, 'user', 'You\'ve logged in as: `'+data.user.name+'`', 'success');
       $location.path('/users/profile');
@@ -194,7 +195,6 @@ b2Controllers.controller('UserNotifyCtrl', ['$scope', 'User', '$alert', '$timeou
 
 b2Controllers.controller('SearchCtrl', ['$scope', '$routeParams', '$location',
     function($scope, $routeParams, $location){
-  // $rootScope.PageTitle.reset();
   // map parameter on scope
   $scope.query = $routeParams.query;
 
@@ -202,13 +202,10 @@ b2Controllers.controller('SearchCtrl', ['$scope', '$routeParams', '$location',
 
 b2Controllers.controller('SearchListCtrl', ['$scope', '$routeParams', '$location',
     function($scope, $routeParams, $location){
-  // $rootScope.PageTitle.reset();
 }]);
 
 b2Controllers.controller('DepositListCtrl', ['$scope', '$routeParams', 'Deposit', '$rootScope', '$alert', '$location',
     function($scope, $routeParams, Deposit, $rootScope, $alert, $location){
-  // $rootScope.PageTitle.reset();
-
   // force page offset
   if($routeParams.page == undefined){
     $location.path('/deposits').search('page', 1);
@@ -221,7 +218,6 @@ b2Controllers.controller('DepositListCtrl', ['$scope', '$routeParams', 'Deposit'
     $scope.deposits = data.deposits;
   }, function(data){
     // error happend
-    // $rootScope.Notify.signal($alert, )
     $rootScope.Notify.flash_add($alert, 'deposits', 'Could not load latest deposits', 'warning');
   });
 
@@ -236,7 +232,6 @@ b2Controllers.controller('DepositCtrl', ['$scope', '$routeParams', 'Deposit', '$
   Deposit.deposit({uuid: $routeParams.uuid}, function(data){
     $rootScope.PageTitle.setSubject(data.deposit.title);
     $scope.deposit = data.deposit;
-    // $rootScope.page_title = "B2SHARE / " + data.deposit.title;
   }, function(data){
     // error handling
     $rootScope.Notify.flash_add($alert, 'deposit', 'Could not load deposit: `'+$routeParams.uuid+'`', 'warning');

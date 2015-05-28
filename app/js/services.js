@@ -1,6 +1,6 @@
 'use strict';
 
-var backend = 'http://localhost:5000';
+var backend = 'http://145.100.1.21:5000';
 
 /* Services */
 
@@ -105,7 +105,7 @@ b2Services.factory('Notify', ['$rootScope', '$location', '$timeout', '$routePara
       var flash = {action: action, html_class: clazz, content: content, type: type, time: (new Date().getTime())};
       _notify.flash.push(flash);
       // show flash notification
-      var content_msg = $('#alerts-container').find('.message.' + clazz).find('[ng-bind-html=content]').html();
+      var content_msg = angular.element('#alerts-container').find('.message.' + clazz).find('[ng-bind-html=content]').html();
       if(content_msg != content){
         action({content: content, title: "", type: type, animation: 'am-fade-and-slide-top message ' + clazz, duration: duration});
       }
@@ -193,8 +193,8 @@ b2Services.factory('Deposit', ['$resource', '$window',  function($resource, $win
 
 
 // intercept all http requests
-b2Services.factory('b2Interceptor', ['$window', '$q', '$location', '$rootScope', 'Session',
-  function($window, $q, $location, $rootScope, Session){
+b2Services.factory('b2Interceptor', ['$window', '$q', '$location', 'Session',
+  function($window, $q, $location, Session){
   return {
     request: function(config){
       // inject user token
@@ -207,16 +207,13 @@ b2Services.factory('b2Interceptor', ['$window', '$q', '$location', '$rootScope',
     response: function(response){
       // catch new user token (secure against replay attacks)
       var currentUser = Session.get('user');
+      var prefix = "B2SHARE";
       if(currentUser && response.config.url.startsWith("http")){
         var token = response.headers('x-token');
-        if(token){
-          var prefix = "B2SHARE"
-          if(token.startsWith(prefix)){
-            token = token.substring(prefix.length +1, token.length);
-          }
+        if(token && token.startsWith(prefix)){
+          token = token.substring(prefix.length +1, token.length);
           currentUser.token = token;
-          Session.set({user: currentUser});
-          $rootScope.currentUser = currentUser;
+          Session.set({user: currentUser}, 'active');
         }
       }
       return response;
@@ -224,9 +221,62 @@ b2Services.factory('b2Interceptor', ['$window', '$q', '$location', '$rootScope',
     responseError: function(rejection){
       // automatically logout when authentication fails
       if(rejection.status == 401){
+        Session.unset('user');
         $location.path('/users/logout');
       }
       return $q.reject(rejection);
+    }
+  };
+}]);
+
+b2Services.factory('Session', ['$rootScope', '$location', '$timeout', '$routeParams', '$window',
+  function($rootScope, $location, $timeout, $routeParams, $window){
+
+  return {
+    unset: function(key){
+      if( key in $window.sessionStorage){
+        delete $window.sessionStorage[key];
+      }
+      if(key in $window.localStorage){
+        delete $window.localStorage[key];
+      }
+    },
+    set: function(values, location){
+      if(location == "active"){
+        location = this.whichStorage('user');
+      }
+      for(var k in values){
+        var value = values[k];
+        var done = false;
+        if(location == "session"){
+          $window.sessionStorage[k] = JSON.stringify(value);
+          done = true;
+        } else if(location == "local"){
+          $window.localStorage[k] = JSON.stringify(value);
+          done = true;
+        }
+        if(done) break;
+      }
+    },
+    get: function(key){
+      if(key in $window.sessionStorage){
+        return JSON.parse($window.sessionStorage[key]);
+      } else if (key in $window.localStorage){
+        return JSON.parse($window.localStorage[key]);
+      }
+    },
+    has: function(key){
+      return (key in $window.sessionStorage || key in $window.localStorage);
+    },
+    whichStorage: function(key){
+      if (key in $window.sessionStorage){
+        return "session";
+      } else if(key in $window.localStorage){
+        return "local";
+      }
+    },
+    load: function(){
+      $rootScope.currentUser = this.get('user');
     }
   };
 }]);
