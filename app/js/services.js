@@ -1,6 +1,6 @@
 'use strict';
 
-var backend = 'http://localhost:5000';
+var backend = 'http://145.100.1.21:5000';
 
 /* Services */
 
@@ -67,8 +67,6 @@ b2Services.factory('Breadcrumbs', ['$rootScope', '$location', '$timeout', '$rout
 }]);
 
 // system to user notification
-
-
 b2Services.factory('Notify', ['$rootScope', '$location', '$timeout', '$routeParams', '$window',
   function($rootScope, $location, $timeout, $routeParams, $window){
   var _notify = {flash: []};
@@ -172,28 +170,35 @@ b2Services.factory('Deposit', ['$resource', '$window',  function($resource, $win
 }]);
 
 // intercept all http requests
-b2Services.factory('b2Interceptor', ['$window', '$q', '$location', function($window, $q, $location){
+b2Services.factory('b2Interceptor', ['$window', '$q', '$location', 'Session',
+  function($window, $q, $location, Session){
   return {
     request: function(config){
       // inject user token
-      var user = $window.sessionStorage.user;
-      if(user && config.url.startsWith("http")){
-        config.params.token = JSON.parse(user).token;
+      var currentUser = Session.get('user');
+      if(currentUser && config.url.startsWith("http")){
+        config.headers.Authorization = 'B2SHARE ' + currentUser.token;
       }
       return config;
     },
     response: function(response){
       // catch new user token (secure against replay attacks)
-      var user = $window.sessionStorage.user;
-      if(user && response.config.url.startsWith("http")){
-        // console.log(response);
-        // TODO: catch new user token here!
+      var currentUser = Session.get('user');
+      var prefix = "B2SHARE";
+      if(currentUser && response.config.url.startsWith("http")){
+        var token = response.headers('x-token');
+        if(token && token.startsWith(prefix)){
+          token = token.substring(prefix.length +1, token.length);
+          currentUser.token = token;
+          Session.set({user: currentUser}, 'active');
+        }
       }
       return response;
     },
     responseError: function(rejection){
       // automatically logout when authentication fails
       if(rejection.status == 401){
+        Session.unset('user');
         $location.path('/users/logout');
       }
       return $q.reject(rejection);
@@ -201,22 +206,52 @@ b2Services.factory('b2Interceptor', ['$window', '$q', '$location', function($win
   };
 }]);
 
+b2Services.factory('Session', ['$rootScope', '$location', '$timeout', '$routeParams', '$window',
+  function($rootScope, $location, $timeout, $routeParams, $window){
 
+  return {
+    unset: function(key){
+      if( key in $window.sessionStorage){
+        delete $window.sessionStorage[key];
+      }
+      if(key in $window.localStorage){
+        delete $window.localStorage[key];
+      }
+    },
+    set: function(values, location){
+      if(location == "active"){
+        location = this.whichStorage('user');
+      }
+      for(var k in values){
+        var value = values[k];
+        var done = false;
+        if(location == "session"){
+          $window.sessionStorage[k] = JSON.stringify(value);
+          done = true;
+        } else if(location == "local"){
+          $window.localStorage[k] = JSON.stringify(value);
+          done = true;
+        }
+        if(done) break;
+      }
+    },
+    get: function(key){
+      if(key in $window.sessionStorage){
+        return JSON.parse($window.sessionStorage[key]);
+      } else if (key in $window.localStorage){
+        return JSON.parse($window.localStorage[key]);
+      }
+    },
+    has: function(key){
+      return (key in $window.sessionStorage || key in $window.localStorage);
+    },
+    whichStorage: function(key){
+      if (key in $window.sessionStorage){
+        return "session";
+      } else if(key in $window.localStorage){
+        return "local";
+      }
+    }
+  };
+}]);
 
-
-  // return {
-  //     $scope.searchForm = {};
-  // $scope.searchForm.submitForm = function() {
-  //   if($scope.searchForm.query == undefined){
-  //     $scope.searchForm_errorMessage = "Please provide a search value";
-  //     return;
-  //   }
-  //   $scope.errorName = "blaat";
-  //   $scope.message = "generic error";
-  //   $location.path('/search/query/' + $scope.searchForm.query);
-  // };
-
-  // $scope.goto = function(name) {
-  //   $location.path(name);
-  // }
-  // };

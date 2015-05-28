@@ -25,13 +25,18 @@ b2Controllers.controller('HomeCtrl', ['$scope', '$alert', '$location', '$timeout
 }]);
 
 
-b2Controllers.controller('DefaultCtrl', ['$scope', '$alert', '$location', '$timeout', '$rootScope', '$window', 'Breadcrumbs', 'PageTitle',
-          function($scope, $alert, $location, $timeout, $rootScope, $window, Breadcrumbs, PageTitle){
+b2Controllers.controller('DefaultCtrl', ['$scope', '$alert', '$location', '$timeout', '$rootScope', '$window', 'Breadcrumbs', 'PageTitle', 'Session',
+  function($scope, $alert, $location, $timeout, $rootScope, $window, Breadcrumbs, PageTitle, Session){
 
   // user session
-  if($window.sessionStorage.user != undefined){
-    $rootScope.user = JSON.parse($window.sessionStorage.user);
+
+  if(Session.has('user')){
+    $rootScope.user = Session.get('user');
   }
+
+  // if($window.sessionStorage.user != undefined){
+  //   $rootScope.user = JSON.parse($window.sessionStorage.user);
+  // }
 
   // search
   $scope.searchForm = {};
@@ -124,12 +129,12 @@ b2Controllers.controller('HelpListCtrl', ['$scope', '$rootScope', function($scop
 
 }]);
 
-b2Controllers.controller('UserCtrl', ['$scope', 'User', '$alert', '$timeout', '$rootScope', '$window', '$location',
-    function($scope, User, $alert, $timeout, $rootScope, $window, $location){
+b2Controllers.controller('UserCtrl', ['$scope', 'User', '$alert', '$timeout', '$rootScope', '$window', '$location', 'Session',
+    function($scope, User, $alert, $timeout, $rootScope, $window, $location, Session){
 
   // logout user
   if ($location.path() == "/users/logout"){
-    delete $window.sessionStorage.user;
+    Session.unset('user');
     $rootScope.user = undefined;
     $rootScope.Notify.dismiss();
     $rootScope.Notify.flash_dismiss();
@@ -142,13 +147,18 @@ b2Controllers.controller('UserCtrl', ['$scope', 'User', '$alert', '$timeout', '$
   $scope.userLogin.submitForm = function() {
     var f = $scope.userLogin;
     // call user authenticate
-    delete $window.sessionStorage.user;
+    Session.unset('user');
+    // delete $window.sessionStorage.user;
     User.authenticate({email: f.email, password: f.password, remember: f.remember}, function(data){
       $rootScope.Notify.flash_dismiss('user');
       // TODO: handle invalid requests here!
-      $window.sessionStorage.user = JSON.stringify(data.user);
+      var loc = "session";
+      if(f.remember){
+        loc = "local";
+      }
+      Session.set({user: data.user}, loc);
       // user session (load when default not yet loaded)
-      $rootScope.user = JSON.parse($window.sessionStorage.user);
+      $rootScope.user = Session.get('user'); //JSON.parse($window.sessionStorage.user);
       angular.element("[name=userLoginFormNg]").removeClass("has-error");
       $rootScope.Notify.flash_add($alert, 'user', 'You\'ve logged in as: `'+data.user.name+'`', 'success');
       $location.path('/users/profile');
@@ -190,7 +200,6 @@ b2Controllers.controller('UserNotifyCtrl', ['$scope', 'User', '$alert', '$timeou
 
 b2Controllers.controller('SearchCtrl', ['$scope', '$routeParams', '$location',
     function($scope, $routeParams, $location){
-  // $rootScope.PageTitle.reset();
   // map parameter on scope
   $scope.query = $routeParams.query;
 
@@ -198,13 +207,10 @@ b2Controllers.controller('SearchCtrl', ['$scope', '$routeParams', '$location',
 
 b2Controllers.controller('SearchListCtrl', ['$scope', '$routeParams', '$location',
     function($scope, $routeParams, $location){
-  // $rootScope.PageTitle.reset();
 }]);
 
 b2Controllers.controller('DepositListCtrl', ['$scope', '$routeParams', 'Deposit', '$rootScope', '$alert', '$location',
     function($scope, $routeParams, Deposit, $rootScope, $alert, $location){
-  // $rootScope.PageTitle.reset();
-
   // force page offset
   if($routeParams.page == undefined){
     $location.path('/deposits').search('page', 1);
@@ -217,7 +223,6 @@ b2Controllers.controller('DepositListCtrl', ['$scope', '$routeParams', 'Deposit'
     $scope.deposits = data.deposits;
   }, function(data){
     // error happend
-    // $rootScope.Notify.signal($alert, )
     $rootScope.Notify.flash_add($alert, 'deposits', 'Could not load latest deposits', 'warning');
   });
 
@@ -232,7 +237,6 @@ b2Controllers.controller('DepositCtrl', ['$scope', '$routeParams', 'Deposit', '$
   Deposit.deposit({uuid: $routeParams.uuid}, function(data){
     $rootScope.PageTitle.setSubject(data.deposit.title);
     $scope.deposit = data.deposit;
-    // $rootScope.page_title = "B2SHARE / " + data.deposit.title;
   }, function(data){
     // error handling
     $rootScope.Notify.flash_add($alert, 'deposit', 'Could not load deposit: `'+$routeParams.uuid+'`', 'warning');
