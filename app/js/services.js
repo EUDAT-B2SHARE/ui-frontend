@@ -7,7 +7,6 @@ var backend = 'http://localhost:5000';
 var b2Services = angular.module('b2Services', ['ngResource']);
 
 // page title object (only used here)
-
 b2Services.factory('PageTitle', ['$rootScope', '$location', '$timeout', '$routeParams',
   function($rootScope, $location, $timeout, $routeParams){
   var _pageTitle = {page: "", subject: "", title: "B2SHARE"};
@@ -33,8 +32,6 @@ b2Services.factory('PageTitle', ['$rootScope', '$location', '$timeout', '$routeP
 }]);
 
 // breadcrumbs
-
-
 b2Services.factory('Breadcrumbs', ['$rootScope', '$location', '$timeout', '$routeParams',
   function($rootScope, $location, $timeout, $routeParams){
   var _breadcrumbs = [];
@@ -67,8 +64,6 @@ b2Services.factory('Breadcrumbs', ['$rootScope', '$location', '$timeout', '$rout
 }]);
 
 // system to user notification
-
-
 b2Services.factory('Notify', ['$rootScope', '$location', '$timeout', '$routeParams', '$window',
   function($rootScope, $location, $timeout, $routeParams, $window){
   var _notify = {flash: []};
@@ -129,7 +124,30 @@ b2Services.factory('Notify', ['$rootScope', '$location', '$timeout', '$routePara
   };
 }]);
 
+// session helper
+b2Services.factory('Session', ['$rootScope', '$location', '$timeout', '$routeParams', '$window',
+  function($rootScope, $location, $timeout, $routeParams, $window){
+  var _notify = {flash: []};
+  return {
+    get: function(name){
+      if($window.sessionStorage[name]){
+        return JSON.parse($window.sessionStorage[name]);
+      }
+      return {};
+    },
+    set: function(values){
+      for(var key in values){
+        var value = values[key];
+        $window.sessionStorage[key] = JSON.stringify(value);
+      }
+    },
+    reset: function(){
+      $window.sessionStorage = {};
+    }
+  };
+}]);
 
+// generic helper
 b2Services.factory('Helper', ['$rootScope', '$location', '$timeout', '$routeParams',
   function($rootScope, $location, $timeout, $routeParams){
   return {
@@ -152,6 +170,8 @@ b2Services.factory('Helper', ['$rootScope', '$location', '$timeout', '$routePara
 }]);
 
 
+// MODELS --------------------------------------
+
 b2Services.factory('User', ['$resource', function($resource){
   return $resource(backend + '/user/:action.json', {}, {
     authenticate: { method: 'POST', params: {action: "authenticate", remember: '@remember'},
@@ -171,23 +191,22 @@ b2Services.factory('Deposit', ['$resource', '$window',  function($resource, $win
   });
 }]);
 
+
 // intercept all http requests
-b2Services.factory('b2Interceptor', ['$window', '$q', '$location', '$rootScope', function($window, $q, $location, $rootScope){
+b2Services.factory('b2Interceptor', ['$window', '$q', '$location', '$rootScope', 'Session',
+  function($window, $q, $location, $rootScope, Session){
   return {
     request: function(config){
       // inject user token
-      var currentUser = $window.sessionStorage.user;
-      // console.log(currentUser);
+      var currentUser = Session.get('user');
       if(currentUser && config.url.startsWith("http")){
-        console.log(config);
-        config.headers.Authorization = 'B2SHARE ' + JSON.parse(currentUser).token;
-        // config.params.token = JSON.parse(currentUser).token;
+        config.headers.Authorization = 'B2SHARE ' + currentUser.token;
       }
       return config;
     },
     response: function(response){
       // catch new user token (secure against replay attacks)
-      var currentUser = $window.sessionStorage.user;
+      var currentUser = Session.get('user');
       if(currentUser && response.config.url.startsWith("http")){
         var token = response.headers('x-token');
         if(token){
@@ -195,9 +214,8 @@ b2Services.factory('b2Interceptor', ['$window', '$q', '$location', '$rootScope',
           if(token.startsWith(prefix)){
             token = token.substring(prefix.length +1, token.length);
           }
-          var currentUser = JSON.parse(currentUser);
           currentUser.token = token;
-          $window.sessionStorage.user = JSON.stringify(currentUser);
+          Session.set({user: currentUser});
           $rootScope.currentUser = currentUser;
         }
       }
@@ -206,7 +224,6 @@ b2Services.factory('b2Interceptor', ['$window', '$q', '$location', '$rootScope',
     responseError: function(rejection){
       // automatically logout when authentication fails
       if(rejection.status == 401){
-        console.log(rejection);
         $location.path('/users/logout');
       }
       return $q.reject(rejection);

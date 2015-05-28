@@ -124,12 +124,13 @@ b2Controllers.controller('HelpListCtrl', ['$scope', '$rootScope', function($scop
 
 }]);
 
-b2Controllers.controller('UserCtrl', ['$scope', 'User', '$alert', '$timeout', '$rootScope', '$window', '$location',
-    function($scope, User, $alert, $timeout, $rootScope, $window, $location){
+b2Controllers.controller('UserCtrl', ['$scope', 'User', '$alert', '$timeout', '$rootScope', '$window', '$location', 'Session',
+    function($scope, User, $alert, $timeout, $rootScope, $window, $location, Session){
 
   // logout user
   if ($location.path() == "/users/logout"){
-    delete $window.sessionStorage.user;
+    // delete $window.sessionStorage.user;
+    Session.reset('user');
     $rootScope.currentUser = undefined;
     $rootScope.Notify.dismiss();
     $rootScope.Notify.flash_dismiss();
@@ -142,13 +143,16 @@ b2Controllers.controller('UserCtrl', ['$scope', 'User', '$alert', '$timeout', '$
   $scope.userLogin.submitForm = function() {
     var f = $scope.userLogin;
     // call user authenticate
-    delete $window.sessionStorage.user;
+    Session.reset('user');
+    // delete $window.sessionStorage.user;
     User.authenticate({email: f.email, password: f.password, remember: f.remember}, function(data){
       $rootScope.Notify.flash_dismiss('user');
       // TODO: handle invalid requests here!
-      $window.sessionStorage.user = JSON.stringify(data.user);
+      // $window.sessionStorage.user = JSON.stringify(data.user);
+      Session.set({user: data.user});
       // user session (load when default not yet loaded)
-      $rootScope.currentUser = JSON.parse($window.sessionStorage.user);
+      $rootScope.currentUser = Session.get('user');
+      // $rootScope.currentUser = JSON.parse($window.sessionStorage.user);
       angular.element("[name=userLoginFormNg]").removeClass("has-error");
       $rootScope.Notify.flash_add($alert, 'user', 'You\'ve logged in as: `'+data.user.name+'`', 'success');
       $location.path('/users/profile');

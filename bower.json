@@ -19,6 +19,7 @@
     "angular-strap": "~2.2.1",
     "bootstrap": "~3.3.4",
     "components-font-awesome": "~4.3.0",
-    "raleway": "1.0.1"
+    "raleway": "~1.0.1",
+    "angular-md5": "~0.1.7"
   }
 }
