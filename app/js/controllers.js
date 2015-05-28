@@ -71,7 +71,7 @@ b2Controllers.controller('DefaultCtrl', ['$scope', '$alert', '$location', '$time
     // a href hooks
     angular.element('a').each(function(i, a){
       var a = angular.element(a);
-      if(!a.attr("href").startsWith("#/")){
+      if(a.attr("href") != undefined && !a.attr("href").startsWith("#/")){
         if(a.attr("target") == undefined)
           // overwrite remote href to _blank target (if target not set)
           a.attr("target", "_blank");
@@ -153,7 +153,8 @@ b2Controllers.controller('UserCtrl', ['$scope', 'User', '$alert', '$timeout', '$
       }
       Session.set({user: data.user}, loc);
       // user session (load when default not yet loaded)
-      $rootScope.user = Session.get('user'); //JSON.parse($window.sessionStorage.user);
+      $rootScope.user = Session.get('user');
+      $scope.info = data.info;
       angular.element("[name=userLoginFormNg]").removeClass("has-error");
       $rootScope.Notify.flash_add($alert, 'user', 'You\'ve logged in as: `'+data.user.name+'`', 'success');
       $location.path('/users/profile');
@@ -204,22 +205,28 @@ b2Controllers.controller('SearchListCtrl', ['$scope', '$routeParams', '$location
     function($scope, $routeParams, $location){
 }]);
 
-b2Controllers.controller('DepositListCtrl', ['$scope', '$routeParams', 'Deposit', '$rootScope', '$alert', '$location',
-    function($scope, $routeParams, Deposit, $rootScope, $alert, $location){
+b2Controllers.controller('DepositListCtrl', ['$scope', '$routeParams', 'Deposit', '$rootScope', '$alert', '$location', 'Pagination',
+    function($scope, $routeParams, Deposit, $rootScope, $alert, $location, Pagination){
   // force page offset
   if($routeParams.page == undefined){
     $location.path('/deposits').search('page', 1);
     return;
   }
-  $scope.currentPage = $routeParams.page;
 
   // latest 20 deposits
-  Deposit.deposits({page: $scope.currentPage, page_size: 20, order_by: 'created_at', order: 'desc'}, function(data){
+  var currentPage = $routeParams.page;
+  var pageSize = 20;
+  Deposit.deposits({page: currentPage, page_size: pageSize, order_by: 'created_at', order: 'desc'}, function(data){
     $scope.deposits = data.deposits;
+    $scope.info = data.info;
+    var totalItemCnt = $scope.info.count;
+    // pagination
+    $scope.pagination = Pagination.show('#deposits-paginator', 'deposits', currentPage, pageSize, data.info.count);
   }, function(data){
     // error happend
     $rootScope.Notify.flash_add($alert, 'deposits', 'Could not load latest deposits', 'warning');
   });
+
 
 }]);
 
@@ -232,6 +239,7 @@ b2Controllers.controller('DepositCtrl', ['$scope', '$routeParams', 'Deposit', '$
   Deposit.deposit({uuid: $routeParams.uuid}, function(data){
     $rootScope.PageTitle.setSubject(data.deposit.title);
     $scope.deposit = data.deposit;
+    $scope.info = data.info;
   }, function(data){
     // error handling
     $rootScope.Notify.flash_add($alert, 'deposit', 'Could not load deposit: `'+$routeParams.uuid+'`', 'warning');

@@ -169,6 +169,70 @@ b2Services.factory('Helper', ['$rootScope', '$location', '$timeout', '$routePara
   };
 }]);
 
+b2Services.factory('Pagination', ['$rootScope', '$location', '$routeParams', 'Helper',
+  function($rootScope, $location, $routeParams, Helper){
+  return {
+    show: function(self, page, currentPage, pageSize, itemCnt){
+      // some calculations
+      var p = "#/"+page+"?page="
+      var showItems = 10;
+      var lastPage = Math.ceil(itemCnt / pageSize);
+      currentPage = 1*currentPage;
+      var showFirst = currentPage+1 > Math.ceil(showItems / 2);
+      var showPrev = currentPage > 1;
+      var showNext = currentPage < lastPage;
+      var showLast = currentPage < lastPage;
+      // wrappers
+      var wrap = $('<div/>', { class: 'pagination' });
+      var btn_group = $('<div/>', {'class': "btn-group", 'role': "group", 'aria-label': "..."});
+
+      if(showFirst){
+        var icon = $('<i/>', {class: "fa fa-fast-backward"});
+        var a_first = $('<a/>', {'href': p+""+1, class: "btn btn-warning", 'text': ""});
+        icon.prependTo(a_first);
+        a_first.appendTo(btn_group);
+      }
+
+      // page back
+      if(showPrev){
+        var icon = $('<i/>', {class: "fa fa-step-backward"});
+        var a_prev = $('<a/>', {'href': p+""+(currentPage-1), class: "btn btn-default", 'text': ""});
+        icon.prependTo(a_prev);
+        a_prev.appendTo(btn_group);
+      }
+
+      // current page + surrounding pages
+      for(var i = currentPage-(showItems/2); i < currentPage+(showItems/2); i++){
+        if(i > lastPage) break;
+        if(i < 1) continue;
+        var a_curr = $("<a/>", {'href': p+""+i, class: 'btn btn-default ' +
+          Helper.pageActive(i), text: i})
+        a_curr.appendTo(btn_group);
+      }
+
+      // next page
+      if(showNext){
+        var icon = $('<i/>', {class: "fa fa-step-forward"});
+        var a_next = $('<a/>', {'href': p+""+(1*currentPage+1), class: "btn btn-primary", 'text': ""});
+        icon.appendTo(a_next);
+        a_next.appendTo(btn_group);
+      }
+
+      if(showLast){
+        var icon = $('<i/>', {class: "fa fa-fast-forward"});
+        var a_last = $('<a/>', {'href': p+""+lastPage, class: "btn btn-warning", 'text': ""});
+        icon.appendTo(a_last);
+        a_last.appendTo(btn_group);
+      }
+
+      // wrapper placeholders
+      btn_group.appendTo(wrap);
+      wrap.appendTo(self);
+      // return $sce.trustAsHtml(wrap);
+    }
+  };
+}]);
+
 
 // MODELS --------------------------------------
 

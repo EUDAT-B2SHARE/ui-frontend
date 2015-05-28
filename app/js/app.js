@@ -27,12 +27,14 @@ var b2App = angular.module('b2App', [
 
 
 // application runner
-b2App.run(function($rootScope, $window, Helper, PageTitle, Breadcrumbs, Notify) {
+b2App.run(['$rootScope', '$window', 'Helper', 'PageTitle', 'Breadcrumbs', 'Notify', 'Pagination',
+  function($rootScope, $window, Helper, PageTitle, Breadcrumbs, Notify, Pagination) {
   // global bindings (service)
   $rootScope.Helper = Helper;
   $rootScope.PageTitle = PageTitle;
   $rootScope.Breadcrumbs = Breadcrumbs;
   $rootScope.Notify = Notify;
+  $rootScope.Pagination = Pagination;
 
   // string helper startsWith
   if (typeof String.prototype.startsWith != 'function') {
@@ -61,7 +63,7 @@ b2App.run(function($rootScope, $window, Helper, PageTitle, Breadcrumbs, Notify) 
   // }
 
 
-});
+}]);
 
 // routes
 b2App.config(['$routeProvider', function($routeProvider){
