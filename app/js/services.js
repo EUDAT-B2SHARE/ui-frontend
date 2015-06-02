@@ -1,6 +1,6 @@
 'use strict';
 
-var backend = 'http://145.100.1.21:5000';
+var backend = 'http://localhost:5000';
 
 /* Services */
 
@@ -121,29 +121,6 @@ b2Services.factory('Notify', ['$rootScope', '$location', '$timeout', '$routePara
         }
       }, 100);
     },
-  };
-}]);
-
-// session helper
-b2Services.factory('Session', ['$rootScope', '$location', '$timeout', '$routeParams', '$window',
-  function($rootScope, $location, $timeout, $routeParams, $window){
-  var _notify = {flash: []};
-  return {
-    get: function(name){
-      if($window.sessionStorage[name]){
-        return JSON.parse($window.sessionStorage[name]);
-      }
-      return {};
-    },
-    set: function(values){
-      for(var key in values){
-        var value = values[key];
-        $window.sessionStorage[key] = JSON.stringify(value);
-      }
-    },
-    reset: function(){
-      $window.sessionStorage = {};
-    }
   };
 }]);
 

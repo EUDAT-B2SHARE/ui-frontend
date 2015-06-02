@@ -129,7 +129,7 @@ b2Controllers.controller('UserCtrl', ['$scope', 'User', '$alert', '$timeout', '$
 
   // logout user
   if ($location.path() == "/users/logout"){
-    Session.reset('user');
+    Session.unset('user');
     $rootScope.currentUser = undefined;
     $rootScope.Notify.dismiss();
     $rootScope.Notify.flash_dismiss();
