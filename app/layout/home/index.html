@@ -23,8 +23,25 @@
       <div ng-include ng-show="currentUser == undefined" src="'layout/user/_register.html'"></div>
       <!-- user logged in -->
       <div ng-include ng-show="currentUser != undefined" src="'layout/user/_user.html'"></div>
-      <!-- search box -->
-      <div ng-include src="'layout/deposit/_upload.html'"></div>
+      <!-- deposit file select -->
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-xs-12">
+              <h2 id="create-deposit-header">Create Deposit</h2>
+              <span ng-show="uploadForm.files">{{uploadForm.files.length}} {{pluralize('file', uploadForm.files.length)}} selected for upload <i class="fa fa-chevron-down"></i></span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12">
+              <form id="deposit-file-select" novalidate name="uploadFormNg" ng-submit="uploadForm.submitForm()">
+                <div ng-include src="'layout/deposit/_file_select.html'"></div
+                  >
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
       <!-- latest deposits -->
       <div ng-include src="'layout/deposit/_latest.html'"></div>
       <div class="col-xs-1">&nbsp;</div>

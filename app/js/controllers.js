@@ -5,14 +5,9 @@
 
 var b2Controllers = angular.module('b2Controllers', ['angular-loading-bar']);
 
-// phonecatControllers.run(function($rootScope) {
-//   $rootScope.globalFoo = function() {
-//     alert("I'm global foo!");
-//   };
-// });
 
-b2Controllers.controller('HomeCtrl', ['$scope', '$alert', '$location', '$timeout', '$rootScope', '$window', 'Deposit', 'Helper', 'Upload',
-    function($scope, $alert, $location, $timeout, $rootScope, $window, Deposit, Helper, Upload){
+b2Controllers.controller('HomeCtrl', ['$scope', '$alert', '$location', '$timeout', '$rootScope', '$window', 'Deposit', 'Helper', 'Upload', 'Session',
+    function($scope, $alert, $location, $timeout, $rootScope, $window, Deposit, Helper, Upload, Session){
 
   // latest deposits
   Deposit.deposits({page: 1, page_size: 6, order_by: 'created_at', order: 'desc'}, function(data){
@@ -23,45 +18,27 @@ b2Controllers.controller('HomeCtrl', ['$scope', '$alert', '$location', '$timeout
   });
 
   // file upload
-  $scope.uploadForm = {};
-  $scope.uploadForm.submitForm = function(){
-    var fs = $scope.uploadForm.files;
-    if(!fs)
+  $rootScope.uploadForm = {};
+  $rootScope.uploadForm.showSubmit = true;
+  $rootScope.uploadForm.submitForm = function(){
+    if(!$rootScope.uploadForm.files){
+      // TODO: user error feedback!
       return;
-    for(var i in fs){
-      var f = fs[i];
-      console.log(i);
-      console.log(f);
-      // upload files
-      Upload.upload({
-        url: 'upload/url',
-        fields: {'key': 'value'},
-        file: f
-      }).progress(function(evt){
-        console.log("progress");
-        console.log(evt);
-      }).success(function(data, status, headers, config){
-        console.log("success");
-        console.log(data);
-        console.log(status);
-        console.log(headers);
-        console.log(config);
-      });
-
     }
+    // forward to deposit creation page
+    $location.path('/deposits/create');
   };
-  $scope.uploadForm.change = function(files){
+  $rootScope.uploadForm.change = function(files){
     // show preview (bind media element)
     $timeout(function() {
       angular.element('.media').media();
     }, 100);
-  }
-  $scope.uploadForm.reset = function(){
+  };
+  $rootScope.uploadForm.reset = function(){
     // reset files, scroll to create deposit
-    $scope.uploadForm.files = undefined;
+    $rootScope.uploadForm.files = undefined;
     Helper.scrollToInvisible("#create-deposit-header");
-  }
-
+  };
 
 }]);
 
@@ -169,6 +146,7 @@ b2Controllers.controller('UserCtrl', ['$scope', 'User', '$alert', '$timeout', '$
   function($scope, User, $alert, $timeout, $rootScope, $window, $location, Session){
 
   // logout user
+  // TODO: move do different controller or make an angular function!
   if ($location.path() == "/users/logout"){
     Session.unset('user');
     $rootScope.currentUser = undefined;
@@ -290,4 +268,43 @@ b2Controllers.controller('DepositCtrl', ['$scope', '$routeParams', 'Deposit', '$
 
 }]);
 
+b2Controllers.controller('DepositCreateCtrl', ['$scope', '$routeParams', 'Deposit', '$rootScope', '$alert', '$window', 'Session', 'Helper', '$timeout',
+    function($scope, $routeParams, Deposit, $rootScope, $alert, $window, Session, Helper, $timeout){
+
+  // file upload
+  if(!$rootScope.uploadForm)
+    $rootScope.uploadForm = {};
+  else
+    $timeout(function() {
+      angular.element('.media').media();
+    }, 100);
+  $rootScope.uploadForm.showSubmit = false;
+
+  $rootScope.uploadForm.submitForm = function(){
+    if(!$rootScope.uploadForm.files){
+      // TODO: user error feedback!
+      return;
+    }
+    // forward to deposit creation page
+    $location.path('/deposits/create');
+  };
+  $rootScope.uploadForm.change = function(files){
+    // show preview (bind media element)
+    $timeout(function() {
+      angular.element('.media').media();
+    }, 100);
+  };
+  $rootScope.uploadForm.reset = function(){
+    // reset files, scroll to create deposit
+    $rootScope.uploadForm.files = undefined;
+    Helper.scrollToInvisible("#create-deposit-header");
+  };
+
+
+
+  var fs = $rootScope.uploadForm.files;
+
+  console.log(fs);
+
+}]);
 

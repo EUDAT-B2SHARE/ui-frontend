@@ -37,6 +37,10 @@ b2App.run(['$rootScope', '$window', 'Helper', 'PageTitle', 'Breadcrumbs', 'Notif
   $rootScope.Notify = Notify;
   $rootScope.Pagination = Pagination;
 
+  // pluralize wrapper
+  $rootScope.pluralize = function(value, cnt){
+    return pluralize(value, cnt);
+  }
   // string helper startsWith
   if (typeof String.prototype.startsWith != 'function') {
     String.prototype.startsWith = function (str){
@@ -55,14 +59,6 @@ b2App.run(['$rootScope', '$window', 'Helper', 'PageTitle', 'Breadcrumbs', 'Notif
       return this.charAt(0).toUpperCase() + this.slice(1);
     }
   }
-
-  // // string helper isUuid
-  // if (typeof String.prototype.isUuid != 'function'){
-  //   String.prototype.isUuid = function(str){
-  //     return typeof str == "string" && str.matches("[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}");
-  //   }
-  // }
-
 
 }]);
 
@@ -152,6 +148,9 @@ b2App.config(['$routeProvider', function($routeProvider){
   $routeProvider.when('/deposits/',{
     templateUrl: 'layout/deposit/index.html',
     controller: 'DepositListCtrl'
+  }).when('/deposits/create',{
+    templateUrl: 'layout/deposit/create.html',
+    controller: 'DepositCreateCtrl'
   }).when('/deposits/:uuid',{
     templateUrl: 'layout/deposit/deposit.html',
     controller: 'DepositCtrl'

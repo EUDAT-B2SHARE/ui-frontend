@@ -19,7 +19,7 @@ inputHtmlByType = function(src, type){
   }
 }
 
-
+// media class element wrapper
 $.fn.media = function() {
   // iterate all media elements
   this.each(function(){
