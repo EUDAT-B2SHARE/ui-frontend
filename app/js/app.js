@@ -9,6 +9,7 @@ var b2App = angular.module('b2App', [
   'b2Controllers',
   'b2Filters',
   'b2Services',
+  'ngFileUpload',
 ]).config(function(cfpLoadingBarProvider){
   cfpLoadingBarProvider.includeSpinner = true;
   cfpLoadingBarProvider.includeBar = true;

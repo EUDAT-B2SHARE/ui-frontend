@@ -31,3 +31,9 @@ b2Filters.filter('reverse', function(){
       });
   }
 });
+
+b2Filters.filter('size_byte2kilobyte', function(){
+  return function(val) {
+    return Math.round(val / 1024);
+  }
+});

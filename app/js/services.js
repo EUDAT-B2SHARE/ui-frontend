@@ -136,23 +136,51 @@ b2Services.factory('Helper', ['$rootScope', '$location', '$timeout', '$routePara
     routeActive: function(route){
       if($location.path() == route){
         return "active";
+      } else {
+        return "";
       }
     },
     pageActive: function(page){
       if($routeParams.page == page){
         return "active";
+      } else {
+        return "";
       }
     },
+    scrollTop: function(){
+      this.scrollTo('html, body');
+    },
+    scrollTo: function(element, speed, offset){
+      if(!offset)
+        offset = 50;
+      if(!speed)
+        speed = "medium";
+      // angular.element(element).animate({scrollTop: 0}, "medium");
+      $('html, body').animate({scrollTop: $(element).offset().top - offset}, speed);
+    },
+    scrollToInvisible: function(element, speed, offset){
+      if(!offset)
+        offset = 50;
+      if(!speed)
+        speed = "medium";
+      var ot = $(element).offset().top - offset;
+      // scrollTo when page is below element
+      if(window.pageYOffset > ot){
+        this.scrollTo(element, speed, offset);
+      }
+    }
+
   };
 }]);
 
 b2Services.factory('Pagination', ['$rootScope', '$location', '$routeParams', 'Helper',
   function($rootScope, $location, $routeParams, Helper){
   return {
-    show: function(self, page, currentPage, pageSize, itemCnt){
+    show: function(self, page, currentPage, pageSize, itemCnt, showItems){
       // some calculations
       var p = "#/"+page+"?page="
-      var showItems = 10;
+      if(!showItems)
+        showItems = 10;
       var lastPage = Math.ceil(itemCnt / pageSize);
       currentPage = 1*currentPage;
       var showFirst = currentPage+1 > Math.ceil(showItems / 2);
@@ -183,7 +211,10 @@ b2Services.factory('Pagination', ['$rootScope', '$location', '$routeParams', 'He
         if(i > lastPage) break;
         if(i < 1) continue;
         var a_curr = $("<a/>", {'href': p+""+i, class: 'btn btn-default ' +
-          Helper.pageActive(i), text: i})
+          Helper.pageActive(i), text: i});
+        if(i != currentPage){
+            a_curr.addClass('hidden-xs');
+          }
         a_curr.appendTo(btn_group);
       }
 
@@ -201,9 +232,12 @@ b2Services.factory('Pagination', ['$rootScope', '$location', '$routeParams', 'He
         icon.appendTo(a_last);
         a_last.appendTo(btn_group);
       }
-
+      // info text
+      var info = $('<div/>', {class: "info " +page});
+      info.text(itemCnt + " " + pluralize(page.capitalize(), itemCnt) + ", " + pageSize + " per page");
+      info.appendTo(wrap);
       // wrapper placeholders
-      btn_group.appendTo(wrap);
+      btn_group.prependTo(wrap);
       wrap.appendTo(self);
       // return $sce.trustAsHtml(wrap);
     }

@@ -11,8 +11,8 @@ var b2Controllers = angular.module('b2Controllers', ['angular-loading-bar']);
 //   };
 // });
 
-b2Controllers.controller('HomeCtrl', ['$scope', '$alert', '$location', '$timeout', '$rootScope', '$window', 'Deposit',
-    function($scope, $alert, $location, $timeout, $rootScope, $window, Deposit){
+b2Controllers.controller('HomeCtrl', ['$scope', '$alert', '$location', '$timeout', '$rootScope', '$window', 'Deposit', 'Helper', 'Upload',
+    function($scope, $alert, $location, $timeout, $rootScope, $window, Deposit, Helper, Upload){
 
   // latest deposits
   Deposit.deposits({page: 1, page_size: 6, order_by: 'created_at', order: 'desc'}, function(data){
@@ -22,11 +22,52 @@ b2Controllers.controller('HomeCtrl', ['$scope', '$alert', '$location', '$timeout
     $rootScope.Notify.flash_add($alert, 'deposits', 'Could not load latest deposits', 'warning');
   });
 
+  // file upload
+  $scope.uploadForm = {};
+  $scope.uploadForm.submitForm = function(){
+    var fs = $scope.uploadForm.files;
+    if(!fs)
+      return;
+    for(var i in fs){
+      var f = fs[i];
+      console.log(i);
+      console.log(f);
+      // upload files
+      Upload.upload({
+        url: 'upload/url',
+        fields: {'key': 'value'},
+        file: f
+      }).progress(function(evt){
+        console.log("progress");
+        console.log(evt);
+      }).success(function(data, status, headers, config){
+        console.log("success");
+        console.log(data);
+        console.log(status);
+        console.log(headers);
+        console.log(config);
+      });
+
+    }
+  };
+  $scope.uploadForm.change = function(files){
+    // show preview (bind media element)
+    $timeout(function() {
+      angular.element('.media').media();
+    }, 100);
+  }
+  $scope.uploadForm.reset = function(){
+    // reset files, scroll to create deposit
+    $scope.uploadForm.files = undefined;
+    Helper.scrollToInvisible("#create-deposit-header");
+  }
+
+
 }]);
 
 
-b2Controllers.controller('DefaultCtrl', ['$scope', '$alert', '$location', '$timeout', '$rootScope', '$window', 'Breadcrumbs', 'PageTitle', 'Session',
-  function($scope, $alert, $location, $timeout, $rootScope, $window, Breadcrumbs, PageTitle, Session){
+b2Controllers.controller('DefaultCtrl', ['$scope', '$alert', '$location', '$timeout', '$rootScope', '$window', 'Breadcrumbs', 'PageTitle', 'Session', 'Helper',
+  function($scope, $alert, $location, $timeout, $rootScope, $window, Breadcrumbs, PageTitle, Session, Helper){
 
   // user session
   if(Session.has('user')){
@@ -53,12 +94,13 @@ b2Controllers.controller('DefaultCtrl', ['$scope', '$alert', '$location', '$time
   // content view loaded
   $scope.$on('$viewContentLoaded', function(){
     // colorbox
-    var v = angular.element('.img-thumbnail');
+    var v = angular.element('.colorbox');
     v.colorbox({href: function(){
         // bind href with src of img
         return angular.element(this).attr("src");
       }, maxWidth: "75%", fixed: true, scrolling: false
     });
+
     // stop background scrolling (body behind colorbox)
     angular.element(document).bind('cbox_open', function(){
       angular.element('body').addClass('stop-scrolling');
@@ -88,9 +130,7 @@ b2Controllers.controller('DefaultCtrl', ['$scope', '$alert', '$location', '$time
     });
 
     // scroll pages into view (better effect than autofocus="true")
-    if(window.pageYOffset > 200){
-      angular.element('html, body').animate({scrollTop: 0}, "medium");
-    }
+    Helper.scrollToInvisible('#header');
 
     // breadcrumbs
     Breadcrumbs.load();
@@ -100,6 +140,7 @@ b2Controllers.controller('DefaultCtrl', ['$scope', '$alert', '$location', '$time
 
     // load session
     Session.load();
+
 
   });
 }]);
@@ -125,7 +166,7 @@ b2Controllers.controller('HelpListCtrl', ['$scope', '$rootScope', function($scop
 }]);
 
 b2Controllers.controller('UserCtrl', ['$scope', 'User', '$alert', '$timeout', '$rootScope', '$window', '$location', 'Session',
-    function($scope, User, $alert, $timeout, $rootScope, $window, $location, Session){
+  function($scope, User, $alert, $timeout, $rootScope, $window, $location, Session){
 
   // logout user
   if ($location.path() == "/users/logout"){
@@ -134,6 +175,7 @@ b2Controllers.controller('UserCtrl', ['$scope', 'User', '$alert', '$timeout', '$
     $rootScope.Notify.dismiss();
     $rootScope.Notify.flash_dismiss();
     $rootScope.Notify.flash_add($alert, 'user', 'You\'ve logged out', 'success');
+    $rootScope.Notify.dismiss();
     $location.path("/users/login");
   }
 
@@ -221,7 +263,7 @@ b2Controllers.controller('DepositListCtrl', ['$scope', '$routeParams', 'Deposit'
     $scope.info = data.info;
     var totalItemCnt = $scope.info.count;
     // pagination
-    $scope.pagination = Pagination.show('#deposits-paginator', 'deposits', currentPage, pageSize, data.info.count);
+    $scope.pagination = Pagination.show('#deposits-paginator', 'deposits', currentPage, pageSize, data.info.count, 10);
   }, function(data){
     // error happend
     $rootScope.Notify.flash_add($alert, 'deposits', 'Could not load latest deposits', 'warning');

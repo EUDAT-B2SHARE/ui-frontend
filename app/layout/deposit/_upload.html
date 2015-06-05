@@ -3,19 +3,54 @@
   <div class="panel-body">
     <div class="row">
       <div class="col-xs-12">
-        <h2>Create Deposit</h2>
+        <h2 id="create-deposit-header">Create Deposit</h2>
       </div>
     </div>
     <div class="row">
       <div class="col-xs-12">
-        <div class="input-group">
-          <input name="file" type="file" ng-model="depositUpload.file" placeholder="Search 185 records for" class="form-control">
-          <span class="input-group-btn">
-            <button class="btn btn-primary" type="submit">
-              DEPOSIT
+
+        <form novalidate name="uploadFormNg" ng-submit="uploadForm.submitForm()">
+
+          <!-- upload drop & file select -->
+          <div class="" role="group" aria-label="...">
+            <div ngf-drop ng-show="!uploadForm.files" ng-model="uploadForm.files" class="drop-box well hidden-xs" ngf-drag-over-class="dragover" ngf-multiple="true" ngf-allow-dir="true" ngf-accept="'*/*'" ngf-change="uploadForm.change($files)">
+              Drag & drop Files
+            </div>
+
+            <!-- select files -->
+            <button role="group" aria-label="..." ng-show="!uploadForm.files" ngf-select ng-model="uploadForm.files" ngf-multiple="true" class="btn btn-primary" ngf-accept="'*/*'" ngf-allow-dir="true" ngf-change="uploadForm.change($files)">
+                Select Files
             </button>
-          </span>
-        </div>
+          </div>
+
+          <!-- file selected preview -->
+          <div class="well upload-preview pull-left" ng-show="uploadForm.files.length > 0">
+            <!-- upload header -->
+            <h4 style="clear: both;">Selected {{uploadForm.files.length}} {{pluralize('file', uploadForm.files.length)}} for upload</h4>
+
+            <!-- iterate files -->
+            <div ng-repeat="file in uploadForm.files" class="">
+              <div class="col-sm-12">
+                <a class="media" ngf-src="file" type="{{file.type}}" size="{{file.size|size_byte2kilobyte}}" name="{{file.name}}"></a>
+                <!-- show divider bar -->
+                <div ng-show="!$last" class="divider"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- reset and submit -->
+          <div ng-show="uploadForm.files" class="pull-right btn-group" role="group" aria-label="...">
+            <!-- change selection -->
+            <button class="btn btn-warning" ng-click="uploadForm.reset()">
+              Reset
+            </button>
+            <button class="btn btn-primary" type="submit">
+              Create Deposit <i class="fa fa-chevron-circle-right"></i>
+            </button>
+          </div>
+
+        </form>
+
       </div>
     </div>
   </div>

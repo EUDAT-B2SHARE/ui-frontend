@@ -67,6 +67,13 @@
   color: #b94a48;
 }
 
+.well .divider {
+  height: 1px;
+  width: 100%;
+  border-top: 1px solid #ddd;
+  padding: 5px;
+}
+
 /* fix to footer bottom */
 
 html,body{
@@ -276,8 +283,45 @@ input.ng-valid.ng-touched {
   color: gray;
 }
 
-/* pages */
+.pagination .info {
+  font-size: 0.8em;
+}
 
+/* upload form */
+
+.drop-box {
+  border: 1px solid #bbb;
+  text-align: center;
+}
+.drop-box.dragover {
+  border: 2px solid gray;
+  text-align: center;
+}
+
+.upload-preview .img-empty{
+  width: 100%;
+  padding: 10px;
+  text-align:center;
+}
+
+.upload-preview .media-wrapper{
+  min-height: 80px;
+  padding-bottom: 40px;
+}
+
+.media-wrapper .file-name{
+  font-size: 0.8em;
+}
+
+.media-wrapper .file-type{
+  font-size: 0.8em;
+}
+
+.media-wrapper .file-size{
+  font-size: 0.8em;
+}
+
+/* pages */
 
 .legal-notice img {
   float: left;
@@ -300,7 +344,7 @@ input.ng-valid.ng-touched {
   margin: 0;
 }
 
-.img-thumbnail {
+.colorbox {
   cursor: pointer;
 }
 /* presets */
