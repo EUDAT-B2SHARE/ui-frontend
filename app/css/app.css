@@ -68,10 +68,11 @@
 }
 
 .well .divider {
-  height: 1px;
+  height: 10px;
   width: 100%;
-  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
   padding: 5px;
+  clear: both;
 }
 
 /* fix to footer bottom */
@@ -307,6 +308,7 @@ input.ng-valid.ng-touched {
 .upload-preview .media-wrapper{
   min-height: 80px;
   padding-bottom: 40px;
+  margin-top: 10px;
 }
 
 .media-wrapper .file-name{
