@@ -1,11 +1,11 @@
 <!-- upload drop & file select -->
 <div class="" role="group" aria-label="...">
-  <div ngf-drop ng-show="!uploadForm.files" ng-model="uploadForm.files" class="drop-box well hidden-xs" ngf-drag-over-class="dragover" ngf-multiple="true" ngf-allow-dir="true" ngf-accept="'*/*'" ngf-change="uploadForm.change($files)">
+  <div ngf-drop ng-show="!uploadForm.files || uploadForm.files.length <= 0" ng-model="uploadForm.files" class="drop-box well hidden-xs" ngf-drag-over-class="dragover" ngf-multiple="true" ngf-allow-dir="true" ngf-accept="'*/*'" ngf-change="uploadForm.change($files)">
     Drag & drop Files
   </div>
 
   <!-- select files -->
-  <button role="group" aria-label="..." ng-show="!uploadForm.files" ngf-select ng-model="uploadForm.files" ngf-multiple="true" class="btn btn-primary" ngf-accept="'*/*'" ngf-allow-dir="true" ngf-change="uploadForm.change($files)">
+  <button role="group" aria-label="..." ng-show="!uploadForm.files || uploadForm.files.length <= 0" ngf-select ng-model="uploadForm.files" ngf-multiple="true" class="btn btn-primary" ngf-accept="'*/*'" ngf-allow-dir="true" ngf-change="uploadForm.change($files)">
       Select Files
   </button>
 </div>
@@ -23,7 +23,7 @@
 </div>
 
 <!-- reset and submit -->
-<div ng-show="uploadForm.showSubmit && uploadForm.files" class="pull-right btn-group" role="group" aria-label="...">
+<div ng-show="uploadForm.showSubmit && uploadForm.files && uploadForm.files.length > 0" class="pull-right btn-group" role="group" aria-label="...">
   <!-- change selection -->
   <button class="btn btn-warning" ng-click="uploadForm.reset()">
     Reset
@@ -33,7 +33,7 @@
   </button>
 </div>
 
-<div ng-show="!uploadForm.showSubmit && uploadForm.files" ng-show="uploadForm.files" class="pull-right btn-group" role="group" aria-label="...">
+<div ng-show="!uploadForm.showSubmit && uploadForm.files && uploadForm.files.length > 0" ng-show="uploadForm.files" class="pull-right btn-group" role="group" aria-label="...">
   <!-- change selection -->
   <button class="btn btn-warning" ng-click="uploadForm.reset()">
     Reset
