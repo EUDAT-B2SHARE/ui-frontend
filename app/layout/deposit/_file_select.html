@@ -26,17 +26,17 @@
 <div ng-show="uploadForm.showSubmit && uploadForm.files && uploadForm.files.length > 0" class="pull-right btn-group" role="group" aria-label="...">
   <!-- change selection -->
   <button class="btn btn-warning" ng-click="uploadForm.reset()">
-    Reset
+    Undo
   </button>
   <button class="btn btn-primary" type="submit">
-    Deposit Files <i class="fa fa-chevron-circle-right"></i>
+    Create Deposit <i class="fa fa-chevron-circle-right"></i>
   </button>
 </div>
 
 <div ng-show="!uploadForm.showSubmit && uploadForm.files && uploadForm.files.length > 0" ng-show="uploadForm.files" class="pull-right btn-group" role="group" aria-label="...">
   <!-- change selection -->
   <button class="btn btn-warning" ng-click="uploadForm.reset()">
-    Reset
+    Undo Selection
   </button>
 </div>
 
