@@ -41,22 +41,22 @@
         <!-- basic navigation -->
         <li class="{{Helper.routeActive('/about/b2share')}}">
           <a href="#/about/b2share">
-            <i class="fa fa-cubes"></i>What is B2SHARE
+            <i class="fa fa-cubes"></i> What is B2SHARE
           </a>
         </li>
         <li class="{{Helper.routeActive('/help/user-guide')}}">
           <a href="#/help/user-guide">
-            <i class="fa fa-cubes"></i>User Guide
+            <i class="fa fa-cubes"></i> User Guide
           </a>
         </li>
         <li class="{{Helper.routeActive('/help/faq')}}">
           <a href="#/help/faq">
-            <i class="fa fa-cubes"></i>FAQs
+            <i class="fa fa-cubes"></i> FAQs
           </a>
         </li>
         <li class="{{Helper.routeActive('/about/communities')}}">
           <a href="#/about/communities">
-            <i class="fa fa-cubes"></i>Communities
+            <i class="fa fa-cubes"></i> Communities
           </a>
         </li>
         <li class="">
@@ -88,7 +88,8 @@
         </li>
         <!-- show when user object is empty -->
         <li class="{{Helper.routeActive('/users/login')}}" ng-show="currentUser == undefined">
-          <a href="#/users/login"><i class="fa fa-sign-in"></i></a>
+          <a href="#/users/login" class="hidden-xs"><i class="fa fa-sign-in"></i></a>
+          <a href="#/users/login" class="visible-xs"><i class="fa fa-sign-in"> Login</i></a>
         </li>
       </ul>
 
