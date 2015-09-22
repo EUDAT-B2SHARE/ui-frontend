@@ -1,13 +1,13 @@
 {
-  "name": "b2share-frontend",
+  "name": "ui-frontend",
   "description": "B2SHARE frontend UI",
   "version": "0.0.0",
-  "homepage": "https://git.osd.surfsara.nl/EUDAT-B2SHARE/b2share-frontend.git",
+  "homepage": "https://github.com/EUDAT-B2SHARE/ui-frontend",
   "license": "EUPL",
   "private": true,
   "dependencies": {
-    "angular": "1.3.x",
-    "angular-mocks": "1.3.x",
+    "angular": "~1.3.0",
+    "angular-mocks": "~1.3.0",
     "jquery": "~2.1.1",
     "jquery-colorbox": "~1.6.0",
     "bootstrap": "~3.1.1",
@@ -23,5 +23,8 @@
     "angular-md5": "~0.1.7",
     "ng-file-upload": "~4.2.4",
     "pluralize": ""
+  },
+  "resolutions": {
+    "angular": "1.3.19"
   }
 }
