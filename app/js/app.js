@@ -19,7 +19,7 @@ var b2App = angular.module('b2App', [
     animation: 'am-fade-and-slide-top message',
     placement: 'top',
     container: "#alerts-container",
-  })
+  });
 }).config(['$httpProvider', function($httpProvider) {
   // push interceptor to inject user token validation
   $httpProvider.interceptors.push('b2Interceptor');
@@ -39,8 +39,8 @@ b2App.run(['$rootScope', '$window', 'Helper', 'PageTitle', 'Breadcrumbs', 'Notif
 
   // pluralize wrapper
   $rootScope.pluralize = function(value, cnt){
-    return pluralize(value, cnt);
-  }
+    return $window.pluralize(value, cnt);
+  };
   // string helper startsWith
   if (typeof String.prototype.startsWith != 'function') {
     String.prototype.startsWith = function (str){
@@ -51,13 +51,13 @@ b2App.run(['$rootScope', '$window', 'Helper', 'PageTitle', 'Breadcrumbs', 'Notif
   if (typeof String.prototype.endsWith != 'function') {
     String.prototype.endsWith = function(str){
       return this.slice(-str.length) == str;
-    }
+    };
   }
   // string helper capticalize
   if (typeof String.prototype.capitalize != 'function') {
     String.prototype.capitalize = function() {
       return this.charAt(0).toUpperCase() + this.slice(1);
-    }
+    };
   }
 
 }]);
@@ -66,7 +66,7 @@ b2App.run(['$rootScope', '$window', 'Helper', 'PageTitle', 'Breadcrumbs', 'Notif
 b2App.config(['$routeProvider', function($routeProvider){
   // default route
   $routeProvider.when('/', {
-    templateUrl: 'layout/home/index.html',
+    templateUrl: 'layout/index.html',
     controller: 'HomeCtrl'
   }).otherwise({
     redirectTo: '/'
@@ -76,14 +76,8 @@ b2App.config(['$routeProvider', function($routeProvider){
   $routeProvider.when('/about/b2share',{
     templateUrl: 'layout/about/b2share.html',
     controller: 'AboutCtrl'
-  }).when('/about/communities',{
-    templateUrl: 'layout/about/communities.html',
-    controller: 'AboutCtrl'
   }).when('/about/legal-notice',{
     templateUrl: 'layout/about/legal-notice.html',
-    controller: 'AboutCtrl'
-  }).when('/about/eudat',{
-    templateUrl: 'layout/about/eudat.html',
     controller: 'AboutCtrl'
   }).when('/about/',{
     templateUrl: 'layout/about/index.html',
@@ -135,6 +129,12 @@ b2App.config(['$routeProvider', function($routeProvider){
     controller: 'UserNotifyCtrl'
   });
 
+  // communities
+  $routeProvider.when('/communities',{
+    templateUrl: 'layout/communities/index.html',
+    controller: 'CommunitiesCtrl'
+  });
+
   // search
   $routeProvider.when('/search/query',{
     templateUrl: 'layout/search/query.html',
@@ -144,16 +144,16 @@ b2App.config(['$routeProvider', function($routeProvider){
     controller: 'SearchListCtrl'
   });
 
-  // deposit
-  $routeProvider.when('/deposits/',{
-    templateUrl: 'layout/deposit/index.html',
-    controller: 'DepositListCtrl'
-  }).when('/deposits/create',{
-    templateUrl: 'layout/deposit/create.html',
-    controller: 'DepositCreateCtrl'
-  }).when('/deposits/:uuid',{
-    templateUrl: 'layout/deposit/deposit.html',
-    controller: 'DepositCtrl'
+  // record
+  $routeProvider.when('/records/',{
+    templateUrl: 'layout/records/index.html',
+    controller: 'RecordListCtrl'
+  }).when('/records/create',{
+    templateUrl: 'layout/records/create.html',
+    controller: 'RecordCreateCtrl'
+  }).when('/records/:uuid',{
+    templateUrl: 'layout/records/record.html',
+    controller: 'RecordCtrl'
   });
 
 

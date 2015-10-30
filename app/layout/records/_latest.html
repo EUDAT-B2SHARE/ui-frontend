@@ -1,0 +1,26 @@
+<h3>Latest Records</h3>
+
+<div class="row">
+  <div class="records col-sm-12">
+
+    <div class="row">
+      <!-- iterate records -->
+      <div class="record col-sm-6" ng-repeat="record in records | compact">
+        <!-- single record -->
+        <a href="#/records/{{record.uuid}}">
+          <p class="date" ng-bind="record.created_at | date:'yyyy-MM-dd'"></p>
+          <p class="name" ng-bind="record.title"></p>
+          <p class="description" ng-bind="record.description | limitTo:200 "></p>
+        </a>
+      </div>
+    </div>
+
+    <p>
+      <!-- link to more records -->
+      <a href="#/records" class="btn btn-default">
+        More Records ...
+      </a>
+    </p>
+
+  </div>
+</div>

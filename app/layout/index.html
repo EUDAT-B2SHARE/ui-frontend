@@ -1,0 +1,29 @@
+<div id="homepage" class="container-fluid">
+  <div class="row">
+    <div class="col-sm-2"></div>
+    <div class="col-sm-8">
+      <h2>Store and share your research data</h2>
+      <!-- user registration (not logged in) -->
+      <div ng-include ng-show="currentUser == undefined" src="'layout/user/_register.html'"></div>
+      <!-- user logged in -->
+      <div ng-include ng-show="currentUser != undefined" src="'layout/user/_user.html'"></div>
+
+      <hr/>
+      <!-- file select for records -->
+      <div>
+        <h3 id="create-record-header">Create Record</h3>
+        <span ng-show="uploadForm.files && uploadForm.files.length > 0">
+          {{uploadForm.files.length}} {{pluralize('file', uploadForm.files.length)}} selected for upload
+          <i class="fa fa-chevron-down"></i>
+        </span>
+        <form id="record-file-select" novalidate name="uploadFormNg" ng-submit="uploadForm.submitForm()">
+          <div ng-include src="'layout/records/_file_select.html'"></div>
+        </form>
+      </div>
+
+      <hr/>
+      <!-- latest records -->
+      <div ng-include src="'layout/records/_latest.html'"></div>
+    </div>
+  </div>
+</div>

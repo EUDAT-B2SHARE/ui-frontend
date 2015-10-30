@@ -1,4 +1,3 @@
-
 // helpers
 htmlRenderImg = function(src, type){
   return $('<img/>', {src: src, class: 'img-thumbnail img-responsive'});

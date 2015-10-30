@@ -1,0 +1,54 @@
+
+<div id="" class="container-fluid">
+  <div class="row">
+    <div class="col-xs-1 hidden-xs"></div>
+    <div class="col-sm-10">
+      <div class="page-header">
+        <h2>Records</h2>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-1 hidden-xs"></div>
+    <div class="records col-sm-10">
+
+      <div class="row">
+        <!-- iterate records -->
+        <div class="record col-sm-12" ng-repeat="record in records | compact">
+          <!-- single record -->
+          <a href="#/records/{{record.uuid}}">
+            <p class="date" ng-bind="record.created_at | date:'yyyy-MM-dd'"></p>
+            <p class="name" ng-bind="record.title"></p>
+            <p class="description" ng-bind="record.description | limitTo:200 "></p>
+          </a>
+        </div>
+
+
+        <!-- pagination -->
+
+        <div id="records-paginator" class="col-xs-12" align="center">
+          <div ng-bind="pagination">
+          </div>
+        </div>
+
+
+        <!-- pagination -->
+        <!--<div class="pagination col-xs-12" align="center">
+          <div class="btn-group" role="group" aria-label="...">
+
+            <a href="#/records?page={{currentPage -1}}" class="btn btn-default" ng-if="currentPage > 1">Prev.</a>
+            <a href="#/records?page=1" class="btn btn-default {{Helper.pageActive('1')}}">1</a>
+            <a href="#/records?page=2" class="btn btn-default {{Helper.pageActive('2')}}">2</a>
+            <a href="#/records?page=3" class="btn btn-default {{Helper.pageActive('3')}}">3</a>
+            <a href="#/records?page=4" class="btn btn-default {{Helper.pageActive('4')}}">4</a>
+            <a href="#/records?page={{1*currentPage +1}}" class="btn btn-primary">Next</a>
+
+          </div>
+        </div>-->
+
+      </div>
+
+    </div>
+  </div>
+</div>
