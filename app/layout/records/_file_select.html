@@ -11,7 +11,7 @@
 </div>
 
 <!-- file selected preview -->
-<div class="well upload-preview pull-left" ng-show="uploadForm.files.length > 0">
+<div class="well upload-preview" ng-show="uploadForm.files.length > 0">
   <!-- iterate files -->
   <div ng-repeat="file in uploadForm.files" class="">
     <div class="col-sm-12">
@@ -23,17 +23,17 @@
 </div>
 
 <!-- reset and submit -->
-<div ng-show="uploadForm.showSubmit && uploadForm.files && uploadForm.files.length > 0" class="pull-right btn-group" role="group" aria-label="...">
+<div ng-show="uploadForm.showSubmit && uploadForm.files && uploadForm.files.length > 0" class="btn-group" role="group" aria-label="...">
   <!-- change selection -->
   <button class="btn btn-warning" ng-click="uploadForm.reset()">
     Undo
   </button>
   <button class="btn btn-primary" type="submit">
-    Create Deposit <i class="fa fa-chevron-circle-right"></i>
+    Create Record <i class="fa fa-chevron-circle-right"></i>
   </button>
 </div>
 
-<div ng-show="!uploadForm.showSubmit && uploadForm.files && uploadForm.files.length > 0" ng-show="uploadForm.files" class="pull-right btn-group" role="group" aria-label="...">
+<div ng-show="!uploadForm.showSubmit && uploadForm.files && uploadForm.files.length > 0" ng-show="uploadForm.files" class="btn-group" role="group" aria-label="...">
   <!-- change selection -->
   <button class="btn btn-warning" ng-click="uploadForm.reset()">
     Undo Selection

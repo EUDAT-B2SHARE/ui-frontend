@@ -6,15 +6,15 @@
 var b2Controllers = angular.module('b2Controllers', ['angular-loading-bar']);
 
 
-b2Controllers.controller('HomeCtrl', ['$scope', '$alert', '$location', '$timeout', '$rootScope', '$window', 'Deposit', 'Helper', 'Upload', 'Session',
-    function($scope, $alert, $location, $timeout, $rootScope, $window, Deposit, Helper, Upload, Session){
+b2Controllers.controller('HomeCtrl', ['$scope', '$alert', '$location', '$timeout', '$rootScope', '$window', 'Record', 'Helper', 'Upload', 'Session',
+  function($scope, $alert, $location, $timeout, $rootScope, $window, Record, Helper, Upload, Session){
 
-  // latest deposits
-  Deposit.deposits({page: 1, page_size: 6, order_by: 'created_at', order: 'desc'}, function(data){
-    $scope.deposits = data.deposits;
+  // latest records
+  Record.records({page: 1, page_size: 6, order_by: 'created_at', order: 'desc'}, function(data){
+    $scope.records = data.records;
   }, function(data){
     // error happend
-    $rootScope.Notify.flash_add($alert, 'deposits', 'Could not load latest deposits', 'warning');
+    $rootScope.Notify.flash_add($alert, 'records', 'Could not load latest records', 'warning');
   });
 
   // file upload
@@ -25,8 +25,8 @@ b2Controllers.controller('HomeCtrl', ['$scope', '$alert', '$location', '$timeout
       // TODO: user error feedback!
       return;
     }
-    // forward to deposit creation page
-    $location.path('/deposits/create');
+    // forward to record creation page
+    $location.path('/records/create');
   };
   $rootScope.uploadForm.change = function(files){
     // show preview (bind media element)
@@ -35,9 +35,9 @@ b2Controllers.controller('HomeCtrl', ['$scope', '$alert', '$location', '$timeout
     }, 100);
   };
   $rootScope.uploadForm.reset = function(){
-    // reset files, scroll to create deposit
+    // reset files, scroll to create record
     $rootScope.uploadForm.files = undefined;
-    Helper.scrollToInvisible("#create-deposit-header");
+    Helper.scrollToInvisible("#create-record-header");
   };
 
 }]);
@@ -179,7 +179,7 @@ b2Controllers.controller('UserCtrl', ['$scope', 'User', '$alert', '$timeout', '$
       $rootScope.Notify.flash_add($alert, 'user', 'You\'ve logged in as: `'+data.user.name+'`', 'success');
       $location.path('/users/profile');
     }, function(data){
-      f.errorBase = data.data.error.base;
+      f.errorBase = data.error.base;
       angular.element("[name=userLoginFormNg]").addClass("has-error");
       if(String(data.status).startsWith("5")){
         $rootScope.Notify.flash_add($alert, 'user', 'An error has occured', 'danger');
@@ -189,6 +189,30 @@ b2Controllers.controller('UserCtrl', ['$scope', 'User', '$alert', '$timeout', '$
 
 
 }]);
+
+b2Controllers.controller('CommunitiesCtrl',
+  ['$scope', '$routeParams', '$rootScope', '$location', '$alert', 'Communities', 'Pagination',
+    function($scope, $routeParams, $rootScope, $location, $alert, Communities, Pagination){
+      if (!$routeParams.page) {
+        $location.path('/communities').search('page', 1);
+        return;
+      }
+
+      var currentPage = $routeParams.page;
+      var pageSize = 20;
+      Communities.getAll({page: currentPage, page_size: pageSize}, function(data) {
+        console.log('communities', data);
+        $scope.communities = data.communities;
+        $scope.pagination = Pagination.show(
+          '#communities-paginator', 'communities', currentPage, pageSize, data.communities.length, 10);
+      }, function(data) {
+        // error happend
+        $rootScope.Notify.flash_add($alert, 'communities', 'Could not load list of communities', 'warning');
+      });
+    }
+  ]
+);
+
 
 b2Controllers.controller('UserListCtrl', ['$scope', 'User', '$alert', '$timeout', '$rootScope', '$window', '$location',
     function($scope, User, $alert, $timeout, $rootScope, $window, $location){
@@ -225,51 +249,49 @@ b2Controllers.controller('SearchListCtrl', ['$scope', '$routeParams', '$location
     function($scope, $routeParams, $location){
 }]);
 
-b2Controllers.controller('DepositListCtrl', ['$scope', '$routeParams', 'Deposit', '$rootScope', '$alert', '$location', 'Pagination',
-    function($scope, $routeParams, Deposit, $rootScope, $alert, $location, Pagination){
+b2Controllers.controller('RecordListCtrl', ['$scope', '$routeParams', 'Record', '$rootScope', '$alert', '$location', 'Pagination',
+    function($scope, $routeParams, Record, $rootScope, $alert, $location, Pagination){
   // force page offset
   if($routeParams.page == undefined){
-    $location.path('/deposits').search('page', 1);
+    $location.path('/records').search('page', 1);
     return;
   }
 
-  // latest 20 deposits
+  // latest 20 records
   var currentPage = $routeParams.page;
   var pageSize = 20;
-  Deposit.deposits({page: currentPage, page_size: pageSize, order_by: 'created_at', order: 'desc'}, function(data){
-    $scope.deposits = data.deposits;
+  Record.records({page: currentPage, page_size: pageSize, order_by: 'created_at', order: 'desc'}, function(data){
+    $scope.records = data.records;
     $scope.info = data.info;
     var totalItemCnt = $scope.info.count;
     // pagination
-    $scope.pagination = Pagination.show('#deposits-paginator', 'deposits', currentPage, pageSize, data.info.count, 10);
+    $scope.pagination = Pagination.show('#records-paginator', 'records', currentPage, pageSize, data.info.count, 10);
   }, function(data){
     // error happend
-    $rootScope.Notify.flash_add($alert, 'deposits', 'Could not load latest deposits', 'warning');
+    $rootScope.Notify.flash_add($alert, 'records', 'Could not load latest records', 'warning');
   });
-
-
 }]);
 
 
 
-b2Controllers.controller('DepositCtrl', ['$scope', '$routeParams', 'Deposit', '$rootScope', '$alert', '$window',
-    function($scope, $routeParams, Deposit, $rootScope, $alert, $window){
+b2Controllers.controller('RecordCtrl', ['$scope', '$routeParams', 'Record', '$rootScope', '$alert', '$window',
+    function($scope, $routeParams, Record, $rootScope, $alert, $window){
 
-  // load requested deposit
-  Deposit.deposit({uuid: $routeParams.uuid}, function(data){
-    $rootScope.PageTitle.setSubject(data.deposit.title);
-    $scope.deposit = data.deposit;
+  // load requested record
+  Record.record({uuid: $routeParams.uuid}, function(data){
+    $rootScope.PageTitle.setSubject(data.record.title);
+    $scope.record = data.record;
     $scope.info = data.info;
   }, function(data){
     // error handling
-    $rootScope.Notify.flash_add($alert, 'deposit', 'Could not load deposit: `'+$routeParams.uuid+'`', 'warning');
+    $rootScope.Notify.flash_add($alert, 'record', 'Could not load record: `'+$routeParams.uuid+'`', 'warning');
     $window.history.back();
   });
 
 }]);
 
-b2Controllers.controller('DepositCreateCtrl', ['$scope', '$routeParams', 'Deposit', '$rootScope', '$alert', '$window', 'Session', 'Helper', '$timeout',
-    function($scope, $routeParams, Deposit, $rootScope, $alert, $window, Session, Helper, $timeout){
+b2Controllers.controller('RecordCreateCtrl', ['$scope', '$routeParams', 'Record', '$rootScope', '$alert', '$window', 'Session', 'Helper', '$timeout',
+    function($scope, $routeParams, Record, $rootScope, $alert, $window, Session, Helper, $timeout){
 
   // file upload
   if(!$rootScope.uploadForm)
@@ -285,8 +307,8 @@ b2Controllers.controller('DepositCreateCtrl', ['$scope', '$routeParams', 'Deposi
       // TODO: user error feedback!
       return;
     }
-    // forward to deposit creation page
-    $location.path('/deposits/create');
+    // forward to record creation page
+    $location.path('/records/create');
   };
   $rootScope.uploadForm.change = function(files){
     // show preview (bind media element)
@@ -295,9 +317,9 @@ b2Controllers.controller('DepositCreateCtrl', ['$scope', '$routeParams', 'Deposi
     }, 100);
   };
   $rootScope.uploadForm.reset = function(){
-    // reset files, scroll to create deposit
+    // reset files, scroll to create record
     $rootScope.uploadForm.files = undefined;
-    Helper.scrollToInvisible("#create-deposit-header");
+    Helper.scrollToInvisible("#create-record-header");
   };
 
 

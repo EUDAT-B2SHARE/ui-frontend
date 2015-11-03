@@ -1,6 +1,6 @@
 'use strict';
 
-var backend = 'http://localhost:5000';
+var backend = window.location.origin + window.location.pathname + "api";
 
 /* Services */
 
@@ -248,21 +248,39 @@ b2Services.factory('Pagination', ['$rootScope', '$location', '$routeParams', 'He
 // MODELS --------------------------------------
 
 b2Services.factory('User', ['$resource', function($resource){
-  return $resource(backend + '/user/:action.json', {}, {
-    authenticate: { method: 'POST', params: {action: "authenticate", remember: '@remember'},
+  return $resource(backend + '/users/:action.json', {}, {
+    authenticate: {
+      method: 'POST',
+      params: {action: "authenticate", remember: '@remember'},
       transformRequest: function(data){
         delete data['remember'];
         return angular.toJson(data);
       }
-      },
+    },
   });
 }]);
 
-b2Services.factory('Deposit', ['$resource', '$window',  function($resource, $window){
-  // deposit functions
-  return $resource(backend + '/deposit/:action.json', {}, {
-    deposits: { method: 'GET', params: {action: 'index', order: '@order', order_by: '@order_by', page: '@page', page_size: '@page_size'}},
-    deposit: { method: 'GET', params: {action: 'deposit', uuid: '@uuid'}},
+b2Services.factory('Record', ['$resource', '$window',  function($resource, $window){
+  // record functions
+  return $resource(backend + '/records/:action.json', {}, {
+    records: { method: 'GET', params: {action: 'index', order: '@order', order_by: '@order_by', page: '@page', page_size: '@page_size'}},
+    record: { method: 'GET', params: {action: 'record', uuid: '@uuid'}},
+  });
+}]);
+
+
+b2Services.factory('Communities', ['$resource', '$window',  function($resource, $window){
+  return $resource(backend + '/communities/', {}, {
+    getAll: {
+      method: 'GET',
+      headers: {'Content-Type': 'application/json'},
+      params: {page: '@page', page_size: '@page_size'},
+    },
+    get: {
+      method: 'GET',
+      headers: {'Content-Type': 'application/json'},
+      params: {url: backend + '/communities/:id', id: '@id'}
+    },
   });
 }]);
 

@@ -1,0 +1,19 @@
+<div id="communities" class="container-fluid">
+  <div class="row">
+    <div class="col-xs-1 hidden-xs"></div>
+    <div class="col-sm-10">
+    <h1>Communities</h1>
+
+    <div class="row">
+      <div class="community col-sm-12" ng-repeat="community in communities">
+        <!-- single community -->
+        <a href="#/communities/{{community.id}}">
+          <!-- <p class="date" ng-bind="community.created_at | date:'yyyy-MM-dd'"></p> -->
+          <p class="name" ng-bind="community.name"></p>
+          <p class="description" ng-bind="community.description | limitTo:200 "></p>
+        </a>
+      </div>
+    </div>
+
+  </div>
+</div>
