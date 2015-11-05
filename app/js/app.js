@@ -10,6 +10,7 @@ var b2App = angular.module('b2App', [
   'b2Filters',
   'b2Services',
   'ngFileUpload',
+  'multiStepForm',
 ]).config(function(cfpLoadingBarProvider){
   cfpLoadingBarProvider.includeSpinner = true;
   cfpLoadingBarProvider.includeBar = true;

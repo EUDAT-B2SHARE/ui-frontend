@@ -21,10 +21,7 @@ b2Controllers.controller('HomeCtrl', ['$scope', '$alert', '$location', '$timeout
   $rootScope.uploadForm = {};
   $rootScope.uploadForm.showSubmit = true;
   $rootScope.uploadForm.submitForm = function(){
-    if(!$rootScope.uploadForm.files){
-      // TODO: user error feedback!
-      return;
-    }
+    // NOTE: check empty file list in deposit controller
     // forward to deposit creation page
     $location.path('/deposits/create');
   };
@@ -268,8 +265,15 @@ b2Controllers.controller('DepositCtrl', ['$scope', '$routeParams', 'Deposit', '$
 
 }]);
 
-b2Controllers.controller('DepositCreateCtrl', ['$scope', '$routeParams', 'Deposit', '$rootScope', '$alert', '$window', 'Session', 'Helper', '$timeout',
-    function($scope, $routeParams, Deposit, $rootScope, $alert, $window, Session, Helper, $timeout){
+b2Controllers.controller('DepositCreateCtrl', ['$scope', '$routeParams', 'Deposit', '$rootScope', '$alert', '$window', 'Session', 'Helper', '$timeout', '$location',
+    function($scope, $routeParams, Deposit, $rootScope, $alert, $window, Session, Helper, $timeout, $location){
+
+  // force step offset
+  if($routeParams.step == undefined){
+    $location.path('/deposits/create').search('step', 1);
+  } else {
+    $scope.step = $routeParams.step;
+  }
 
   // file upload
   if(!$rootScope.uploadForm)
@@ -302,9 +306,8 @@ b2Controllers.controller('DepositCreateCtrl', ['$scope', '$routeParams', 'Deposi
 
 
 
-  var fs = $rootScope.uploadForm.files;
 
-  console.log(fs);
+
 
 }]);
 

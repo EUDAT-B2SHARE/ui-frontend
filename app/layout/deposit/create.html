@@ -1,22 +1,6 @@
 <div id="" class="container-fluid">
-  <!--<div class="row">
-    <div class="col-xs-offset-1 col-sm-10">
-
-      <div class="page-header">
-        <h2>Create Deposit `{{deposit.title}}`</h2>
-        <p><strong>UUID:</strong> {{deposit.uuid}}</p>
-        <p><strong>Created:</strong> {{deposit.created_at | date:'yyyy-MM-dd HH:mm'}}</p>
-        <p><strong>Modified:</strong> {{deposit.modified_at | date:'yyyy-MM-dd HH:mm'}}</p>
-        <p><strong>Abstract:</strong> ...</p>
-        <p><strong>Keywords:</strong> ...</p>
-      </div>
-
-    </div>
-  </div> -->
-  <div class="row">
-
-    <form id="deposit-file-select" novalidate name="uploadFormNg" ng-submit="uploadForm.submitForm()">
-
+  <form id="deposit-file-select" novalidate name="uploadFormNg" ng-submit="uploadForm.submitForm()">
+    <div class="row">
       <div class="col-xs-1 hidden-xs"></div>
       <div class="col-sm-10">
         <div class="page-header">
@@ -24,69 +8,42 @@
             Create Deposit <small>{{uploadForm.title}}</small>
           </h2>
         </div>
-
-        <div class="col-sm-6">
-
-          <div class="form-horizontal">
-            <!-- base errors -->
-            <span class="help-inline" ng-bind="userLogin.errorBase"></span>
-            <!-- title TODO: remove temporary input -->
-            <div class="form-group">
-              <label for="inputEmail" class="col-sm-2 control-label">Title*</label>
-              <div class="col-sm-8">
-                <input type="text" class="form-control" name="uTitle" id="inputTitle" placeholder="enter title" ng-model="uploadForm.title" required="true" autofocus="true">
-                <div class="help-inline" ng-show="uploadFormNg.$submitted || userLoginFormNg.uEmail.$touched">
-                  <span ng-show="uploadFormNg.uTitle.$error.title" ng-bind="uploadFormNg.errorTitle"></span>
-                </div>
-              </div>
-            </div>
-
-            <!-- TODO: load dynamic metadata templates here -->
-
-          </div>
-
-        </div>
-
-        <div class="col-sm-6">
-
-          <!-- file selector -->
-          <div class="panel panel-default">
-            <div class="panel-heading" role="tab" id="headingTwo">
-              <h4 class="panel-title">
-                <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-                  <span ng-show="!uploadForm.files">No Files selected <i class="fa fa-chevron-down"></i></span>
-                  <span ng-show="uploadForm.files">{{uploadForm.files.length}} {{pluralize('file', uploadForm.files.length)}} selected for upload <i class="fa fa-chevron-down"></i></span>
-                </a>
-              </h4>
-            </div>
-            <!-- file select part -->
-            <div id="collapseTwo" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTwo">
-              <div class="panel-body">
-                <!-- upload file selector -->
-                <div ng-include src="'layout/deposit/_file_select.html'"></div>
-              </div>
-            </div>
-          </div>
-
-
-        </div>
-
-
-
-        <div class="col-sm-12">
-          <div class="form-group">
-            <div class="col-sm-12">
-              <button type="submit" class="btn btn-primary">
-                Create Deposit <i class="fa fa-chevron-right"></i>
-              </button>
-            </div>
-          </div>
-        </div>
-
+        
+        <div ng-include src="'layout/deposit/_create_nav_header.html'"></div>
 
       </div>
     </div>
+    <div class="row margin-top-20">
 
+      <div class="col-xs-1 hidden-xs"></div>
+      <div class="col-sm-10 well">
 
-  </form>
+        <!-- file select -->
+        <div class="panel-collapse collapse {{Helper.isActive('step', 1)}}" role="tabpanel">
+          <div ng-include src="'layout/deposit/_create_select_file.html'"></div>
+        </div>
+
+        <!-- schema  -->
+        <div class="panel-collapse collapse {{Helper.isActive('step', 2)}}" role="tabpanel">
+          <div ng-include src="'layout/deposit/_create_select_schema.html'"></div>
+        </div>
+
+        <!-- annotate  -->
+        <div class="panel-collapse collapse {{Helper.isActive('step', 3)}}" role="tabpanel">
+          <div ng-include src="'layout/deposit/_create_annotate.html'"></div>
+        </div>
+
+      </div>
+    </div>
+    <div class="row margin-top-20">
+
+      <div class="col-xs-1 hidden-xs"></div>
+      <div class="col-sm-10">
+        <div ng-include src="'layout/deposit/_create_nav_footer.html'"></div>
+      </div>
+    </div>
+
+    
+
+  </from>
 </div>

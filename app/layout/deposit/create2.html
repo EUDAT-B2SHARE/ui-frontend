@@ -1,0 +1,109 @@
+<div id="" class="container-fluid">
+  <form id="deposit-file-select" novalidate name="uploadFormNg" ng-submit="uploadForm.submitForm()">
+
+    <!-- heading -->
+    <div class="row">
+      <div class="col-xs-1 hidden-xs"></div>
+      <div class="col-sm-10">
+        <div class="page-header">
+          <h2 id ="create-deposit-header">
+            Create Deposit <small>{{uploadForm.title}}</small>
+          </h2>
+        </div>
+      </div>
+    </div>
+
+    <!-- 1. file selector -->
+    <div class="row">
+      <div class="col-xs-1 hidden-xs"></div>
+      <div class="col-sm-10">
+
+        <h4 id="selected-files" class="page-header">
+          1. 
+          <span ng-show="!uploadForm.files">No Files selected</span>
+          <span ng-show="uploadForm.files">({{uploadForm.files.length}}) {{pluralize('file', uploadForm.files.length)}} selected</span>
+        </h4>
+
+        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#deposit-file-selector" aria-expanded="true" aria-controls="collapseOne">
+          show details
+        </a>
+
+        <!-- file select part -->
+        <div id="deposit-file-selector" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            <!-- upload file selector -->
+            <div ng-include src="'layout/deposit/_file_select.html'"></div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- 2. specify schema -->
+    <div class="row">
+      <div class="col-xs-1 hidden-xs"></div>
+      <div class="col-sm-10">
+        <div class="form-horizontal">
+          <h4 id="specify-schema-header" class="page-header">2. Specify Schema</h4>
+          
+          
+          
+        </div>
+      </div>
+    </div>
+
+
+    <!-- 2. input fields -->
+    <div class="row">
+      <div class="col-xs-1 hidden-xs"></div>
+      <div class="col-sm-8">
+        <div class="form-horizontal">
+
+          <h4 id="specify-schema-header" class="page-header">3. Input Metadata</h4>
+
+          <!-- base errors -->
+          <span class="help-inline" ng-bind="userLogin.errorBase"></span>
+          <!-- title TODO: remove temporary input -->
+          <div class="form-group">
+            <label for="inputEmail" class="col-sm-2 control-label">Title*</label>
+            <div class="col-sm-8">
+              <input type="text" class="form-control" name="uTitle" id="inputTitle" placeholder="enter title" ng-model="uploadForm.title" required="true" autofocus="true">
+              <div class="help-inline" ng-show="uploadFormNg.$submitted || userLoginFormNg.uEmail.$touched">
+                <span ng-show="uploadFormNg.uTitle.$error.title" ng-bind="uploadFormNg.errorTitle"></span>
+              </div>
+            </div>
+          </div>
+
+
+
+          <!-- TODO: load dynamic metadata templates here -->
+        </div>
+
+          </div>
+
+          <div class="col-sm-4">
+            <!-- TODO: add help here -->
+          </div>
+
+
+
+          <div class="col-sm-12">
+            <div class="form-group">
+              <div class="col-sm-12">
+                <button type="submit" class="btn btn-primary">
+                  Create Deposit <i class="fa fa-chevron-right"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+
+
+
+
+  </form>
+</div>

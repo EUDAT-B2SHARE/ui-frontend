@@ -1,14 +1,31 @@
-<!-- upload drop & file select -->
-<div class="" role="group" aria-label="...">
-  <div ngf-drop ng-show="!uploadForm.files || uploadForm.files.length <= 0" ng-model="uploadForm.files" class="drop-box well hidden-xs" ngf-drag-over-class="dragover" ngf-multiple="true" ngf-allow-dir="true" ngf-accept="'*/*'" ngf-change="uploadForm.change($files)">
-    Drag & drop Files
-  </div>
-
-  <!-- select files -->
-  <button role="group" aria-label="..." ng-show="!uploadForm.files || uploadForm.files.length <= 0" ngf-select ng-model="uploadForm.files" ngf-multiple="true" class="btn btn-primary" ngf-accept="'*/*'" ngf-allow-dir="true" ngf-change="uploadForm.change($files)">
-      Select Files
-  </button>
+<!-- upload drop & file select NOTE: must be hidden after selected, new selection will overwrite everyting -->
+<div ngf-drop ng-show="!uploadForm.files || uploadForm.files.length <= 0" ng-model="uploadForm.files" class="drop-box well hidden-xs" ngf-drag-over-class="dragover" ngf-multiple="true" ngf-allow-dir="true" ngf-accept="'*/*'" ngf-change="uploadForm.change($files)">
+  Drag & drop Files
 </div>
+
+<!-- default controller (homepage => /) -->
+<div class="pull-right" ng-show="Helper.usesRoute('/')">
+  <div class="btn-group" role="group" aria-label="..." ng-show="!uploadForm.files || uploadForm.files.length <= 0">
+    <!-- select files -->
+    <button role="group" aria-label="..." ngf-select ng-model="uploadForm.files" ngf-multiple="true" class="btn btn-primary" ngf-accept="'*/*'" ngf-allow-dir="true" ngf-change="uploadForm.change($files)">
+      Select Files
+    </button>
+    <button class="btn btn-warning" type="submit">
+      Create Empty Deposit <i class="fa fa-chevron-circle-right"></i>
+    </button>
+  </div>  
+</div>
+
+<!-- other controllers -->
+<div ng-show="!Helper.usesRoute('/')">
+  <div class="pull-right" role="group" aria-label="..." ng-show="!uploadForm.files || uploadForm.files.length <= 0">
+    <!-- select files -->
+    <button role="group" aria-label="..." ngf-select ng-model="uploadForm.files" ngf-multiple="true" class="btn btn-primary" ngf-accept="'*/*'" ngf-allow-dir="true" ngf-change="uploadForm.change($files)">
+      Select Files
+    </button>
+  </div>  
+</div>
+
 
 <!-- file selected preview -->
 <div class="well upload-preview pull-left" ng-show="uploadForm.files.length > 0">

@@ -147,6 +147,19 @@ b2Services.factory('Helper', ['$rootScope', '$location', '$timeout', '$routePara
         return "";
       }
     },
+    argActive: function(key, value){
+      if($routeParams[key] == undefined)
+        return "";
+      return ($routeParams[key] == value) ? "active" : "";
+    },
+    isActive: function(key, value){
+      if($routeParams[key] == undefined)
+        return "";
+      return ($routeParams[key] == value) ? "in" : "";
+    },
+    usesRoute: function(route){
+      return $location.path() == route;
+    },
     scrollTop: function(){
       this.scrollTo('html, body');
     },
