@@ -1,42 +1,57 @@
 <!-- upload drop & file select -->
-<div class="" role="group" aria-label="...">
-  <div ngf-drop ng-show="!uploadForm.files || uploadForm.files.length <= 0" ng-model="uploadForm.files" class="drop-box well hidden-xs" ngf-drag-over-class="dragover" ngf-multiple="true" ngf-allow-dir="true" ngf-accept="'*/*'" ngf-change="uploadForm.change($files)">
-    Drag & drop Files
-  </div>
+<div role="group" aria-label="...">
+    <div
+        class="drop-box well hidden-xs"
+        ng-model="uploadForm.files"
+        ng-show="!uploadForm.files || uploadForm.files.length <= 0"
+        ngf-accept="'*/*'"
+        ngf-allow-dir="true"
+        ngf-change="uploadForm.change($files)"
+        ngf-drag-over-class="dragover"
+        ngf-drop
+        ngf-multiple="true"> Drag &amp; drop Files </div>
 
-  <!-- select files -->
-  <button role="group" aria-label="..." ng-show="!uploadForm.files || uploadForm.files.length <= 0" ngf-select ng-model="uploadForm.files" ngf-multiple="true" class="btn btn-primary" ngf-accept="'*/*'" ngf-allow-dir="true" ngf-change="uploadForm.change($files)">
-      Select Files
-  </button>
+    <!-- select files -->
+    <button
+        aria-label="..."
+        class="btn btn-primary"
+        role="group"
+        ng-model="uploadForm.files"
+        ng-show="!uploadForm.files || uploadForm.files.length <= 0"
+        ngf-select
+        ngf-multiple="true"
+        ngf-accept="'*/*'"
+        ngf-allow-dir="true"
+        ngf-change="uploadForm.change($files)"> Select Files </button>
 </div>
 
 <!-- file selected preview -->
 <div class="well upload-preview" ng-show="uploadForm.files.length > 0">
-  <!-- iterate files -->
-  <div ng-repeat="file in uploadForm.files" class="">
-    <div class="col-sm-12">
-      <a class="media" ngf-src="file" type="{{file.type}}" size="{{file.size|size_byte2kilobyte}}" name="{{file.name}}"></a>
-      <!-- show divider bar (except on last) -->
-      <div ng-show="!$last" class="divider">&nbsp;</div>
+    <!-- iterate files -->
+    <div ng-repeat="file in uploadForm.files" class="">
+        <div class="row">
+        <div class="col-sm-12">
+            <a  class="media" ngf-src="file" type="{{file.type}}"
+                size="{{file.size|size_byte2kilobyte}}" name="{{file.name}}"></a>
+            <!-- show divider bar (except on last) -->
+            <div ng-show="!$last" class="divider">&nbsp;</div>
+        </div>
+        </div>
     </div>
-  </div>
 </div>
 
 <!-- reset and submit -->
-<div ng-show="uploadForm.showSubmit && uploadForm.files && uploadForm.files.length > 0" class="btn-group" role="group" aria-label="...">
-  <!-- change selection -->
-  <button class="btn btn-warning" ng-click="uploadForm.reset()">
-    Undo
-  </button>
-  <button class="btn btn-primary" type="submit">
-    Create Record <i class="fa fa-chevron-circle-right"></i>
-  </button>
+<div ng-show="uploadForm.showSubmit && uploadForm.files && uploadForm.files.length > 0"
+     class="btn-group" role="group" aria-label="...">
+    <!-- change selection -->
+    <button class="btn btn-warning" ng-click="uploadForm.reset()"> Undo </button>
+    <!-- <button class="btn btn-primary" type="submit">
+        Create Record <i class="fa fa-chevron-circle-right"></i>
+    </button> -->
 </div>
 
-<div ng-show="!uploadForm.showSubmit && uploadForm.files && uploadForm.files.length > 0" ng-show="uploadForm.files" class="btn-group" role="group" aria-label="...">
-  <!-- change selection -->
-  <button class="btn btn-warning" ng-click="uploadForm.reset()">
-    Undo Selection
-  </button>
+<div ng-show="!uploadForm.showSubmit && uploadForm.files && uploadForm.files.length > 0"
+     class="btn-group" role="group" aria-label="...">
+    <!-- change selection -->
+    <button class="btn btn-warning" ng-click="uploadForm.reset()"> Undo Selection </button>
 </div>
-
