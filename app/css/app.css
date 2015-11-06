@@ -405,3 +405,7 @@ h1, h2, h3 {
     float: none;
     margin: 0 auto;
 }
+
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open .dropdown-toggle.btn-primary {
+  color: #ffffff;
+}
