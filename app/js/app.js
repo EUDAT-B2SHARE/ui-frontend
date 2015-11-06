@@ -66,7 +66,7 @@ b2App.run(['$rootScope', '$window', 'Helper', 'PageTitle', 'Breadcrumbs', 'Notif
 b2App.config(['$routeProvider', function($routeProvider){
     // default route
     $routeProvider.when('/', {
-        templateUrl: 'layout/index.html',
+        templateUrl: 'layout/home.html',
         controller: 'HomeCtrl'
     }).otherwise({
         redirectTo: '/'
