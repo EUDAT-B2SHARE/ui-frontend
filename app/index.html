@@ -1,51 +1,50 @@
 <!doctype html>
 <html lang="en" ng-app="b2App">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title ng-bind="PageTitle.getTitle()">B2SHARE</title>
+    <title ng-bind="PageTitle.getTitle()">B2SHARE</title>
 
-  <link rel="stylesheet" href="bower_components/angular-loading-bar/src/loading-bar.css">
-  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
-  <link rel="stylesheet" href="bower_components/components-font-awesome/css/font-awesome.css">
-  <link rel="stylesheet" href="bower_components/angular-motion/dist/angular-motion.css">
-  <link rel="stylesheet" href="bower_components/jquery-colorbox/example5/colorbox.css">
-  <link type="txt/css" rel="stylesheet" href="bower_components/raleway/raleway.css">
+    <link rel="stylesheet" href="bower_components/angular-loading-bar/src/loading-bar.css">
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="bower_components/components-font-awesome/css/font-awesome.css">
+    <link rel="stylesheet" href="bower_components/angular-motion/dist/angular-motion.css">
+    <link rel="stylesheet" href="bower_components/jquery-colorbox/example5/colorbox.css">
 
-  <link rel="shortcut icon" href="favicon.ico"/>
+    <link rel="shortcut icon" href="favicon.ico"/>
 
-  <script src="bower_components/jquery/dist/jquery.js"></script>
-  <script src="bower_components/jquery-colorbox/jquery.colorbox.js"></script>
-  <script src="bower_components/angular/angular.js"></script>
-  <script src="bower_components/angular-route/angular-route.js"></script>
-  <script src="bower_components/angular-resource/angular-resource.js"></script>
-  <script src="bower_components/angular-animate/angular-animate.js"></script>
-  <script src="bower_components/angular-strap/dist/angular-strap.min.js"></script>
-  <script src="bower_components/angular-strap/dist/angular-strap.tpl.min.js"></script>
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/jquery-colorbox/jquery.colorbox.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="bower_components/angular-resource/angular-resource.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
+    <script src="bower_components/angular-strap/dist/angular-strap.min.js"></script>
+    <script src="bower_components/angular-strap/dist/angular-strap.tpl.min.js"></script>
 
-  <script src="bower_components/angular-loading-bar/src/loading-bar.js"></script>
-  <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="bower_components/angular-loading-bar/src/loading-bar.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
 
-  <!--[if lt IE 9 ]>
-    <script src="bower_components/ng-file-upload/ng-file-upload-shim.js"></script>
-  <![endif]-->
-  <script src="bower_components/ng-file-upload/ng-file-upload.js"></script>
-  <script src="bower_components/pluralize/pluralize.js"></script>
-
-
-  <script src="js/animations.js"></script>
-  <script src="js/app.js"></script>
-  <script src="js/controllers.js"></script>
-  <script src="js/filters.js"></script>
-  <script src="js/services.js"></script>
-  <script src="js/media.js"></script>
+    <!--[if lt IE 9 ]>
+        <script src="bower_components/ng-file-upload/ng-file-upload-shim.js"></script>
+    <![endif]-->
+    <script src="bower_components/ng-file-upload/ng-file-upload.js"></script>
+    <script src="bower_components/pluralize/pluralize.js"></script>
 
 
-  <link rel="stylesheet" href="css/animations.css">
-  <link rel="stylesheet" href="css/bootstrap-theme.css">
-  <link rel="stylesheet" href="css/app.css">
-  <link rel="stylesheet" href="css/font.css">
+    <script src="js/animations.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/controllers.js"></script>
+    <script src="js/filters.js"></script>
+    <script src="js/services.js"></script>
+    <script src="js/media.js"></script>
+
+
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/bootstrap-theme.css">
+    <link rel="stylesheet" href="css/app.css">
+    <link rel="stylesheet" href="css/font.css">
 
 
 </head>
@@ -53,72 +52,71 @@
 
 <div ng-controller="DefaultCtrl" id="holder">
 
-  <div id="header">
-    <div id="alerts-container"></div>
-    <header>
-      <div class="row-fluid bg-color-orange text-color-white">
-        <span class="col-xs-offset-1 about-header text-center-responsive text-color-white"><a href="http://eudat.eu" target="_blank">GO TO EUDAT WEBSITE</a>
-      </div>
+    <div id="header">
+        <div id="alerts-container"></div>
+        <header>
+            <div class="row-fluid bg-color-orange text-color-white">
+                <span class="col-xs-offset-1 about-header text-center-responsive text-color-white"><a href="http://eudat.eu" target="_blank">GO TO EUDAT WEBSITE</a>
+            </div>
 
-      <div ng-include src="'layout/_nav.html'"></div>
-      <div ng-include src="'layout/_breadcrumbs.html'"></div>
+            <div ng-include src="'layout/_nav.html'"></div>
+            <div ng-include src="'layout/_breadcrumbs.html'"></div>
 
-      <!-- main container -->
-      <div id="main-container" class="view-container">
-        <div id="page" ng-view class="view-frame" autoscroll="false">
-          <!-- this is replaced by controller -->
-        </div>
-      </div>
+            <!-- main container -->
+            <div id="main-container" class="view-container">
+                <div id="page" ng-view class="view-frame" autoscroll="false">
+                    <!-- this is replaced by controller -->
+                </div>
+            </div>
 
-    </header>
-  </div>
+        </header>
+    </div>
 
-  <!-- footer -->
-  <div id="footer">
-    <footer>
-      <div class="about-footer">
-        Powered by
-        <a href="http://invenio-software.org" target="_blank">
-          <img ng-src="{{'img/invenio.png'}}">
-        </a>
-      </div>
-      <div class="spacer-footer container-fluid">
-        <div class="col-xs-3 box-1"></div>
-        <div class="col-xs-3 box-2"></div>
-        <div class="col-xs-3 box-3" ></div>
-        <div class="col-xs-3 box-4"></div>
-      </div>
-      <nav class="bottom-nav navbar-bottom navbar-default">
-        <div class="container-fluid">
-          <div class="col-xs-1 hidden-xs"></div>
-          <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#footer-navbar-collapse">
-              <span class="sr-only">Toggle Navigation Menu</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
-          </div>
+    <!-- footer -->
+    <div id="footer">
+        <footer>
+            <div class="about-footer">
+                Powered by
+                <a href="http://invenio-software.org" target="_blank">
+                    <img ng-src="{{'img/invenio.png'}}">
+                </a>
+            </div>
+            <div class="spacer-footer container-fluid">
+                <div class="col-xs-3 box-1"></div>
+                <div class="col-xs-3 box-2"></div>
+                <div class="col-xs-3 box-3" ></div>
+                <div class="col-xs-3 box-4"></div>
+            </div>
+            <nav class="bottom-nav navbar-bottom navbar-default">
+                <div class="container-fluid">
+                    <div class="col-xs-1 hidden-xs"></div>
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#footer-navbar-collapse">
+                            <span class="sr-only">Toggle Navigation Menu</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                    </div>
 
-          <div class="collapse navbar-collapse" id="footer-navbar-collapse">
-            <p class="legal-notice col-xs-5">
-              <img ng-src="{{'img/ce-logo.png'}}">
-              EUDAT has received funding from the European Union's Horizon 2020 research and innovation programme under grant agreement No 654065 <a href="#/about/legal-notice">Legal Notice</a>.
-            </p>
-            <ul class="nav navbar-nav navbar-right">
-              <li class=""><a href="#/help/terms-of-use">Terms of Use</a></li>
-              <li class=""><a href="#/help/api">REST API</a></li>
-              <li class=""><a href="#/about/eudat">About EUDAT</a></li>
-            </ul>
-          </div>
-        </div>
-        <div class="footer-version">
-          &copy; EUDAT 2015 v1.1.1
-        </div>
-      </nav>
-    </footer>
-  </div>
-
+                    <div class="collapse navbar-collapse" id="footer-navbar-collapse">
+                        <p class="legal-notice col-xs-5">
+                            <img ng-src="{{'img/ce-logo.png'}}">
+                            EUDAT has received funding from the European Union's Horizon 2020 research and innovation programme under grant agreement No 654065 <a href="#/about/legal-notice">Legal Notice</a>.
+                        </p>
+                        <ul class="nav navbar-nav navbar-right">
+                            <li class=""><a href="#/help/terms-of-use">Terms of Use</a></li>
+                            <li class=""><a href="#/help/api">REST API</a></li>
+                            <li class=""><a href="#/about/eudat">About EUDAT</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="footer-version">
+                    &copy; EUDAT 2015 v1.1.1
+                </div>
+            </nav>
+        </footer>
+    </div>
 
 </div>
 </body>
